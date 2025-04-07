@@ -126,3 +126,11 @@ In `app/templates/hello.twig`:
 ## License
 
 This project is open-sourced under the [MIT license](LICENSE).
+
+---
+
+## 更新新聞
+
+### 2025-04-07
+- 初始版本發布
+- 完成基本功能設置
