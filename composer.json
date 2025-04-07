@@ -1,0 +1,32 @@
+{
+  "name": "n270/nslim4-skeleton",
+  "description": "A lightweight Slim 4 skeleton with Twig, PHP-DI, Dotenv.",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "N Wang",
+      "email": "frank@imusm.net"
+    }
+  ],
+  "require": {
+    "slim/slim": "^4.12",
+    "slim/psr7": "^1.5",
+    "slim/twig-view": "^3.3",
+    "slim/flash": "^0.4.0",
+    "monolog/monolog": "^2.0",
+    "illuminate/database": "^8.0",
+    "illuminate/pagination": "^8.0",
+    "filp/whoops": "^2.14",
+    "vlucas/phpdotenv": "^5.5",
+    "php-console/php-console": "^3.1",
+    "twig/twig": "^3.8",
+    "phpoffice/phpspreadsheet": "^1.29"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/src/"
+    }
+  }
+}
+
