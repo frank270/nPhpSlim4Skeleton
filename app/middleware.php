@@ -9,12 +9,14 @@ use Slim\Views\Twig;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Psr\Http\Message\ResponseInterface as Response;
+use App\Middleware\PermissionMiddleware;
 
 return function (App $app) {
     $container = $app->getContainer();
 
-    // 加入 Twig Middleware（讓 View 可以運作）
-    $app->add(TwigMiddleware::createFromContainer($app, 'view'));
+
+
+
 
     // ✅ 新增 Flash message 中介層（注入 Twig 全域變數）
     $app->add(function (Request $request, RequestHandler $handler) use ($container): Response {
@@ -31,14 +33,9 @@ return function (App $app) {
         return $handler->handle($request);
     });
 
-    // 加入 Error Middleware（錯誤處理）
-    $settings = $container->get('settings');
-    $errorMiddleware = new ErrorMiddleware(
-        $app->getCallableResolver(),
-        $app->getResponseFactory(),
-        $settings['displayErrorDetails'] ?? false,
-        $settings['logError'] ?? false,
-        $settings['logErrorDetails'] ?? false
-    );
-    $app->add($errorMiddleware);
+    // 加入權限檢查中介層（用於後台路由）
+    $app->add($container->get(PermissionMiddleware::class));
+    
+    // 加入 Twig Middleware（讓 View 可以運作）
+    $app->add(TwigMiddleware::createFromContainer($app, 'view'));
 };

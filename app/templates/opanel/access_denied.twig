@@ -1,0 +1,28 @@
+{% extends 'opanel/layout.twig' %}
+
+{% block title %}無權限訪問{% endblock %}
+
+{% block content %}
+<div class="container-tight py-4">
+  <div class="card card-md">
+    <div class="card-body">
+      <div class="text-center mb-4">
+        <h1 class="h3 text-danger">
+          <i class="ti ti-lock-access"></i> 無權限訪問
+        </h1>
+      </div>
+      <div class="text-center mb-3">
+        <p class="text-muted">您沒有權限訪問此頁面。</p>
+        {% if requested_url %}
+          <p class="text-muted">請求的頁面: <code>{{ requested_url }}</code></p>
+        {% endif %}
+      </div>
+      <div class="d-flex justify-content-center">
+        <a href="/opanel/dashboard" class="btn btn-primary">
+          <i class="ti ti-home"></i> 返回首頁
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

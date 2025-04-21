@@ -8,6 +8,9 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Slim\Flash\Messages;
 use App\Actions\Opanel\AuthAction;
+use App\Utils\PermissionChecker;
+use App\Middleware\PermissionMiddleware;
+use Slim\Psr7\Factory\ResponseFactory;
 
 return function (App $app) {
     /** @var ContainerInterface $container */
@@ -33,12 +36,38 @@ return function (App $app) {
     $container->set('flash', function () {
         return new Messages();
     });
+    
     // Database
     $container->set(\Doctrine\DBAL\Connection::class, function () {
         return require __DIR__ . '/database.php';
     });
-    //
+    
+    // Response Factory
+    $container->set(ResponseFactory::class, function () {
+        return new ResponseFactory();
+    });
+    
+    // Permission Checker
+    $container->set(PermissionChecker::class, function (ContainerInterface $c) {
+        return new PermissionChecker($c);
+    });
+    
+    // Permission Middleware
+    $container->set(PermissionMiddleware::class, function (ContainerInterface $c) {
+        return new PermissionMiddleware(
+            $c->get(PermissionChecker::class),
+            $c->get('flash'),
+            $c->get(ResponseFactory::class)
+        );
+    });
+    
+    // Actions
     $container->set(AuthAction::class, function ($c) {
         return new AuthAction($c);
+    });
+    
+    // Dashboard Action
+    $container->set(\App\Actions\Opanel\DashBoardAction::class, function ($c) {
+        return new \App\Actions\Opanel\DashBoardAction($c);
     });
 };

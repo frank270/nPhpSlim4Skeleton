@@ -11,6 +11,7 @@ return function (App $app) {
     $app->group('/opanel', function (RouteCollectorProxy $group) {
         (require __DIR__ . '/Routes/opanel_auth.php')($group);
         (require __DIR__ . '/Routes/opanel_dashboard.php')($group);
+        (require __DIR__ . '/Routes/opanel_access.php')($group);
         // 其他 ...
     });
 };

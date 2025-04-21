@@ -24,18 +24,37 @@ $settings = require __DIR__ . '/../app/settings.php';
 AppFactory::setContainer($settings['container']);
 $app = AppFactory::create();
 
-// 🔥 **順序：先載入 dependencies，再加 middleware！**
+
+
+
+// 🔥 **順序：先載入 dependencies，再連接資料庫，最後加入 middleware！**
 (require __DIR__ . '/../app/dependencies.php')($app);
-(require __DIR__ . '/../app/middleware.php')($app);
 
 // 連接資料庫
 (require __DIR__ . '/../app/database.php')($app);
-// 設定 PostModel
+
+// 設定 Model
 foreach (glob(__DIR__ . '/../app/Models/*.php') as $file) {
     require_once $file;
 }
+
 // 加入路由
 (require __DIR__ . '/../app/routes.php')($app);
+
+// 加入中介層
+(require __DIR__ . '/../app/middleware.php')($app);
+
+
+
+// 啟用路由中介層 (RoutingMiddleware)，確保最先執行路由匹配
+$app->addRoutingMiddleware();
+
+// 啟用 Slim 官方錯誤中介層，處理 404、500 等例外
+$app->addErrorMiddleware(
+    $settings['displayErrorDetails'] ?? false,
+    $settings['logError'] ?? false,
+    $settings['logErrorDetails'] ?? false
+);
 
 // Run app
 $app->run();
