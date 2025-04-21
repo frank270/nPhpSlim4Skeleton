@@ -1,0 +1,34 @@
+{% extends 'opanel/layout.twig' %}
+
+{% block content %}
+<div class="page-header d-print-none">
+  <div class="container-xl">
+    <div class="row g-2 align-items-center">
+      <div class="col">
+        <h2 class="page-title">
+          控制台總覽
+        </h2>
+        <div class="page-pretitle">
+          歡迎回來，{{ user.display_name | default('管理者') }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="container-xl">
+    <div class="row row-deck row-cards">
+      <div class="col-sm-6 col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">系統概況</h3>
+            <p class="text-muted">這裡可以顯示系統統計、提醒、待辦事項或快捷入口。</p>
+          </div>
+        </div>
+      </div>
+      <!-- 更多卡片區塊可持續擴充 -->
+    </div>
+  </div>
+</div>
+{% endblock %}

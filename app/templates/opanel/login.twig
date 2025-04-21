@@ -11,6 +11,11 @@
       <h2 class="h3 mt-3">請登入後台</h2>
       <p class="text-muted">輸入帳號密碼以進入管理後台</p>
     </div>
+    {% if flash.login_error %}
+      <div class="alert alert-danger text-center mb-4">
+        {{ flash.login_error[0] }}
+      </div>
+    {% endif %}
 
     <form class="card card-md shadow-sm rounded-xl" method="post" action="/opanel/login">
       <div class="card-body">

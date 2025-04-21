@@ -10,6 +10,7 @@ return function (App $app) {
     // ✅ 正確做法：自己 group，然後手動呼叫每個回傳的 Closure
     $app->group('/opanel', function (RouteCollectorProxy $group) {
         (require __DIR__ . '/Routes/opanel_auth.php')($group);
+        (require __DIR__ . '/Routes/opanel_dashboard.php')($group);
         // 其他 ...
     });
 };

@@ -8,6 +8,7 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Slim\Flash\Messages;
 use App\Actions\Opanel\AuthAction;
+
 return function (App $app) {
     /** @var ContainerInterface $container */
     $container = $app->getContainer();

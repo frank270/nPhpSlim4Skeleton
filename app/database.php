@@ -17,6 +17,7 @@ return function (App $app) {
         'host'     => $_ENV['DB_HOST'] ?? 'localhost',
         'driver'   => $_ENV['DB_CONNECTION'] ?? 'pdo_mysql',
         'charset'  => 'utf8mb4',
+        'collate'  => 'utf8mb4_unicode_ci'
     ]);
 
     $container->set(Connection::class, $connection);
