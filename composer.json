@@ -25,7 +25,7 @@
   },
   "autoload": {
     "psr-4": {
-      "App\\": "app/src/"
+      "App\\": "app/actions/"
     }
   }
 }
