@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use Slim\App;
 use App\HomeAction;
+use App\PostDemoAction;
 
 return function (App $app) {
      // 首頁 landing page route
@@ -22,4 +23,6 @@ return function (App $app) {
         $group->get('/logout', "{$ctrl}:logout");
     });
     */
+    $app->get('/posts', PostDemoAction::class); // list
+
 };

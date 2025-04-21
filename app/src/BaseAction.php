@@ -13,9 +13,10 @@ class BaseAction
     protected Twig $view;
     protected Logger $logger;
     protected Messages $flash;
-
+    protected ContainerInterface $container;
     public function __construct(ContainerInterface $container)
     {
+        $this->container = $container;
         $this->view = $container->get('view');
         $this->logger = $container->get('logger');
         $this->flash = $container->get('flash');

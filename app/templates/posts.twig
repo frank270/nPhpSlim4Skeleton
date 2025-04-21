@@ -1,0 +1,9 @@
+<h1>文章列表</h1>
+<ul>
+  {% for post in posts %}
+    <li>
+      <a href="/posts/{{ post.id }}"><strong>{{ post.title }}</strong></a>
+      <br><small>{{ post.created_at }}</small>
+    </li>
+  {% endfor %}
+</ul>
