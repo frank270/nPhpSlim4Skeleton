@@ -63,9 +63,14 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       SERVICE_NAME: mysql
+      # 字元編碼設定
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_general_ci
+      TZ: Asia/Taipei
     volumes:
       - mysql_data:/var/lib/mysql
       - ./docker/mysql:/docker-entrypoint-initdb.d
+      - ./docker/mysql/conf.d:/etc/mysql/conf.d
     networks:
       - app_network
 
