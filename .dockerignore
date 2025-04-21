@@ -1,0 +1,28 @@
+# 版本控制
+.git
+.gitignore
+.gitattributes
+
+# 開發環境
+.idea
+.vscode
+*.sublime-*
+.DS_Store
+Thumbs.db
+
+# 依賴
+/vendor
+/node_modules
+
+# 環境設定
+.env
+
+# 快取和日誌
+/cache/*
+/log/*
+!/cache/.gitkeep
+!/log/.gitkeep
+
+# 其他
+/docker/nginx/logs/*
+/docker-compose.override.yml

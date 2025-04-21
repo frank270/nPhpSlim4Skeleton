@@ -1,0 +1,92 @@
+version: '3.8'
+name: slim4-project
+
+services:
+  # PHP 應用服務
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: slim_app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    networks:
+      - app_network
+    depends_on:
+      - mysql
+      - redis
+    command: >
+      /bin/sh -c "
+        composer update --no-interaction --no-progress --prefer-dist &&
+        php-fpm
+      "
+
+  # Nginx 服務
+  nginx:
+    image: nginx:alpine
+    container_name: slim_nginx
+    restart: unless-stopped
+    ports:
+      - "8243:443"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/app.conf:/etc/nginx/conf.d/app.conf
+      - ./docker/nginx/phpmyadmin.conf:/etc/nginx/conf.d/phpmyadmin.conf
+      - ./docker/nginx/logs:/var/log/nginx
+      - ./docker/ssl:/etc/nginx/ssl
+    depends_on:
+      - app
+    networks:
+      - app_network
+    command: >
+      /bin/sh -c "
+        apk update && 
+        apk add --no-cache openssl && 
+        mkdir -p /etc/nginx/ssl && 
+        openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/ndev.local.key -out /etc/nginx/ssl/ndev.local.crt -subj \"/C=TW/ST=Taiwan/L=Taipei/O=Development/CN=ndev.local\" && 
+        openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/ndba.local.key -out /etc/nginx/ssl/ndba.local.crt -subj \"/C=TW/ST=Taiwan/L=Taipei/O=Development/CN=ndba.local\" && 
+        chmod 644 /etc/nginx/ssl/*.crt && 
+        chmod 600 /etc/nginx/ssl/*.key && 
+        nginx -g 'daemon off;'
+      "
+
+  # MySQL 服務
+  mysql:
+    image: mysql:8.0
+    container_name: slim_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: demo_db
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      SERVICE_NAME: mysql
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql:/docker-entrypoint-initdb.d
+    networks:
+      - app_network
+
+  # PHPMyAdmin 服務已移除，改用獨立下載的版本
+
+  # Redis 服務
+  redis:
+    image: redis:alpine
+    container_name: slim_redis
+    restart: unless-stopped
+    networks:
+      - app_network
+    volumes:
+      - redis_data:/data
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local
+  redis_data:
+    driver: local

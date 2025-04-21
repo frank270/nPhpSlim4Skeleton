@@ -5,3 +5,12 @@ log
 .env
 .ssh
 .vscode
+**phpmyadmin
+*.crt
+*.lock
+*.key
+*.zip
+*.log
+*.lock
+**.DS_Store
+**cache/*
