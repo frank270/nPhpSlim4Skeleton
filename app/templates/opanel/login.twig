@@ -1,29 +1,36 @@
 {% extends 'opanel/login_layout.twig' %}
 
-{% block title %}後台登入{% endblock %}
-
 {% block content %}
-  <h2 class="text-center mb-4">請登入後台</h2>
-
-  {% if flash.login_error %}
-    <div class="alert alert-danger">
-      {{ flash.login_error }}
+<div class="page page-center">
+  <div class="container container-tight py-4">
+    <div class="text-center mb-4">
+      <a href="/" class="navbar-brand">
+        <img src="/assets/img/logo-v7-nobg.png" height="48" alt="Logo">
+      </a>
+      <h2 class="h3 mt-3">請登入後台</h2>
+      <p class="text-muted">輸入帳號密碼以進入管理後台</p>
     </div>
-  {% endif %}
 
-  <form method="POST" action="/opanel/login" class="card card-md">
-    <div class="card-body">
-      <div class="mb-3">
-        <label class="form-label">帳號</label>
-        <input type="text" class="form-control" name="username" required autofocus>
+    <form class="card card-md shadow-sm rounded-xl" method="post" action="/opanel/login">
+      <div class="card-body">
+        <div class="mb-3">
+          <label class="form-label">帳號</label>
+          <input type="text" name="account" class="form-control" placeholder="請輸入帳號" required>
+        </div>
+        <div class="mb-2">
+          <label class="form-label">密碼</label>
+          <input type="password" name="password" class="form-control" placeholder="請輸入密碼" required>
+        </div>
+        <div class="form-footer">
+          <button type="submit" class="btn btn-primary w-100">登入</button>
+        </div>
       </div>
-      <div class="mb-2">
-        <label class="form-label">密碼</label>
-        <input type="password" class="form-control" name="password" required>
-      </div>
-      <div class="form-footer">
-        <button type="submit" class="btn btn-primary w-100">登入</button>
-      </div>
+    </form>
+
+    <div class="text-center text-muted mt-3 small">
+      <a href="/">← 回前台首頁</a>
+      {# <span class="mx-2">|</span> <a href="#">忘記密碼？</a> #}
     </div>
-  </form>
+  </div>
+</div>
 {% endblock %}

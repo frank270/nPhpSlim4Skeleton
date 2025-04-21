@@ -31,7 +31,7 @@ $app = AppFactory::create();
 // 連接資料庫
 (require __DIR__ . '/../app/database.php')($app);
 // 設定 PostModel
-foreach (glob(__DIR__ . '/../app/models/*.php') as $file) {
+foreach (glob(__DIR__ . '/../app/Models/*.php') as $file) {
     require_once $file;
 }
 // 加入路由

@@ -19,7 +19,7 @@ return [
                     'level' => \Monolog\Logger::DEBUG,
                 ],
                 'twig' => [
-                    'template_path' => __DIR__ . '/templates',
+                    'template_path' => __DIR__ . '/Templates',
                     'cache_path'    => __DIR__ . '/../cache/twig',
                 ],
             ];

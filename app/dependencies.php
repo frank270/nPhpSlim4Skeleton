@@ -14,7 +14,7 @@ return function (App $app) {
 
     // Twig View
     $container->set('view', function () {
-        return Twig::create(__DIR__ . '/templates', [
+        return Twig::create(__DIR__ . '/Templates', [
             'cache' => __DIR__ . '/../cache/twig', // 建議開發時設 false，正式上線用快取
             'auto_reload' => true,
         ]);
