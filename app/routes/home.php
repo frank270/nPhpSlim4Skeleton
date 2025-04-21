@@ -1,5 +1,5 @@
 <?php
-use App\HomeAction;
+use App\Actions\HomeAction;
 // 首頁 landing page route
 $app->get('/', HomeAction::class . ':landingPage');
 // 定義 /hello/{name} 路由，交給 HomeAction

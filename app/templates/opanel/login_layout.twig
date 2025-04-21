@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}後台登入{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/assets/tabler/css/tabler.min.css" rel="stylesheet" />
+  <script src="/assets/tabler/js/tabler.min.js" defer></script>
+</head>
+<body class="d-flex flex-column bg-white">
+  <div class="page page-center">
+    <div class="container-tight py-4">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+</body>
+</html>

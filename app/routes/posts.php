@@ -1,3 +1,3 @@
 <?php
-use App\PostDemoAction;
+use App\Actions\PostDemoAction;
 $app->get('/posts', PostDemoAction::class); // list

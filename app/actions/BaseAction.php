@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App;
+namespace App\Actions;
 
 use Psr\Container\ContainerInterface;
 use Slim\Views\Twig;

@@ -2,10 +2,16 @@
 declare(strict_types=1);
 
 use Slim\App;
+use Slim\Routing\RouteCollectorProxy;
 return function (App $app) {
-    foreach (glob(__DIR__ . '/routes/*.php') as $routeFile) {
+    foreach (glob(__DIR__ . '/Routes/*.php') as $routeFile) {
         require $routeFile;
     }
+    // ✅ 正確做法：自己 group，然後手動呼叫每個回傳的 Closure
+    $app->group('/opanel', function (RouteCollectorProxy $group) {
+        (require __DIR__ . '/Routes/opanel_auth.php')($group);
+        // 其他 ...
+    });
 };
 // return function (App $app) {
 //     /*

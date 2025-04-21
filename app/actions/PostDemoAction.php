@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App;
+namespace App\Actions;
 
-use App\BaseAction;
+use App\Actions\BaseAction;
 use App\Models\PostModel;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;

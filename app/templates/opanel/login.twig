@@ -1,0 +1,29 @@
+{% extends 'opanel/login_layout.twig' %}
+
+{% block title %}後台登入{% endblock %}
+
+{% block content %}
+  <h2 class="text-center mb-4">請登入後台</h2>
+
+  {% if flash.login_error %}
+    <div class="alert alert-danger">
+      {{ flash.login_error }}
+    </div>
+  {% endif %}
+
+  <form method="POST" action="/opanel/login" class="card card-md">
+    <div class="card-body">
+      <div class="mb-3">
+        <label class="form-label">帳號</label>
+        <input type="text" class="form-control" name="username" required autofocus>
+      </div>
+      <div class="mb-2">
+        <label class="form-label">密碼</label>
+        <input type="password" class="form-control" name="password" required>
+      </div>
+      <div class="form-footer">
+        <button type="submit" class="btn btn-primary w-100">登入</button>
+      </div>
+    </div>
+  </form>
+{% endblock %}

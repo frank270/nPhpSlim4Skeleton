@@ -7,7 +7,7 @@ use Slim\Views\Twig;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Slim\Flash\Messages;
-
+use App\Actions\Opanel\AuthAction;
 return function (App $app) {
     /** @var ContainerInterface $container */
     $container = $app->getContainer();
@@ -32,10 +32,12 @@ return function (App $app) {
     $container->set('flash', function () {
         return new Messages();
     });
-
     // Database
     $container->set(\Doctrine\DBAL\Connection::class, function () {
         return require __DIR__ . '/database.php';
     });
-    
+    //
+    $container->set(AuthAction::class, function ($c) {
+        return new AuthAction($c);
+    });
 };
