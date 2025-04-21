@@ -11,11 +11,11 @@ return function (App $app) {
     $container = $app->getContainer();
 
     $connection = DriverManager::getConnection([
-        'dbname'   => getenv('DB_DATABASE') ?: 'your_database',
-        'user'     => getenv('DB_USERNAME') ?: 'your_user',
-        'password' => getenv('DB_PASSWORD') ?: 'your_password',
-        'host'     => getenv('DB_HOST') ?: 'localhost',
-        'driver'   => getenv('DB_CONNECTION') ?: 'pdo_mysql',
+        'dbname'   => $_ENV['DB_DATABASE'] ?? 'your_database',
+        'user'     => $_ENV['DB_USERNAME'] ?? 'your_user',
+        'password' => $_ENV['DB_PASSWORD'] ?? 'your_password',
+        'host'     => $_ENV['DB_HOST'] ?? 'localhost',
+        'driver'   => $_ENV['DB_CONNECTION'] ?? 'pdo_mysql',
         'charset'  => 'utf8mb4',
     ]);
 
