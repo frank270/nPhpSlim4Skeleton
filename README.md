@@ -91,33 +91,96 @@ DB_PASSWORD=your_password
 
 - Docker
 - Docker Compose
+- mkcert (用於生成本地信任的 SSL 憑證)
 - 在本機 hosts 檔案中加入以下設定：
   ```
   127.0.0.1 ndev.local
   127.0.0.1 ndba.local
   ```
 
+### 安裝 mkcert
+
+```bash
+# macOS 使用 Homebrew 安裝
+brew install mkcert
+brew install nss  # 如果使用 Firefox
+
+# 安裝本地 CA
+mkcert -install
+```
+
+### 生成 SSL 憑證
+
+```bash
+# 確保 SSL 目錄存在
+mkdir -p ./docker/ssl
+
+# 生成 ndev.local 的憑證
+mkcert -key-file ./docker/ssl/ndev.local.key -cert-file ./docker/ssl/ndev.local.crt ndev.local "*.ndev.local"
+
+# 生成 ndba.local 的憑證
+mkcert -key-file ./docker/ssl/ndba.local.key -cert-file ./docker/ssl/ndba.local.crt ndba.local "*.ndba.local"
+```
+
+### 設定環境變數
+
+```bash
+# 複製環境變數檔案
+cp .env.example .env
+```
+
+編輯 `.env` 檔案，設定資料庫連線資訊：
+
+```dotenv
+APP_ENV=local
+APP_DEBUG=true
+
+DB_CONNECTION=pdo_mysql
+DB_HOST=mysql
+DB_DATABASE=demo_db
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+
+REDIS_HOST=redis
+REDIS_PORT=6379
+```
+
 ### 啟動 Docker 環境
 
 ```bash
-# 複製 Docker 環境變數檔案
-cp .env.docker .env
-
 # 啟動 Docker 容器
-docker-compose up -d
+docker compose up -d
 ```
 
 ### 存取服務
 
 - 網站：https://ndev.local:8243
-- PHPMyAdmin：https://ndba.local:8243
-- MySQL：localhost:3306
-- Redis：localhost:6379
+- PHPMyAdmin：https://ndba.local:8243 (使用本地下載的 PHPMyAdmin)
+- MySQL：
+  - 主機：mysql
+  - 連接埠：3306
+  - 資料庫：demo_db
+  - 使用者：如 .env 檔案中設定
+- Redis：
+  - 主機：redis
+  - 連接埠：6379
 
-### 停止 Docker 環境
+### 資料庫字元編碼設定
+
+本專案已設定 MySQL 使用 utf8mb4 字元編碼和 utf8mb4_general_ci 排序規則，確保正確處理中文和其他多字節字元。相關設定在：
+
+- `docker-compose.yml` 中的 MySQL 服務環境變數
+- `docker/mysql/conf.d/charset.cnf` 中的 MySQL 配置
+- `docker/mysql/init.sql` 中的資料表定義
+
+### 停止和重置 Docker 環境
 
 ```bash
-docker-compose down
+# 停止容器
+docker compose down
+
+# 停止容器並移除卷存儲 (重置資料庫和 Redis 資料)
+docker compose down -v
 ```
 
 ---

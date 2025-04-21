@@ -40,17 +40,7 @@ services:
       - app
     networks:
       - app_network
-    command: >
-      /bin/sh -c "
-        apk update && 
-        apk add --no-cache openssl && 
-        mkdir -p /etc/nginx/ssl && 
-        openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/ndev.local.key -out /etc/nginx/ssl/ndev.local.crt -subj \"/C=TW/ST=Taiwan/L=Taipei/O=Development/CN=ndev.local\" && 
-        openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/ndba.local.key -out /etc/nginx/ssl/ndba.local.crt -subj \"/C=TW/ST=Taiwan/L=Taipei/O=Development/CN=ndba.local\" && 
-        chmod 644 /etc/nginx/ssl/*.crt && 
-        chmod 600 /etc/nginx/ssl/*.key && 
-        nginx -g 'daemon off;'
-      "
+    command: nginx -g 'daemon off;'
 
   # MySQL 服務
   mysql:
