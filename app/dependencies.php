@@ -32,4 +32,10 @@ return function (App $app) {
     $container->set('flash', function () {
         return new Messages();
     });
+
+    // Database
+    $container->set(\Doctrine\DBAL\Connection::class, function () {
+        return require __DIR__ . '/database.php';
+    });
+    
 };

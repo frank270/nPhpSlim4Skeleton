@@ -18,9 +18,9 @@ class HomeAction extends BaseAction
         ]);
     }
     public function landingPage(Request $request, Response $response, array $args): Response
-{
-    return $this->view->render($response, 'landing.twig', [
-        'title' => 'Coming Soon - 1fBreakfast'
-    ]);
-}
+    {
+        return $this->view->render($response, 'landing.twig', [
+            'title' => 'Coming Soon - 1fBreakfast'
+        ]);
+    }
 }

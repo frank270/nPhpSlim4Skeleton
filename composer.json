@@ -15,13 +15,12 @@
     "slim/twig-view": "^3.3",
     "slim/flash": "^0.4.0",
     "monolog/monolog": "^2.0",
-    "illuminate/database": "^8.0",
-    "illuminate/pagination": "^8.0",
     "filp/whoops": "^2.14",
     "vlucas/phpdotenv": "^5.5",
     "php-console/php-console": "^3.1",
     "twig/twig": "^3.8",
-    "phpoffice/phpspreadsheet": "^1.29"
+    "phpoffice/phpspreadsheet": "^1.29",
+    "doctrine/dbal": "^4.2"
   },
   "autoload": {
     "psr-4": {
@@ -29,4 +28,3 @@
     }
   }
 }
-
