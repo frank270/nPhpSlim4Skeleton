@@ -11,7 +11,7 @@ A lightweight Slim 4 project skeleton with Twig templating, PHP-DI container, El
 - 🛠️ Slim 4 (Minimal and fast)
 - 🎨 Twig 3 Template Engine
 - 📦 PHP-DI (Dependency Injection Container)
-- 🗄️ Illuminate Eloquent ORM (Database ORM)
+- 🗄️ Doctrine DBAL (Database Abstraction Layer)
 - 🔐 Dotenv (.env configuration support)
 - 🛎️ Slim Flash Message (Session flash message)
 - 📝 Monolog (Logging)
@@ -42,7 +42,7 @@ app/
   src/          → PHP Source files (Actions, Controllers)
   templates/    → Twig templates
   settings.php  → Application settings
-  database.php  → Database connection setup (Eloquent)
+  database.php  → Database connection setup (Doctrine DBAL)
   dependencies.php → Container dependencies
   middleware.php → Global middlewares
   routes.php    → Route definitions
@@ -130,6 +130,14 @@ This project is open-sourced under the [MIT license](LICENSE).
 ---
 
 ## 更新新聞
+
+### 2025-04-21
+- 資料庫套件變更：從 Eloquent ORM 改為使用 Doctrine DBAL
+- 環境變數處理方式變更：從 `getenv()` 改為使用 `$_ENV`
+- 資料庫連線驅動變更：在 .env 檔案中將 `DB_CONNECTION` 從 `mysql` 改為 `pdo_mysql`
+- 改進依賴注入方式：在 Action 類別中使用容器獲取服務，而非直接注入
+- 在 BaseAction 中增加 `protected ContainerInterface $container` 屬性
+- 簡化 PostDemoAction 的錯誤處理邏輯
 
 ### 2025-04-07
 - 初始版本發布
