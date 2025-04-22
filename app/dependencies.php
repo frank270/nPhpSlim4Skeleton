@@ -65,5 +65,5 @@ return function (App $app) {
     $container->set(AuthAction::class, function ($c) {
         return new AuthAction($c);
     });
-
+    
 };

@@ -61,7 +61,7 @@ $errorMiddleware = $app->addErrorMiddleware(
 // 自訂 404 錯誤處理器，忽略靜態資源的 404 錯誤
 $errorMiddleware->setErrorHandler(
     \Slim\Exception\HttpNotFoundException::class,
-    function (\Psr\Http\Message\ServerRequestInterface $request, \Throwable $exception, bool $displayErrorDetails) {
+    function (\Psr\Http\Message\ServerRequestInterface $request, \Throwable $exception, bool $displayErrorDetails) use ($errorMiddleware) {
         $uri = $request->getUri()->getPath();
         // 如果是靜態資源請求，不記錄日誌
         if (preg_match('/\.(css|js|html|scss|png|jpe?g|webp|gif|bmp|svg|ico|woff2?|ttf|otf|map)$/i', $uri)) {
