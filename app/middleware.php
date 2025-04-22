@@ -14,11 +14,7 @@ use App\Middleware\PermissionMiddleware;
 return function (App $app) {
     $container = $app->getContainer();
 
-
-
-
-
-    // ✅ 新增 Flash message 中介層（注入 Twig 全域變數）
+    // ✅ 正確注入 Flash 實例給 Twig，不提前清空訊息
     $app->add(function (Request $request, RequestHandler $handler) use ($container): Response {
         error_log('🔔 Flash middleware executed');
 
@@ -28,14 +24,15 @@ return function (App $app) {
         /** @var Messages $flash */
         $flash = $container->get('flash');
 
-        $view->getEnvironment()->addGlobal('flash', $flash->getMessages());
+        // ✅ 正確做法：直接傳遞 flash 物件，而非 getMessages()
+        $view->getEnvironment()->addGlobal('flash', $flash);
 
         return $handler->handle($request);
     });
 
-    // 加入權限檢查中介層（用於後台路由）
+    // ✅ 權限檢查中介層（放在業務邏輯之上）
     $app->add($container->get(PermissionMiddleware::class));
-    
-    // 加入 Twig Middleware（讓 View 可以運作）
+
+    // ✅ Twig middleware 放在最底層
     $app->add(TwigMiddleware::createFromContainer($app, 'view'));
 };

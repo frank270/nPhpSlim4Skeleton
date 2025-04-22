@@ -50,10 +50,12 @@ foreach (glob(__DIR__ . '/../app/Models/*.php') as $file) {
 $app->addRoutingMiddleware();
 
 // 啟用 Slim 官方錯誤中介層，處理 404、500 等例外
+// 從容器中取得設定
+$appSettings = $app->getContainer()->get('settings');
 $app->addErrorMiddleware(
-    $settings['displayErrorDetails'] ?? false,
-    $settings['logError'] ?? false,
-    $settings['logErrorDetails'] ?? false
+    $appSettings['displayErrorDetails'] ?? false,
+    $appSettings['logError'] ?? false,
+    $appSettings['logErrorDetails'] ?? false
 );
 
 // Run app
