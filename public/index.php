@@ -52,10 +52,26 @@ $app->addRoutingMiddleware();
 // 啟用 Slim 官方錯誤中介層，處理 404、500 等例外
 // 從容器中取得設定
 $appSettings = $app->getContainer()->get('settings');
-$app->addErrorMiddleware(
+$errorMiddleware = $app->addErrorMiddleware(
     $appSettings['displayErrorDetails'] ?? false,
     $appSettings['logError'] ?? false,
     $appSettings['logErrorDetails'] ?? false
+);
+
+// 自訂 404 錯誤處理器，忽略靜態資源的 404 錯誤
+$errorMiddleware->setErrorHandler(
+    \Slim\Exception\HttpNotFoundException::class,
+    function (\Psr\Http\Message\ServerRequestInterface $request, \Throwable $exception, bool $displayErrorDetails) {
+        $uri = $request->getUri()->getPath();
+        // 如果是靜態資源請求，不記錄日誌
+        if (preg_match('/\.(css|js|html|scss|png|jpe?g|webp|gif|bmp|svg|ico|woff2?|ttf|otf|map)$/i', $uri)) {
+            return new \Slim\Psr7\Response(404);
+        }
+        
+        // 非靜態資源的 404 錯誤，使用預設的處理方式
+        $handler = $errorMiddleware->getDefaultErrorHandler();
+        return $handler($request, $exception, $displayErrorDetails, false, false);
+    }
 );
 
 // Run app

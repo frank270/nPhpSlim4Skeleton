@@ -33,6 +33,22 @@ return function (App $app) {
     // ✅ 權限檢查中介層（放在業務邏輯之上）
     $app->add($container->get(PermissionMiddleware::class));
 
+    // 加入一個過濾靜態資源 404 日誌的中介層
+    $app->add(function (Request $request, RequestHandler $handler) use ($container) {
+        try {
+            return $handler->handle($request);
+        } catch (\Slim\Exception\HttpNotFoundException $e) {
+            // 只有在靜態資源請求時才忽略 404 錯誤
+            $uri = $request->getUri()->getPath();
+            if (preg_match('/\.(css|js|html|scss|png|jpe?g|webp|gif|bmp|svg|ico|woff2?|ttf|otf|map)$/i', $uri)) {
+                // 靜態資源的 404 錯誤，直接回傳 404 而不記錄
+                return new \Slim\Psr7\Response(404);
+            }
+            // 非靜態資源的 404 錯誤，繼續拋出
+            throw $e;
+        }
+    });
+    
     // ✅ Twig middleware 放在最底層
     $app->add(TwigMiddleware::createFromContainer($app, 'view'));
 };
