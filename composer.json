@@ -21,7 +21,8 @@
     "twig/twig": "^3.8",
     "phpoffice/phpspreadsheet": "^1.29",
     "doctrine/dbal": "^4.2",
-    "php-di/php-di": "^7.0"
+    "php-di/php-di": "^7.0",
+    "guzzlehttp/guzzle": "^7.9"
   },
   "autoload": {
     "psr-4": {

@@ -1,35 +1,97 @@
 {% extends "opanel/layout.twig" %}
 
+{% block title %}優化權限功能名稱{% endblock %}
+
 {% block content %}
-<div class="container-xl mt-4">
-  <h2 class="mb-3">🔧 權限名稱校正工具（GPT 批次轉換）</h2>
-
-  {% for msg in flash.getMessage('info') %}
-    <div class="alert alert-info">{{ msg }}</div>
-  {% endfor %}
-
-  <div class="card mb-4">
-    <div class="card-header">
-      <h3 class="card-title">1️⃣ 原始權限資料（複製貼給 GPT）</h3>
+<div class="page-header d-print-none">
+    <div class="container-xl">
+        <div class="row g-2 align-items-center">
+            <div class="col">
+                <h2 class="page-title">優化權限功能名稱</h2>
+                <div class="text-muted mt-1">使用 GPT 優化系統權限功能的名稱，使其更清晰易懂</div>
+            </div>
+            <div class="col-auto ms-auto">
+                {% if hasApiKey %}
+                <form method="post" action="/opanel/access/refine-names">
+                    <input type="hidden" name="action" value="generate_with_gpt">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="ti ti-wand"></i> 使用 GPT 自動優化
+                    </button>
+                </form>
+                {% else %}
+                <div class="alert alert-warning mb-0 py-2">
+                    <i class="ti ti-alert-circle"></i> 未設定 OpenAI API Key，請在 .env 檔案中設定 OPENAI_API_KEY
+                </div>
+                {% endif %}
+            </div>
+        </div>
     </div>
-    <div class="card-body">
-      <textarea class="form-control" rows="12" readonly>{{ permissions | json_encode(constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_UNICODE')) }}
-</textarea>
-    </div>
-  </div>
+</div>
 
-  <form method="POST">
-    <div class="card mb-4">
-      <div class="card-header">
-        <h3 class="card-title">2️⃣ 貼上 GPT 校正後 JSON（僅修改 name 欄位）</h3>
-      </div>
-      <div class="card-body">
-        <textarea class="form-control" name="json" rows="12" required placeholder='[{"code":"xxx", "name":"中文名稱"}]'></textarea>
-      </div>
-      <div class="card-footer text-end">
-        <button type="submit" class="btn btn-primary">🚀 更新權限名稱</button>
-      </div>
+<div class="page-body">
+    <div class="container-xl">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">權限功能列表</h3>
+            </div>
+            <div class="card-body">
+                {% if permissions|length > 0 %}
+                <div class="table-responsive">
+                    <table class="table table-vcenter card-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>代碼</th>
+                                <th>名稱</th>
+                                <th>控制器</th>
+                                <th>方法</th>
+                                <th>類型</th>
+                                <th>建立時間</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in permissions %}
+                            <tr>
+                                <td>{{ p.id }}</td>
+                                <td>{{ p.code }}</td>
+                                <td>{{ p.name }}</td>
+                                <td>{{ p.controller }}</td>
+                                <td>{{ p.method }}</td>
+                                <td>{{ p.type }}</td>
+                                <td>{{ p.created_at }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="alert alert-info">
+                    <i class="ti ti-info-circle"></i> 目前沒有權限功能資料
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h3 class="card-title">手動更新權限名稱</h3>
+            </div>
+            <div class="card-body">
+                <form method="post" action="/opanel/access/refine-names">
+                    <input type="hidden" name="action" value="update_from_json">
+                    <div class="mb-3">
+                        <label class="form-label">權限資料 (JSON 格式)</label>
+                        <textarea class="form-control" name="json" rows="10">{{ permissionsJson }}</textarea>
+                        <div class="form-text">
+                            修改上方 JSON 中的 "name" 欄位值，然後點擊「更新」按鈕將變更儲存到資料庫。
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="ti ti-device-floppy"></i> 更新
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
-  </form>
 </div>
 {% endblock %}
