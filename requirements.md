@@ -241,3 +241,26 @@ public/
 | 🔄 middleware 提取 session | 可選： 中介層提取 session->user | 讓 controller 不必反覆 $_SESSION[...] |
 
 
+## Slim Action 類別設計原則與依賴注入行為
+
+### 基本架構
+- 所有 Action 均繼承 BaseAction，統一管理 view/logger/conn 等服務注入
+- BaseAction 提供共用功能，各子類實作具體業務邏輯
+
+### 依賴注入規則
+| 情境 | 處理方式 | 說明 |
+|------|---------|------|
+| 無自定 constructor | ✅ 自動解析，不需註冊 | PHP-DI 會自動處理 |
+| constructor 僅使用已註冊服務 | ✅ 自動解析，不需註冊 | 容器會自動注入已知服務 |
+| constructor 含未註冊服務 | ⚠️ 需手動註冊 | 在 dependencies.php 中明確定義 |
+
+### 路由綁定方式
+| 綁定語法 | 觸發方法 | 範例用途 |
+|---------|---------|--------|
+| `SomeAction::class` | 觸發 `__invoke()` | 單一職責的 Action |
+| `[SomeAction::class, 'methodName']` | 呼叫具名方法 | 多功能 Action，如 `stats()` 或 `handleGet()` |
+
+### 技術說明
+- PHP 不限制子類別覆寫 `__invoke()`，與繼承 BaseAction 完全相容
+- Slim 只會呼叫路由中具體指定的方法，不會呼叫父類方法
+- 使用具名方法可增加權限中介層的可見性，便於追蹤與除錯

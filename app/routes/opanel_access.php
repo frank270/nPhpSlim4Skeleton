@@ -5,6 +5,8 @@ use App\Actions\Opanel\AccessRefineAction;
 
 return function (RouteCollectorProxy $group) {
     $group->get('/access-denied[/{requested_url}]', [AccessDeniedAction::class, '__invoke']);
-    $group->map(['GET', 'POST'], '/access/refine-names', [AccessRefineAction::class, '__invoke'])
-          ->setName('access.refine');
+    $group->get('/access/refine-names', [AccessRefineAction::class, 'handleGet'])
+          ->setName('access.refine.get');
+    $group->post('/access/refine-names', [AccessRefineAction::class, 'handlePost'])
+          ->setName('access.refine.post');
 };

@@ -65,9 +65,5 @@ return function (App $app) {
     $container->set(AuthAction::class, function ($c) {
         return new AuthAction($c);
     });
-    
-    // Dashboard Action
-    $container->set(\App\Actions\Opanel\DashBoardAction::class, function ($c) {
-        return new \App\Actions\Opanel\DashBoardAction($c);
-    });
+
 };

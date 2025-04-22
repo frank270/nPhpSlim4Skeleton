@@ -9,16 +9,17 @@ use App\Utils\GptUtils;
 
 class AccessRefineAction extends BaseAction
 {
-    public function __invoke(Request $request, Response $response): Response
+    public function handleGet(Request $request, Response $response): Response
     {
-        if ($request->getMethod() === 'POST') {
-            return $this->handlePost($request, $response);
-        }
-
-        return $this->handleGet($response);
+        return $this->displayRefinePage($response);
     }
-
-    private function handleGet(Response $response): Response
+    
+    public function handlePost(Request $request, Response $response): Response
+    {
+        return $this->processPostRequest($request, $response);
+    }
+    
+    private function displayRefinePage(Response $response): Response
     {
         $permissions = $this->conn->createQueryBuilder()
             ->select('id', 'code', 'name', 'controller', 'method', 'type', 'created_at')
@@ -36,7 +37,7 @@ class AccessRefineAction extends BaseAction
         ]);
     }
 
-    private function handlePost(Request $request, Response $response): Response
+    private function processPostRequest(Request $request, Response $response): Response
     {
         $action = $request->getParsedBody()['action'] ?? '';
         
