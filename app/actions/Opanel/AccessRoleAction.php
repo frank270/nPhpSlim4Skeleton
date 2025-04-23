@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Action\Opanel;
+namespace App\Actions\Opanel;
 
 use App\Actions\BaseAction;
 use Psr\Http\Message\ResponseInterface as Response;

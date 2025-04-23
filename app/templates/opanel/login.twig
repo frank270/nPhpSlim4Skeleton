@@ -16,7 +16,11 @@
         {{ flash.login_error[0] }}
       </div>
     {% endif %}
-
+    {% if flash.logout_success %}
+      <div class="alert alert-success text-center mb-4">
+        {{ flash.logout_success[0] }}
+      </div>
+    {% endif %}
     <form class="card card-md shadow-sm rounded-xl" method="post" action="/opanel/login">
       <div class="card-body">
         <div class="mb-3">

@@ -1,5 +1,13 @@
 {% extends "opanel/layout.twig" %}
+
 {% block content %}
-  <div id="roles-app"></div>
-  <script type="module" src="/js/opanel/accessRoles.bundle.js"></script>
+<div id="roles-app"></div>
+{% endblock %}
+
+{% block scripts %}
+  {{ parent() }}
+  <script type="module" src="/js/opanel/accessRoles.bundle.js?v={{ "now"|date("U") }}"></script>
+  <script>
+    console.log('🧪 Slim script block 確實有執行');
+  </script>
 {% endblock %}

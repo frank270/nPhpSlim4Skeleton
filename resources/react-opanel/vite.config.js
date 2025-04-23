@@ -9,7 +9,7 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       input: {
-        accessRoles: resolve(__dirname, 'src/main.jsx')  // ← 暫時先以這為入口
+        accessRoles: resolve(__dirname, 'src/pages/AccessRoles.jsx')  // ← 暫時先以這為入口
       },
       output: {
         entryFileNames: '[name].bundle.js'

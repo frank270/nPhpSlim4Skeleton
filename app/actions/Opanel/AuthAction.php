@@ -59,5 +59,15 @@ class AuthAction extends BaseAction
         // 導向後台首頁（可替換成 dashboard）
         return $response->withHeader('Location', '/opanel/dashboard')->withStatus(302);
     }
+    public function logout(Request $request, Response $response): Response
+    {
+        unset($_SESSION['opanel_user']);
+        $this->flash->addMessage('logout_success', '已登出');
+        // 添加日誌以便追蹤
+    $this->logger->info('用戶登出', [
+        'flash_messages' => $this->flash->getMessages()
+    ]);
+        return $response->withHeader('Location', '/opanel/login')->withStatus(302);
+    }
 
 }
