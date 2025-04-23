@@ -3,8 +3,11 @@ import ReactDOM from 'react-dom/client';
 import { mockRoles, mockPermissions, mockMatrix } from '../data/mockAccessRoles';
 
 function AccessRolesApp() {
-  const [groupId, setGroupId] = useState(mockRoles[0].id);
+  const [groupId, setGroupId] = useState(null);
+
   const [matrix, setMatrix] = useState(() => ({ ...mockMatrix }));
+  const [loading, setLoading] = useState(false);
+
   
   const handlePermissionChange = async ({ groupId, funcId, enabled }) => {
     try {
@@ -34,7 +37,26 @@ function AccessRolesApp() {
               {mockRoles.map((role) => (
                 <button
                   key={role.id}
-                  onClick={() => setGroupId(role.id)}
+                  onClick={() => {
+                    setGroupId(role.id);
+                    setLoading(true);
+                  
+                    fetch(`/opanel/access/group/${role.id}/matrix`)
+                      .then(res => res.json())
+                      .then(data => {
+                        setMatrix(prev => ({
+                          ...prev,
+                          [role.id]: data.funcIds
+                        }));
+                      })
+                      .catch(err => {
+                        window.Tabler.Toast.show('載入權限失敗', { color: 'red' });
+                      })
+                      .finally(() => {
+                        setLoading(false);
+                      });
+                  }}
+                  
                   className={`btn w-100 mb-2 ${
                     role.id === groupId ? 'btn-primary' : 'btn-outline-primary'
                   }`}
@@ -53,55 +75,51 @@ function AccessRolesApp() {
             <h3 className="card-title">權限清單</h3>
             </div>
             <div className="card-body">
-            <table className="table">
+            {groupId === null ? (
+              <div className="text-muted">請先選擇一個角色</div>
+            ) : loading ? (
+              <div className="text-muted">載入中...</div>
+            ) : (
+              <table className="table">
                 <thead>
-                <tr>
+                  <tr>
                     <th>功能名稱</th>
                     <th className="text-end">是否啟用</th>
-                </tr>
+                  </tr>
                 </thead>
                 <tbody>
-                {mockPermissions.map((perm) => {
+                  {mockPermissions.map((perm) => {
                     const enabled = matrix[groupId]?.includes(perm.id);
                     return (
-                    <tr key={perm.id}>
+                      <tr key={perm.id}>
                         <td>{perm.name}</td>
                         <td className="text-end">
-                        <input
+                          <input
                             type="checkbox"
-                            checked={enabled}
-                            onChange={(e) => {
-                                const checked = e.target.checked;
-                              
-                                // ✅ 模擬送出 payload
-                                console.log('🛰 權限更新準備送出：', {
-                                  groupId,
-                                  funcId: perm.id,
-                                  enabled: checked
-                                });
-                              
-                                // ✅ 本地更新 matrix 狀態
-                                setMatrix((prev) => {
-                                  const current = prev[groupId] || [];
-                                  const updated = checked
-                                    ? [...new Set([...current, perm.id])]
-                                    : current.filter((id) => id !== perm.id);
-                                  return {
-                                    ...prev,
-                                    [groupId]: updated
-                                  };
-                                });
-
-                                handlePermissionChange({ groupId, funcId: perm.id, enabled: checked });
-                              }}
                             className="form-check-input"
-                        />
+                            checked={enabled}
+                            disabled={loading}
+                            onChange={(e) => {
+                              const checked = e.target.checked;
+
+                              setMatrix((prev) => {
+                                const current = prev[groupId] || [];
+                                const updated = checked
+                                  ? [...new Set([...current, perm.id])]
+                                  : current.filter((id) => id !== perm.id);
+                                return { ...prev, [groupId]: updated };
+                              });
+
+                              handlePermissionChange({ groupId, funcId: perm.id, enabled: checked });
+                            }}
+                          />
                         </td>
-                    </tr>
+                      </tr>
                     );
-                })}
+                  })}
                 </tbody>
-            </table>
+              </table>
+            )}
             </div>
           </div>
         </div>
