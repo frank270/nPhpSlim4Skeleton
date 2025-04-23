@@ -22,7 +22,7 @@ class AuthAction extends BaseAction
 
         // 驗證欄位
         if ($username === '' || $password === '') {
-            $this->flash->addMessage('login_error', '請輸入帳號與密碼');
+            $this->flash->addMessage('info', '請輸入帳號與密碼');
             return $response->withHeader('Location', '/opanel/login')->withStatus(302);
         }
 
@@ -38,7 +38,7 @@ class AuthAction extends BaseAction
         //var_dump(password_verify($password, $user['password_hash']));
         if (!$user || !password_verify($password, $user['password_hash'])) {
             error_log('🚫 登入失敗，觸發 flash');
-            $this->flash->addMessage('login_error', '帳號或密碼錯誤');
+            $this->flash->addMessage('danger', '帳號或密碼錯誤');
             return $response->withHeader('Location', '/opanel/login')->withStatus(302);
         }
 
@@ -62,7 +62,7 @@ class AuthAction extends BaseAction
     public function logout(Request $request, Response $response): Response
     {
         unset($_SESSION['opanel_user']);
-        $this->flash->addMessage('logout_success', '已登出');
+        $this->flash->addMessage('success', '已登出');
         // 添加日誌以便追蹤
     $this->logger->info('用戶登出', [
         'flash_messages' => $this->flash->getMessages()
