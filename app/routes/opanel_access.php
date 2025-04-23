@@ -18,4 +18,8 @@ return function (RouteCollectorProxy $group) {
             ->setName('access.update-permission');
       $group->get('/access/group/{groupId}/matrix', [AccessGroupAction::class, 'matrix'])
           ->setName('access.group.matrix');
+      $group->get('/access/roles/list', [AccessRoleAction::class, 'fetchList'])
+            ->setName('access.roles.list');
+      $group->get('/access/group/{groupId}/permissions', [AccessGroupAction::class, 'permissions'])
+      ->setName('access.group.permissions');
 };

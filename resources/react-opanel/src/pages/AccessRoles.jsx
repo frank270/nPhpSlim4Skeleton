@@ -1,27 +1,93 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { mockRoles, mockPermissions, mockMatrix } from '../data/mockAccessRoles';
 
 function AccessRolesApp() {
   const [groupId, setGroupId] = useState(null);
-
   const [matrix, setMatrix] = useState(() => ({ ...mockMatrix }));
   const [loading, setLoading] = useState(false);
+  const [roles, setRoles] = useState([]);
+  const [rolesLoading, setRolesLoading] = useState(true);
+  const [permissions, setPermissions] = useState([]);
 
+  const handleRoleSelect = (roleId) => {
+    setGroupId(roleId);
+    setLoading(true);
+  
+    // Step 1: 抓取權限清單（含勾選狀態）
+    fetch(`/opanel/access/group/${roleId}/permissions`)
+      .then((res) => res.json())
+      .then((data) => {
+        setPermissions(data.permissions || []);
+      })
+      .catch(() => {
+        window.Tabler.Toast.show('載入權限失敗', { color: 'red' });
+        setPermissions([]); // 顯示為空表
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+  
+  
+  useEffect(() => {
+    fetch('/opanel/access/roles/list')
+      .then((res) => res.json())
+      .then((data) => {
+        setRoles(data.roles || []);
+      })
+      .catch(() => {
+        window.Tabler.Toast.show('角色清單載入失敗', { color: 'red' });
+      })
+      .finally(() => {
+        setRolesLoading(false);
+      });
+  }, []);
+  
   
   const handlePermissionChange = async ({ groupId, funcId, enabled }) => {
     try {
-      const response = await fetch('/opanel/access/update-permission', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ groupId, funcId, enabled })
-      });
+        // 確保 groupId 和 funcId 是數字
+        const formData = new URLSearchParams();
+        formData.append('groupId', Number(groupId));
+        formData.append('funcId', Number(funcId));
+        formData.append('enabled', enabled ? '1' : '0');
+        
+        console.log('發送資料:', {
+            groupId: Number(groupId),
+            funcId: Number(funcId),
+            enabled: enabled ? '1' : '0'
+        }); // 除錯訊息
+        
+        const response = await fetch('/opanel/access/update-permission', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: formData
+        });
 
-      if (!response.ok) throw new Error('伺服器錯誤');
+        const result = await response.json(); // 獲取回應內容
+        console.log('伺服器回應:', result); // 除錯訊息
+        
+        if (!result.success) {
+            throw new Error(result.message || '伺服器錯誤');
+        }
 
-      window.Tabler.Toast.show('權限已更新', { color: 'green' });
+        window.showToast('權限已更新', 'success');
     } catch (error) {
-      window.Tabler.Toast.show(`儲存失敗：${error.message}`, { color: 'red' });
+        window.showToast(`更新失敗: ${error.message}`, 'error');
+        
+        // 還原前端狀態（取消樂觀 UI 更新）
+        if (groupId) {
+            // 重新載入權限資料
+            fetch(`/opanel/access/group/${groupId}/permissions`)
+                .then((res) => res.json())
+                .then((data) => {
+                    setPermissions(data.permissions || []);
+                })
+                .catch(() => {
+                    window.showToast('重新載入權限失敗', 'error');
+                });
+        }
     }
   };
   return (
@@ -34,36 +100,23 @@ function AccessRolesApp() {
               <h3 className="card-title">角色清單</h3>
             </div>
             <div className="card-body">
-              {mockRoles.map((role) => (
-                <button
-                  key={role.id}
-                  onClick={() => {
-                    setGroupId(role.id);
-                    setLoading(true);
-                  
-                    fetch(`/opanel/access/group/${role.id}/matrix`)
-                      .then(res => res.json())
-                      .then(data => {
-                        setMatrix(prev => ({
-                          ...prev,
-                          [role.id]: data.funcIds
-                        }));
-                      })
-                      .catch(err => {
-                        window.Tabler.Toast.show('載入權限失敗', { color: 'red' });
-                      })
-                      .finally(() => {
-                        setLoading(false);
-                      });
-                  }}
-                  
-                  className={`btn w-100 mb-2 ${
-                    role.id === groupId ? 'btn-primary' : 'btn-outline-primary'
-                  }`}
-                >
-                  {role.name}
-                </button>
-              ))}
+            {rolesLoading ? (
+                <div className="text-muted">角色清單載入中...</div>
+              ) : roles.length === 0 ? (
+                <div className="text-danger">找不到角色資料</div>
+              ) : (
+                roles.map((role) => (
+                  <button
+                    key={role.id}
+                    onClick={() => handleRoleSelect(role.id)}
+                    className={`btn w-100 mb-2 ${
+                      role.id === groupId ? 'btn-primary' : 'btn-outline-primary'
+                    }`}
+                  >
+                    {role.name}
+                  </button>
+                ))
+              )}
             </div>
           </div>
         </div>
@@ -88,35 +141,36 @@ function AccessRolesApp() {
                   </tr>
                 </thead>
                 <tbody>
-                  {mockPermissions.map((perm) => {
-                    const enabled = matrix[groupId]?.includes(perm.id);
-                    return (
-                      <tr key={perm.id}>
-                        <td>{perm.name}</td>
-                        <td className="text-end">
-                          <input
-                            type="checkbox"
-                            className="form-check-input"
-                            checked={enabled}
-                            disabled={loading}
-                            onChange={(e) => {
-                              const checked = e.target.checked;
+                {permissions.map((perm) => (
+                <tr key={perm.id}>
+                    <td>{perm.name}</td>
+                    <td className="text-end">
+                    <input
+                        type="checkbox"
+                        className="form-check-input"
+                        checked={perm.enabled === 1}
+                        disabled={loading}
+                        onChange={(e) => {
+                        const checked = e.target.checked;
 
-                              setMatrix((prev) => {
-                                const current = prev[groupId] || [];
-                                const updated = checked
-                                  ? [...new Set([...current, perm.id])]
-                                  : current.filter((id) => id !== perm.id);
-                                return { ...prev, [groupId]: updated };
-                              });
+                        // 更新後端
+                        handlePermissionChange({
+                            groupId,
+                            funcId: perm.id,
+                            enabled: checked,
+                        });
 
-                              handlePermissionChange({ groupId, funcId: perm.id, enabled: checked });
-                            }}
-                          />
-                        </td>
-                      </tr>
-                    );
-                  })}
+                        // 更新前端狀態（樂觀 UI）
+                        setPermissions((prev) =>
+                            prev.map((p) =>
+                            p.id === perm.id ? { ...p, enabled: checked ? 1 : 0 } : p
+                            )
+                        );
+                        }}
+                    />
+                    </td>
+                </tr>
+                ))}
                 </tbody>
               </table>
             )}

@@ -13,6 +13,15 @@ class AccessRoleAction extends BaseAction
     {
         return $this->view->render($response, 'opanel/access/roles.twig');
     }
+    public function fetchList(Request $request, Response $response): Response
+    {
+        $roles = $this->conn->fetchAllAssociative(
+            'SELECT id, name FROM permissions_groups ORDER BY id ASC'
+        );
+
+        return $this->respondJson($response, ['roles' => $roles]);
+    }
+
 
     // 之後還可以擴充 list() / save() / toggle() / export() 等 method
 }

@@ -30,9 +30,37 @@ class AccessGroupAction extends BaseAction
         ]);
     }
 
-    protected function respondJson(Response $response, array $data, int $status = 200): Response
+
+    public function permissions(Request $request, Response $response, array $args): Response
     {
-        $response->getBody()->write(json_encode($data));
-        return $response->withHeader('Content-Type', 'application/json')->withStatus($status);
+        $groupId = (int)($args['groupId'] ?? 0);
+
+        if ($groupId <= 0) {
+            return $this->respondJson($response, [
+                'success' => false,
+                'error' => 'Invalid groupId'
+            ], 400);
+        }
+
+        $permissions = $this->conn->fetchAllAssociative(
+            'SELECT
+                f.id,
+                f.name,
+                f.code,
+                f.controller,
+                f.method,
+                f.type,
+                COALESCE(m.enabled, 0) AS enabled
+            FROM permissions_ctrl_func f
+            LEFT JOIN permissions_matrix m
+            ON m.func_id = f.id AND m.group_id = ?
+            ORDER BY f.id ASC',
+            [$groupId]
+        );
+
+        return $this->respondJson($response, [
+            'permissions' => $permissions
+        ]);
     }
+
 }

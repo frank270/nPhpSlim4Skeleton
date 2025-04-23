@@ -138,8 +138,12 @@
         </footer>
       </div>
     </div>
+    <!-- Toast Container：放在 layout.twig 的 </body> 前 -->
+    <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;"></div>
 
-    <script src="/assets/tabler/js/tabler.min.js" defer></script>
     {% block scripts %}{% endblock %}
+    <script src="/js/toast.js"></script>
+    <script src="/assets/tabler/js/tabler.min.js" defer></script>
+    
   </body>
 </html>
