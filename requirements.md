@@ -56,7 +56,17 @@
 - 登出功能
 - Session 管理
 
-#### 2.2 權限管理
+#### 2.2 後台使用者管理
+- **開發重點**：
+  - 完整的後台使用者（admin_users）管理功能，包含列表、新增、編輯、重設密碼、啟用/停用、刪除等操作
+  - 使用 React 18 + Vite 實作前端介面，支援 API 模式與傳統表單提交
+  - 所有操作均自動記錄為標準 JSON 格式日誌，符合 SIEM 規範
+  - 整合 Loki+Grafana 監控，確保日誌保留 90 天
+  - 敏感資料過濾（使用 LogUtil::filterSensitiveData）
+  - 安全性設計：不可刪除當前登入者、密碼強雜湊、所有變更皆有日誌追蹤
+  - UI/UX 設計：採用 Tabler UI 樣式，統一 Toast 通知，操作按鈕均有圖標與提示
+
+#### 2.3 權限管理
 - **開發重點**：
   - 使用 `RouteContext::fromRequest($request)->getRoute()` 安全取得已匹配的 Route。
   - 若無匹配 Route，使用 URI 路徑 `getUri()->getPath()` 與 HTTP 方法 `getMethod()` 組合作為功能識別符，確保所有後台請求均進入檢查。

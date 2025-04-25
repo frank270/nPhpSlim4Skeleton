@@ -82,9 +82,11 @@ services:
     restart: unless-stopped
     volumes:
       - loki_data:/loki
-    command: -config.file=/etc/loki/local-config.yaml
+    environment:
+      - LOKI_LIMITS_RETENTION_PERIOD=2160h
     networks:
       - app_network
+    # 設定日誌保留策略為 90 天 (90 * 24 = 2160 小時)
 
   # Promtail - 日誌收集器
   promtail:

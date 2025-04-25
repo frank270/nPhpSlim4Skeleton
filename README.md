@@ -233,6 +233,14 @@ This project is open-sourced under the [MIT license](LICENSE).
 
 ## 更新新聞
 
+### 2025-04-25
+- 新增後台使用者管理功能，包含列表、新增、編輯、重設密碼、啟用/停用、刪除等操作
+- 使用 React 18 + Vite 實作前端介面，支援 API 模式與傳統表單提交
+- 後台操作日誌自動記錄為標準 JSON 格式，符合 SIEM 規範
+- 整合 Loki+Grafana 日誌監控，確保日誌保留 90 天
+- 後台選單整合，新增使用者管理選項
+- UI/UX 改進：採用 Tabler UI 樣式，統一 Toast 通知，操作按鈕均有 SVG 圖標與提示
+
 ### 2025-04-21
 - 新增 Docker 開發環境支援，包含 PHP 8.3、Nginx、MySQL、PHPMyAdmin 和 Redis
 - 加入本地 SSL 憑證生成功能

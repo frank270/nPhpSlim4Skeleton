@@ -1,0 +1,13 @@
+{% extends "opanel/layout.twig" %}
+
+{% block content %}
+<div id="admin-users-edit-app"></div>
+{% endblock %}
+
+{% block scripts %}
+  {{ parent() }}
+  <script type="module" src="/js/opanel/adminUsersEdit.bundle.js?v={{ "now"|date("U") }}"></script>
+  <script>
+    console.log('🧪 後台編輯使用者模組已載入');
+  </script>
+{% endblock %}
