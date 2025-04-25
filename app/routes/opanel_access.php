@@ -20,6 +20,10 @@ return function (RouteCollectorProxy $group) {
           ->setName('access.group.matrix');
       $group->get('/access/roles/list', [AccessRoleAction::class, 'fetchList'])
             ->setName('access.roles.list');
+      $group->post('/access/roles/create', [AccessRoleAction::class, 'create'])
+            ->setName('access.roles.create');
+      $group->delete('/access/roles/{id}', [AccessRoleAction::class, 'delete'])
+            ->setName('access.roles.delete');
       $group->get('/access/group/{groupId}/permissions', [AccessGroupAction::class, 'permissions'])
       ->setName('access.group.permissions');
 };

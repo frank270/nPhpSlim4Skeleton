@@ -137,33 +137,39 @@ app/
     opanel/             → 後台模板目錄
   database.php  → 資料庫連線設定 (Doctrine DBAL)
   dependencies.php → 容器依賴設定
-  middleware.php → 全域中介件
-  routes.php    → 路由定義入口點
-  settings.php  → 應用程式設定
 
-cache/
-  twig/         → Twig 模板快取
+cache/                  → 快取目錄
 
-docs/
-  sql/          → SQL 資料庫結構檔案
+docs/                   → 文件目錄
+  sql/                  → SQL 資料庫結構檔案
     auth_table.sql      → 權限管理相關資料表
     post.sql            → 文章資料表
 
-docker/         → Docker 相關配置
-  mysql/        → MySQL 配置
-  nginx/        → Nginx 配置
-  php/          → PHP 配置
-  phpmyadmin/    → PHPMyAdmin 配置
-  ssl/          → SSL 憑證
+docker/                 → Docker 相關配置
+  mysql/                → MySQL 配置
+    conf.d/             → MySQL 自定義配置
+    init.sql            → 初始化資料庫腳本
+  nginx/                → Nginx 配置
+  php/                  → PHP 配置
+  phpmyadmin/           → PHPMyAdmin 配置
+  ssl/                  → SSL 憑證
 
-log/
-  app.log       → 應用程式日誌
+log/                    → 應用程式日誌目錄
 
-public/
-  index.php     → 應用程式入口點
-  assets/        → 前端資源檔案
-    tabler/      → Tabler UI 套件
-  .htaccess     → Apache 重寫規則
+public/                 → 公開訪問目錄
+  index.php             → 應用程式入口點
+  assets/               → 前端資源檔案
+    tabler/             → Tabler UI 套件
+  js/                   → JavaScript 檔案
+    toast.js            → Toast 通知系統
+  .htaccess             → Apache 重寫規則
+
+resources/              → 前端資源原始檔
+  react-opanel/         → React 後台應用
+    src/                → React 原始碼
+      pages/            → React 頁面元件
+
+vendor/                 → Composer 依賴
 ```
 
 ### 2. 設計模式
