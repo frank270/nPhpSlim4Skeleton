@@ -27,37 +27,16 @@ class UserAction extends BaseAction
     }
     
     /**
-     * 獲取使用者列表資料（API）
+     * 使用者列表API
      */
-    public function fetchList(Request $request, Response $response): Response
+    public function list(Request $request, Response $response): Response
     {
-        $params = $request->getQueryParams();
-        $groupId = isset($params['group_id']) && $params['group_id'] !== '' ? (int)$params['group_id'] : null;
-        $keyword = $params['keyword'] ?? '';
+        $groupId = isset($request->getQueryParams()['group_id']) && $request->getQueryParams()['group_id'] !== '' ? (int)$request->getQueryParams()['group_id'] : null;
+        $keyword = $request->getQueryParams()['keyword'] ?? null;
         
-        // 建立基本查詢
-        $sql = 'SELECT u.id, u.username, u.display_name, u.last_login_at, u.status, 
-                       g.name as group_name, g.id as group_id
-                FROM admin_users u
-                LEFT JOIN permissions_groups g ON u.group_id = g.id
-                WHERE 1=1';
-        $params = [];
-        
-        // 加入過濾條件
-        if ($groupId !== null) {
-            $sql .= ' AND u.group_id = ?';
-            $params[] = $groupId;
-        }
-        
-        if ($keyword !== '') {
-            $sql .= ' AND (u.username LIKE ? OR u.display_name LIKE ?)';
-            $params[] = "%$keyword%";
-            $params[] = "%$keyword%";
-        }
-        
-        $sql .= ' ORDER BY u.id ASC';
-        
-        $users = $this->conn->fetchAllAssociative($sql, $params);
+        // 使用 AdminUsersModel 獲取使用者列表
+        $adminUsersModel = $this->container->get(\App\Models\AdminUsersModel::class);
+        $users = $adminUsersModel->search($groupId, $keyword);
         
         return $this->respondJson($response, ['users' => $users]);
     }
@@ -138,18 +117,17 @@ class UserAction extends BaseAction
         }
         
         // 建立新使用者
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+        $adminUsersModel = $this->container->get(\App\Models\AdminUsersModel::class);
         
-        $this->conn->insert('admin_users', [
+        $userData = [
             'username' => $username,
-            'password_hash' => $passwordHash,
+            'password' => password_hash($password, PASSWORD_DEFAULT),
             'display_name' => $displayName,
             'group_id' => $groupId,
-            'status' => 1, // 預設啟用
-            'created_at' => date('Y-m-d H:i:s')
-        ]);
+            'status' => 1
+        ];
         
-        $userId = (int)$this->conn->lastInsertId();
+        $userId = $adminUsersModel->create($userData);
         
         // 記錄操作日誌
         LogUtil::logOperation(
@@ -241,11 +219,9 @@ class UserAction extends BaseAction
         $groupId = isset($params['group_id']) && $params['group_id'] !== '' ? (int)$params['group_id'] : null;
         $status = isset($params['status']) ? (int)$params['status'] : 1;
         
-        // 獲取原始使用者資料
-        $oldUser = $this->conn->fetchAssociative(
-            'SELECT username, display_name, group_id, status FROM admin_users WHERE id = ?',
-            [$userId]
-        );
+        // 使用 AdminUsersModel 獲取使用者資料
+        $adminUsersModel = $this->container->get(\App\Models\AdminUsersModel::class);
+        $oldUser = $adminUsersModel->findById($userId);
         
         if (!$oldUser) {
             if ($isApiRequest) {
@@ -259,13 +235,14 @@ class UserAction extends BaseAction
             }
         }
         
-        // 更新使用者資料
-        $this->conn->update('admin_users', [
+        // 使用 AdminUsersModel 更新使用者資料
+        $userData = [
             'display_name' => $displayName,
             'group_id' => $groupId,
-            'status' => $status,
-            'updated_at' => date('Y-m-d H:i:s')
-        ], ['id' => $userId]);
+            'status' => $status
+        ];
+        
+        $success = $adminUsersModel->update($userId, $userData);
         
         // 記錄操作日誌
         LogUtil::logOperation(
@@ -302,23 +279,17 @@ class UserAction extends BaseAction
             return $this->respondJson($response, ['success' => false, 'message' => '密碼不能為空'], 400);
         }
         
-        // 獲取使用者資料
-        $user = $this->conn->fetchAssociative(
-            'SELECT username FROM admin_users WHERE id = ?',
-            [$userId]
-        );
+        // 使用 AdminUsersModel 獲取使用者資料
+        $adminUsersModel = $this->container->get(\App\Models\AdminUsersModel::class);
+        $user = $adminUsersModel->findById($userId);
         
         if (!$user) {
             return $this->respondJson($response, ['success' => false, 'message' => '使用者不存在'], 404);
         }
         
-        // 更新密碼
+        // 使用 AdminUsersModel 更新密碼
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-        
-        $this->conn->update('admin_users', [
-            'password_hash' => $passwordHash,
-            'updated_at' => date('Y-m-d H:i:s')
-        ], ['id' => $userId]);
+        $success = $adminUsersModel->updatePassword($userId, $passwordHash);
         
         // 記錄操作日誌
         LogUtil::logOperation(
@@ -341,11 +312,9 @@ class UserAction extends BaseAction
     {
         $userId = (int)$args['id'];
         
-        // 獲取使用者資料
-        $user = $this->conn->fetchAssociative(
-            'SELECT username, status FROM admin_users WHERE id = ?',
-            [$userId]
-        );
+        // 使用 AdminUsersModel 獲取使用者資料
+        $adminUsersModel = $this->container->get(\App\Models\AdminUsersModel::class);
+        $user = $adminUsersModel->findById($userId);
         
         if (!$user) {
             return $this->respondJson($response, ['success' => false, 'message' => '使用者不存在'], 404);
@@ -355,10 +324,8 @@ class UserAction extends BaseAction
         $newStatus = $user['status'] == 1 ? 0 : 1;
         $statusText = $newStatus == 1 ? '啟用' : '停用';
         
-        $this->conn->update('admin_users', [
-            'status' => $newStatus,
-            'updated_at' => date('Y-m-d H:i:s')
-        ], ['id' => $userId]);
+        // 使用 AdminUsersModel 更新狀態
+        $success = $adminUsersModel->updateStatus($userId, $newStatus);
         
         // 記錄操作日誌
         LogUtil::logOperation(
@@ -379,17 +346,15 @@ class UserAction extends BaseAction
     }
     
     /**
-     * 刪除使用者
+     * 刪除使用者（輸删除）
      */
     public function delete(Request $request, Response $response, array $args): Response
     {
         $userId = (int)$args['id'];
         
-        // 獲取使用者資料
-        $user = $this->conn->fetchAssociative(
-            'SELECT username FROM admin_users WHERE id = ?',
-            [$userId]
-        );
+        // 使用 AdminUsersModel 獲取使用者資料
+        $adminUsersModel = $this->container->get(\App\Models\AdminUsersModel::class);
+        $user = $adminUsersModel->findById($userId);
         
         if (!$user) {
             return $this->respondJson($response, ['success' => false, 'message' => '使用者不存在'], 404);
@@ -400,8 +365,8 @@ class UserAction extends BaseAction
             return $this->respondJson($response, ['success' => false, 'message' => '無法刪除當前登入的使用者'], 400);
         }
         
-        // 刪除使用者
-        $this->conn->delete('admin_users', ['id' => $userId]);
+        // 輸刪除使用者（設定 deleted_at 欄位）
+        $success = $adminUsersModel->softDelete($userId);
         
         // 記錄操作日誌
         LogUtil::logOperation(

@@ -5,7 +5,7 @@ use App\Actions\Opanel\UserAction;
 return function (RouteCollectorProxy $group) {
     // 使用者列表
     $group->get('/users', [UserAction::class, 'index']);
-    $group->get('/users/list', [UserAction::class, 'fetchList']);
+    $group->get('/users/list', [UserAction::class, 'list']);
     
     // 新增使用者
     $group->get('/users/create', [UserAction::class, 'showCreateForm']);
