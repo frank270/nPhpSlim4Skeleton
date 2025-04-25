@@ -74,6 +74,49 @@ services:
       - app_network
     volumes:
       - redis_data:/data
+      
+  # Loki - 日誌儲存和查詢引擎
+  loki:
+    image: grafana/loki:latest
+    container_name: slim_loki
+    restart: unless-stopped
+    volumes:
+      - loki_data:/loki
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - app_network
+
+  # Promtail - 日誌收集器
+  promtail:
+    image: grafana/promtail:latest
+    container_name: slim_promtail
+    restart: unless-stopped
+    volumes:
+      - ./logs:/var/log/1f:ro  # 唯讀方式掛載日誌目錄
+      - ./docker/promtail-config.yml:/etc/promtail/config.yml:ro  # 配置檔
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - app_network
+    depends_on:
+      - loki
+
+  # Grafana - 視覺化工具
+  grafana:
+    image: grafana/grafana:latest
+    container_name: slim_grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"  # Grafana Web 介面
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=1fBreakfast2025
+      - GF_USERS_ALLOW_SIGN_UP=false
+    networks:
+      - app_network
+    depends_on:
+      - loki
 
 networks:
   app_network:
@@ -83,4 +126,8 @@ volumes:
   mysql_data:
     driver: local
   redis_data:
+    driver: local
+  loki_data:
+    driver: local
+  grafana_data:
     driver: local
