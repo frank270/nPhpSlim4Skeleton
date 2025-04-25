@@ -10,6 +10,7 @@ use Slim\Flash\Messages;
 use App\Actions\Opanel\AuthAction;
 use App\Utils\PermissionChecker;
 use App\Middleware\PermissionMiddleware;
+use App\Middleware\AdminLogMiddleware;
 use Slim\Psr7\Factory\ResponseFactory;
 
 return function (App $app) {
@@ -59,6 +60,11 @@ return function (App $app) {
             $c->get('flash'),
             $c->get(ResponseFactory::class)
         );
+    });
+    
+    // Admin Log Middleware
+    $container->set(AdminLogMiddleware::class, function (ContainerInterface $c) {
+        return new AdminLogMiddleware($c);
     });
     
     // Actions

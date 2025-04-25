@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
+use App\Middleware\AdminLogMiddleware;
+
 return function (App $app) {
     foreach (glob(__DIR__ . '/Routes/*.php') as $routeFile) {
         require $routeFile;
@@ -13,7 +15,7 @@ return function (App $app) {
         (require __DIR__ . '/Routes/opanel_dashboard.php')($group);
         (require __DIR__ . '/Routes/opanel_access.php')($group);
         // 其他 ...
-    });
+    })->add($app->getContainer()->get(AdminLogMiddleware::class)); // 為整個路由群組添加日誌中間件
 };
 // return function (App $app) {
 //     /*

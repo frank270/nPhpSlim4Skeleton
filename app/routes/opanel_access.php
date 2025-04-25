@@ -7,6 +7,7 @@ use App\Actions\Opanel\AccessUpdatePermissionAction;
 use App\Actions\Opanel\AccessGroupAction;
 
 return function (RouteCollectorProxy $group) {
+
       $group->get('/access-denied[/{requested_url}]', [AccessDeniedAction::class, '__invoke']);
       $group->get('/access/refine-names', [AccessRefineAction::class, 'handleGet'])
             ->setName('access.refine.get');

@@ -10,6 +10,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Psr\Http\Message\ResponseInterface as Response;
 use App\Middleware\PermissionMiddleware;
+use App\Middleware\AdminLogMiddleware;
 
 return function (App $app) {
     $container = $app->getContainer();
@@ -32,6 +33,8 @@ return function (App $app) {
 
     // ✅ 權限檢查中介層（放在業務邏輯之上）
     $app->add($container->get(PermissionMiddleware::class));
+    
+    // 注意：後台日誌中間件已在 routes.php 中註冊，這裡不需要重複註冊
 
     // 加入一個過濾靜態資源 404 日誌的中介層
     $app->add(function (Request $request, RequestHandler $handler) use ($container) {

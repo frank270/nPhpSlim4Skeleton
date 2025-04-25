@@ -20,6 +20,7 @@ class AccessRoleAction extends BaseAction
             'SELECT id, name FROM permissions_groups ORDER BY id ASC'
         );
 
+        //$this->logAction('list', 'roles', null, null, '取得角色列表');
         return $this->respondJson($response, ['roles' => $roles]);
     }
     

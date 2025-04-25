@@ -10,6 +10,7 @@ use Slim\Views\Twig;
 use Monolog\Logger;
 use Slim\Flash\Messages;
 use Doctrine\DBAL\Connection;
+use App\Utils\LogUtil;
 
 
 class BaseAction
@@ -33,5 +34,45 @@ class BaseAction
         return $response
             ->withHeader('Content-Type', 'application/json')
             ->withStatus($status);
+    }
+    
+    /**
+     * 記錄操作日誌
+     *
+     * @param string $action 操作類型
+     * @param string|null $target 操作目標
+     * @param array|null $oldData 修改前的資料
+     * @param array|null $newData 修改後的資料
+     * @param string|null $memo 備註說明
+     * @return void
+     */
+    protected function logAction(string $action, ?string $target = null, ?array $oldData = null, ?array $newData = null, ?string $memo = null): void
+    {
+        // 檢查是否為後台操作
+        // 從當前路徑判斷是否為後台操作
+        $path = $_SERVER['REQUEST_URI'] ?? '';
+        
+        // 檢查是否應該記錄
+        $isBackend = LogUtil::isBackendOperation($path);
+        if (($isBackend && LogUtil::shouldLogBackend()) || 
+            (!$isBackend && LogUtil::shouldLogFrontend())) {
+            
+            // 獲取當前使用者資訊
+            $session = isset($_SESSION) ? $_SESSION : [];
+            $currentUser = $session['user'] ?? null;
+            $userId = $currentUser['id'] ?? 0;
+            $username = $currentUser['username'] ?? 'system';
+            
+            // 記錄操作
+            LogUtil::logOperation(
+                $userId,
+                $username,
+                $action,
+                $target,
+                $oldData,
+                $newData,
+                $memo
+            );
+        }
     }
 }
