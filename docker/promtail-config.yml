@@ -18,17 +18,39 @@ scrape_configs:
           app: web
           __path__: /var/log/nginx/nginx_*.log
     pipeline_stages:
-      - regex:
-          expression: '^(?P<remote_addr>[^ ]*) - (?P<remote_user>[^ ]*) \[(?P<time_local>[^\]]*)"] "(?P<request>[^"]*)" (?P<status>[^ ]*) (?P<body_bytes_sent>[^ ]*) "(?P<http_referer>[^"]*)" "(?P<http_user_agent>[^"]*)'      
+      - json:
+          expressions:
+            remote_addr: remote_addr
+            remote_user: remote_user
+            time_local: time_local
+            request_method: request_method
+            request: request
+            status: status
+            body_bytes_sent: body_bytes_sent
+            request_time: request_time
+            http_referer: http_referrer
+            http_user_agent: http_user_agent
+            http_x_forwarded_for: http_x_forwarded_for
+            request_id: request_id
+            uri: uri
+            request_uri: request_uri
+            query_string: query_string
       - labels:
           remote_addr:
           remote_user:
           time_local:
+          request_method:
           request:
           status:
           body_bytes_sent:
+          request_time:
           http_referer:
           http_user_agent:
+          http_x_forwarded_for:
+          request_id:
+          uri:
+          request_uri:
+          query_string:
 
   - job_name: 1f_admin_logs
     static_configs:
