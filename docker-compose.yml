@@ -33,7 +33,7 @@ services:
       - ./:/var/www
       - ./docker/nginx/app.conf:/etc/nginx/conf.d/app.conf
       - ./docker/nginx/phpmyadmin.conf:/etc/nginx/conf.d/phpmyadmin.conf
-      - ./docker/nginx/logs:/var/log/nginx
+      - ./logs:/var/log/nginx
       - ./docker/ssl:/etc/nginx/ssl
     depends_on:
       - app
@@ -95,6 +95,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./logs:/var/log/1f:ro  # 唯讀方式掛載日誌目錄
+      - ./logs:/var/log/nginx:ro  # 唯讀方式掛載 Nginx 日誌目錄
       - ./docker/promtail-config.yml:/etc/promtail/config.yml:ro  # 配置檔
     command: -config.file=/etc/promtail/config.yml
     networks:

@@ -58,16 +58,8 @@
           </div>
           
           <!-- 小螢幕頂部小圖示 -->
-          <div class="navbar-nav flex-row d-lg-none">
-            <div class="nav-item dropdown">
-              <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                <span class="avatar avatar-sm" style="background-image: url(/assets/img/avatar.png)"></span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <a class="dropdown-item" href="#">設定</a>
-                <a class="dropdown-item" href="/opanel/logout">登出</a>
-              </div>
-            </div>
+          <div class="d-lg-none">
+            <!-- 移除重複的使用者選單 -->
           </div>
           
           <!-- 主要側邊欄選單 -->
@@ -150,20 +142,27 @@
         <!-- Navbar -->
         <header class="navbar navbar-expand-md d-print-none">
           <div class="container-xl">
-            <div class="navbar-brand d-md-none">
-              <a href="#">EnnovicX</a>
-            </div>
-            <div class="navbar-nav flex-row order-md-last">
-              <div class="nav-item dropdown">
-                <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown">
-                  <span class="avatar avatar-sm" style="background-image: url(/assets/img/avatar.png)"></span>
-                  <div class="d-none d-xl-block ps-2">
-                    <div>{{ current_user.display_name|default('Admin') }}</div>
+            <div class="d-flex flex-fill align-items-center">
+              <div class="navbar-brand d-md-none">
+                <a href="/opanel/dashboard">EnnovicX</a>
+              </div>
+              <div class="ms-auto">
+                <div class="navbar-nav flex-row">
+                  <div class="nav-item dropdown">
+                    <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="開啟使用者選單">
+                      <span class="avatar avatar-sm" style="background-image: url(/assets/img/avatar.png)"></span>
+                      <div class="d-none d-xl-block ps-2">
+                        <div>{{ current_user.display_name|default('Admin') }}</div>
+                        <div class="mt-1 small text-secondary">{{ current_user.group_name|default('管理員') }}</div>
+                      </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                      <a class="dropdown-item" href="/opanel/profile">個人資料管理</a>
+                      <a class="dropdown-item" href="/opanel/profile/change-password">變更密碼</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="/opanel/logout">登出</a>
+                    </div>
                   </div>
-                </a>
-                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <a class="dropdown-item" href="#">設定</a>
-                  <a class="dropdown-item" href="/opanel/logout">登出</a>
                 </div>
               </div>
             </div>

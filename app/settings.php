@@ -15,7 +15,7 @@ return [
                 'logErrorDetails'     => true,
                 'logger' => [
                     'name' => 'slim-app',
-                    'path' => __DIR__ . '/../logs/app.log',
+                    'path' => __DIR__ . '/../logss/app.log',
                     'level' => \Monolog\Logger::DEBUG,
                 ],
                 'twig' => [

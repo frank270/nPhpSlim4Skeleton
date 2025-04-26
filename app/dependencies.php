@@ -28,7 +28,7 @@ return function (App $app) {
     // Monolog Logger
     $container->set('logger', function () {
         $logger = new Logger('slim-app');
-        $logFile = __DIR__ . '/../log/app.log';
+        $logFile = __DIR__ . '/../logs/app.log';
         $logger->pushHandler(new StreamHandler($logFile, Logger::DEBUG));
         return $logger;
     });
