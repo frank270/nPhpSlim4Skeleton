@@ -39,23 +39,82 @@ composer install
 
 ```
 app/
-  src/          → PHP Source files (Actions, Controllers)
-  templates/    → Twig templates
-  settings.php  → Application settings
-  database.php  → Database connection setup (Doctrine DBAL)
-  dependencies.php → Container dependencies
-  middleware.php → Global middlewares
-  routes.php    → Route definitions
+  Actions/      → 控制器類別，處理 HTTP 請求
+    BaseAction.php      → 基礎控制器類別
+    HomeAction.php      → 首頁控制器
+    PostDemoAction.php  → 文章示範控制器
+    Opanel/             → 後台管理相關控制器
+  Middleware/    → 中介層類別
+    AdminLogMiddleware.php → 後台操作日誌中介層
+    PermissionMiddleware.php → 權限檢查中介層
+  Models/        → 資料模型類別
+    AdminUsersModel.php → 後台使用者模型
+    PostModel.php       → 文章模型
+  Routes/        → 路由定義檔案
+    home.php            → 首頁路由
+    opanel_access.php   → 後台權限管理路由
+    opanel_auth.php     → 後台認證路由
+    opanel_dashboard.php → 後台儀表板路由
+    opanel_users.php    → 後台使用者管理路由
+    posts.php           → 文章路由
+  Templates/     → Twig 模板檔案
+    hello.twig          → 歡迎頁模板
+    landing.twig        → 首頁模板
+    posts.twig          → 文章列表模板
+    opanel/             → 後台模板目錄
+  Utils/         → 工具類別
+    CustomJsonFormatter.php → JSON 格式化工具
+    GptUtils.php        → GPT 相關工具
+    LogUtil.php         → 日誌工具
+    PermissionChecker.php → 權限檢查工具
+  database.php   → 資料庫連線設定 (Doctrine DBAL)
+  dependencies.php → 容器依賴設定
+  middleware.php → 全域中介層設定
+  routes.php     → 路由聚合
+  settings.php   → 應用程式設定
 
 cache/
-  twig/         → Twig cache
+  twig/         → Twig 模板快取
 
-log/
-  app.log       → Application logs
+docker/
+  mysql/        → MySQL 相關配置
+    conf.d/     → MySQL 自定義配置
+    init.sql    → 初始化資料庫腳本
+  nginx/        → Nginx 相關配置
+    app.conf    → 應用程式 Nginx 配置
+    phpmyadmin.conf → PHPMyAdmin Nginx 配置
+    logs/       → Nginx 日誌目錄
+  php/          → PHP 相關配置
+    php.ini     → PHP 自定義配置
+  phpmyadmin/   → PHPMyAdmin 安裝目錄
+  ssl/          → SSL 憑證目錄
+  promtail-config.yml → Promtail 日誌收集配置
+
+docs/
+  sql/          → SQL 資料庫結構檔案
+    add_deleted_at_to_admin_users.sql → 使用者軟刪除欄位
+    add_status_to_admin_users.sql     → 使用者狀態欄位
+    auth_table.sql                    → 權限管理相關資料表
+
+logs/            → 應用程式日誌目錄
+  access.log     → 訪問日誌
+  admin_operation-*.log → 後台操作日誌 (依日期分割)
+  app.log        → 應用程式日誌
+  error.log      → 錯誤日誌
+  nginx_*.log    → Nginx 相關日誌
+  php-error.log  → PHP 錯誤日誌
 
 public/
-  index.php     → Entry point
-  .htaccess     → Apache rewrite rules
+  index.php     → 應用程式入口點
+  assets/       → 前端靜態資源
+  js/           → JavaScript 檔案
+  tabler-dev/   → Tabler UI 套件
+
+resources/       → 前端資源原始檔
+  react-opanel/ → React 後台應用
+  tabler/       → Tabler UI 原始檔
+
+vendor/         → Composer 依賴套件
 ```
 
 ---

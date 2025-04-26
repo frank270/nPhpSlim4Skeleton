@@ -133,53 +133,77 @@ app/
     HomeAction.php      → 首頁控制器
     PostDemoAction.php  → 文章示範控制器
     Opanel/             → 後台管理相關控制器
+  Middleware/    → 中介層類別
+    AdminLogMiddleware.php → 後台操作日誌中介層
+    PermissionMiddleware.php → 權限檢查中介層
   Models/       → 資料模型類別
+    AdminUsersModel.php → 後台使用者模型
     PostModel.php       → 文章模型
   Routes/       → 路由定義檔案
     home.php            → 首頁路由
-    posts.php           → 文章路由
+    opanel_access.php   → 後台權限管理路由
     opanel_auth.php     → 後台認證路由
     opanel_dashboard.php → 後台儀表板路由
+    opanel_users.php    → 後台使用者管理路由
+    posts.php           → 文章路由
   Templates/    → Twig 模板檔案
     hello.twig          → 歡迎頁模板
     landing.twig        → 首頁模板
     posts.twig          → 文章列表模板
     opanel/             → 後台模板目錄
+  Utils/         → 工具類別
+    CustomJsonFormatter.php → JSON 格式化工具
+    GptUtils.php        → GPT 相關工具
+    LogUtil.php         → 日誌工具
+    PermissionChecker.php → 權限檢查工具
   database.php  → 資料庫連線設定 (Doctrine DBAL)
   dependencies.php → 容器依賴設定
+  middleware.php → 全域中介層設定
+  routes.php    → 路由聚合
+  settings.php  → 應用程式設定
 
-cache/                  → 快取目錄
+cache/
+  twig/         → Twig 模板快取
 
-docs/                   → 文件目錄
-  sql/                  → SQL 資料庫結構檔案
+docs/           → 文件目錄
+  sql/          → SQL 資料庫結構檔案
+    add_deleted_at_to_admin_users.sql → 使用者軟刪除欄位
+    add_status_to_admin_users.sql     → 使用者狀態欄位
     auth_table.sql      → 權限管理相關資料表
-    post.sql            → 文章資料表
 
-docker/                 → Docker 相關配置
-  mysql/                → MySQL 配置
-    conf.d/             → MySQL 自定義配置
-    init.sql            → 初始化資料庫腳本
-  nginx/                → Nginx 配置
-  php/                  → PHP 配置
-  phpmyadmin/           → PHPMyAdmin 配置
-  ssl/                  → SSL 憑證
+docker/         → Docker 相關配置
+  mysql/        → MySQL 配置
+    conf.d/     → MySQL 自定義配置
+    init.sql    → 初始化資料庫腳本
+  nginx/        → Nginx 配置
+    app.conf    → 應用程式 Nginx 配置
+    phpmyadmin.conf → PHPMyAdmin Nginx 配置
+    logs/       → Nginx 日誌目錄
+  php/          → PHP 配置
+    php.ini     → PHP 自定義配置
+  phpmyadmin/   → PHPMyAdmin 安裝目錄
+  ssl/          → SSL 憑證目錄
+  promtail-config.yml → Promtail 日誌收集配置
 
-log/                    → 應用程式日誌目錄
+logs/          → 應用程式日誌目錄
+  access.log    → 訪問日誌
+  admin_operation-*.log → 後台操作日誌 (依日期分割)
+  app.log       → 應用程式日誌
+  error.log     → 錯誤日誌
+  nginx_*.log   → Nginx 相關日誌
+  php-error.log → PHP 錯誤日誌
 
-public/                 → 公開訪問目錄
-  index.php             → 應用程式入口點
-  assets/               → 前端資源檔案
-    tabler/             → Tabler UI 套件
-  js/                   → JavaScript 檔案
-    toast.js            → Toast 通知系統
-  .htaccess             → Apache 重寫規則
+public/         → 公開訪問目錄
+  index.php     → 應用程式入口點
+  assets/       → 前端靜態資源
+  js/           → JavaScript 檔案
+  tabler-dev/   → Tabler UI 套件
 
-resources/              → 前端資源原始檔
-  react-opanel/         → React 後台應用
-    src/                → React 原始碼
-      pages/            → React 頁面元件
+resources/      → 前端資源原始檔
+  react-opanel/ → React 後台應用
+  tabler/       → Tabler UI 原始檔
 
-vendor/                 → Composer 依賴
+vendor/         → Composer 依賴套件
 ```
 
 ### 2. 設計模式
@@ -259,6 +283,17 @@ vendor/                 → Composer 依賴
 
 
 ## 重大技術變動記錄
+
+### 2025-04-26
+- 新增權限管理中建立及刪除角色功能
+- 重構後台使用者管理，支援軟刪除與模型抽象化
+- 修正日誌路徑及更新 Nginx 和 PHPMyAdmin 日誌配置，新增 Promtail 日誌收集設定
+
+### 2025-04-25
+- 新增後台使用者管理功能：列表、新增、編輯、重設密碼、啟用/停用、刪除等操作
+- 使用 React 18 + Vite 實作前端介面，支援 API 模式與傳統表單提交
+- 後台操作日誌自動記錄為標準 JSON 格式，整合 Loki+Grafana 監控，日誌保留 90 天
+- 後台選單整合，新增使用者管理選項，UI/UX 採用 Tabler UI 樣式並統一 Toast 通知
 
 ### 2025-04-24
 
