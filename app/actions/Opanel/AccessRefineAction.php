@@ -111,12 +111,24 @@ class AccessRefineAction extends BaseAction
                     ->withStatus(302);
             }
             
-            // 從資料庫取得所有權限
-            $permissions = $this->conn->createQueryBuilder()
-                ->select('id', 'code', 'name', 'controller', 'method')
-                ->from('permissions_ctrl_func')
-                ->orderBy('id', 'ASC')
-                ->fetchAllAssociative();
+            // 獲取選擇的權限ID
+            $permissionIds = $_POST['permission_ids'] ?? [];
+            
+            // 如果沒有選擇任何權限，顯示提示訊息
+            if (empty($permissionIds)) {
+                $this->flash->addMessage('warning', '請至少選擇一個權限項目');
+                return $response
+                    ->withHeader('Location', '/opanel/access/refine-names')
+                    ->withStatus(302);
+            }
+            
+            $this->logger->info('選擇的權限 ID', ['ids' => $permissionIds]);
+            
+            // 從資料庫取得選擇的權限
+            $placeholders = implode(',', array_fill(0, count($permissionIds), '?'));
+            $sql = "SELECT id, code, name, controller, method FROM permissions_ctrl_func 
+                    WHERE id IN ($placeholders) ORDER BY id ASC";
+            $permissions = $this->conn->fetchAllAssociative($sql, $permissionIds);
             
             if (empty($permissions)) {
                 $this->flash->addMessage('warning', '沒有找到需要優化的權限名稱');
@@ -124,6 +136,8 @@ class AccessRefineAction extends BaseAction
                     ->withHeader('Location', '/opanel/access/refine-names')
                     ->withStatus(302);
             }
+            
+            $this->logger->info('準備優化的權限數量', ['count' => count($permissions)]);
             
             // 呼叫GPT API
             $optimizedNames = $this->callGptApi($permissions);
@@ -174,7 +188,12 @@ class AccessRefineAction extends BaseAction
         
         // 準備GPT API請求內容
         $prompt = "請優化以下PHP權限功能的名稱，使其更清晰易懂，但保持簡潔。每個名稱應該清楚表達該功能的用途。\n\n";
-        $prompt .= "請注意：必須使用正體中文為功能命名，不要使用英文或拼音。\n\n";
+        $prompt .= "請注意：\n";
+        $prompt .= "1. 必須使用正體中文為功能命名，不要使用英文或拼音\n";
+        $prompt .= "2. 名稱應簡潔，不超過10個字\n";
+        $prompt .= "3. 避免重複使用「功能」、「管理」等詞彙\n";
+        $prompt .= "4. 避免與其他權限功能名稱過於雷同\n\n";
+        
         $prompt .= "原始權限列表：\n";
         
         foreach ($permissions as $p) {

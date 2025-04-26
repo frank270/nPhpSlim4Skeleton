@@ -12,10 +12,10 @@
             </div>
             <div class="col-auto ms-auto">
                 {% if hasApiKey %}
-                <form method="post" action="/opanel/access/refine-names">
+                <form method="post" action="/opanel/access/refine-names" id="gptForm">
                     <input type="hidden" name="action" value="generate_with_gpt">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="ti ti-wand"></i> 使用 GPT 自動優化
+                    <button type="button" id="selectGptBtn" class="btn btn-primary">
+                        <i class="ti ti-wand"></i> 使用 GPT 優化已選項目
                     </button>
                 </form>
                 {% else %}
@@ -33,13 +33,24 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">權限功能列表</h3>
+                <div class="ms-auto">
+                    <button type="button" id="selectAllBtn" class="btn btn-sm btn-outline-primary">
+                        <i class="ti ti-check"></i> 全選
+                    </button>
+                    <button type="button" id="deselectAllBtn" class="btn btn-sm btn-outline-secondary ms-2">
+                        <i class="ti ti-x"></i> 取消全選
+                    </button>
+                </div>
             </div>
             <div class="card-body">
                 {% if permissions|length > 0 %}
                 <div class="table-responsive">
-                    <table class="table table-vcenter card-table">
+                    <table class="table table-vcenter card-table" id="permissionsTable">
                         <thead>
                             <tr>
+                                <th style="width: 40px;">
+                                    <input type="checkbox" class="form-check-input" id="selectAll">
+                                </th>
                                 <th>ID</th>
                                 <th>代碼</th>
                                 <th>名稱</th>
@@ -52,6 +63,9 @@
                         <tbody>
                             {% for p in permissions %}
                             <tr>
+                                <td>
+                                    <input type="checkbox" class="form-check-input permission-select" name="selected_permissions[]" value="{{ p.id }}">
+                                </td>
                                 <td>{{ p.id }}</td>
                                 <td>{{ p.code }}</td>
                                 <td>{{ p.name }}</td>
@@ -94,4 +108,74 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 全選/取消全選功能
+    const selectAll = document.getElementById('selectAll');
+    const checkboxes = document.querySelectorAll('.permission-select');
+    const selectAllBtn = document.getElementById('selectAllBtn');
+    const deselectAllBtn = document.getElementById('deselectAllBtn');
+    const gptForm = document.getElementById('gptForm');
+    const selectGptBtn = document.getElementById('selectGptBtn');
+    
+    // 處理表頭的全選勾選框
+    selectAll.addEventListener('change', function() {
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = this.checked;
+        });
+    });
+    
+    // 處理全選按鈕
+    selectAllBtn.addEventListener('click', function() {
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = true;
+        });
+        selectAll.checked = true;
+    });
+    
+    // 處理取消全選按鈕
+    deselectAllBtn.addEventListener('click', function() {
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = false;
+        });
+        selectAll.checked = false;
+    });
+    
+    // 當個別勾選框狀態改變時，檢查是否全部已勾選
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const allChecked = [...checkboxes].every(c => c.checked);
+            selectAll.checked = allChecked;
+        });
+    });
+    
+    // 處理使用 GPT 優化按鈕
+    selectGptBtn.addEventListener('click', function() {
+        const selectedIds = [];
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                selectedIds.push(checkbox.value);
+            }
+        });
+        
+        if (selectedIds.length === 0) {
+            alert('請至少選擇一個權限項目');
+            return;
+        }
+        
+        // 將選中的 ID 添加到表單
+        selectedIds.forEach(id => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'permission_ids[]';
+            input.value = id;
+            gptForm.appendChild(input);
+        });
+        
+        // 提交表單
+        gptForm.submit();
+    });
+});
+</script>
 {% endblock %}
