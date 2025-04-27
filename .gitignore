@@ -3,6 +3,7 @@ node_modules
 logs
 log
 .env
+.env.docker.prod
 .ssh
 .vscode
 **phpmyadmin
@@ -15,3 +16,5 @@ log
 **.DS_Store
 **cache/*
 **/tabler-dev/*
+**/.cursor/*
+**mcp.json
