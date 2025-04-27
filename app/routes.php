@@ -15,21 +15,7 @@ return function (App $app) {
         (require __DIR__ . '/Routes/opanel_dashboard.php')($group);
         (require __DIR__ . '/Routes/opanel_access.php')($group);
         (require __DIR__ . '/Routes/opanel_users.php')($group);
+        (require __DIR__ . '/Routes/opanel_cms.php')($group); // 添加 CMS 路由
         // 其他 ...
     })->add($app->getContainer()->get(AdminLogMiddleware::class)); // 為整個路由群組添加日誌中間件
 };
-// return function (App $app) {
-//     /*
-//     $app->group('/member', function ($group) {
-//         $ctrl = MemberAction::class;
-//         $group->get('/profile', "{$ctrl}:profile");
-//         $group->get('/profile/edit', "{$ctrl}:profileEdit");
-//         $group->get('/fbLogin', "{$ctrl}:fbLogin");
-//         $group->get('/login', "{$ctrl}:login");
-//         $group->post('/fbProc', "{$ctrl}:fbProc");
-//         $group->get('/fbProc', "{$ctrl}:fbProc");
-//         $group->post('/fbLogin/revoke', "{$ctrl}:revokeFacebookLogin");
-//         $group->get('/logout', "{$ctrl}:logout");
-//     });
-//     */
-// };

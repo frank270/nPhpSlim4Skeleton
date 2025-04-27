@@ -1,27 +1,21 @@
 <?php
 namespace App\Actions\Opanel;
 
+use App\Actions\BaseAction;
 use App\Models\CmsCategoryModel;
 use App\Utils\LogUtil;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Views\Twig;
-use Doctrine\DBAL\Connection;
-use Slim\Flash\Messages;
+use Psr\Container\ContainerInterface;
 
-class CmsCategoryAction
+class CmsCategoryAction extends BaseAction
 {
-    private Twig $twig;
-    private Connection $db;
-    private Messages $flash;
     private CmsCategoryModel $categoryModel;
 
-    public function __construct(Twig $twig, Connection $db, Messages $flash)
+    public function __construct(ContainerInterface $container)
     {
-        $this->twig = $twig;
-        $this->db = $db;
-        $this->flash = $flash;
-        $this->categoryModel = new CmsCategoryModel($db);
+        parent::__construct($container);
+        $this->categoryModel = new CmsCategoryModel($this->conn);
     }
 
     /**
@@ -29,9 +23,9 @@ class CmsCategoryAction
      */
     public function index(Request $request, Response $response): Response
     {
-        return $this->twig->render($response, 'opanel/cms/categories/index.twig', [
+        return $this->view->render($response, 'opanel/cms/categories/index.twig', [
             'title' => 'CMS 分類管理',
-            'apiUrl' => '/api/opanel/cms/categories'
+            'apiUrl' => '/opanel/cms/categories/list'
         ]);
     }
 
@@ -42,12 +36,12 @@ class CmsCategoryAction
     {
         try {
             $categories = $this->categoryModel->getAllWithHierarchy();
-            return $response->withJson([
+            return $this->respondJson($response, [
                 'success' => true,
                 'data' => $categories
             ]);
         } catch (\Exception $e) {
-            return $response->withJson([
+            return $this->respondJson($response, [
                 'success' => false,
                 'message' => $e->getMessage()
             ], 500);
@@ -65,18 +59,18 @@ class CmsCategoryAction
             $category = $this->categoryModel->findById($id);
             
             if (!$category) {
-                return $response->withJson([
+                return $this->respondJson($response, [
                     'success' => false,
                     'message' => '找不到指定的分類'
                 ], 404);
             }
             
-            return $response->withJson([
+            return $this->respondJson($response, [
                 'success' => true,
                 'data' => $category
             ]);
         } catch (\Exception $e) {
-            return $response->withJson([
+            return $this->respondJson($response, [
                 'success' => false,
                 'message' => $e->getMessage()
             ], 500);
@@ -92,7 +86,7 @@ class CmsCategoryAction
         
         // 驗證數據
         if (empty($data['name']) || empty($data['slug'])) {
-            return $response->withJson([
+            return $this->respondJson($response, [
                 'success' => false,
                 'message' => '名稱和標識不能為空',
                 'errors' => [
@@ -105,7 +99,7 @@ class CmsCategoryAction
         // 檢查標識是否唯一
         $existingCategory = $this->categoryModel->findBySlug($data['slug']);
         if ($existingCategory) {
-            return $response->withJson([
+            return $this->respondJson($response, [
                 'success' => false,
                 'message' => '此標識已被使用',
                 'errors' => [
@@ -131,19 +125,19 @@ class CmsCategoryAction
             $newCategory = $this->categoryModel->findById($id);
             
             // 記錄操作日誌
-            LogUtil::adminLog('CMS 新增分類', [
+            $this->logAction('CMS 新增分類', '分類', null, [
                 'id' => $id,
                 'name' => $data['name'],
                 'slug' => $data['slug']
             ]);
             
-            return $response->withJson([
+            return $this->respondJson($response, [
                 'success' => true,
                 'message' => '分類已成功建立',
                 'data' => $newCategory
             ]);
         } catch (\Exception $e) {
-            return $response->withJson([
+            return $this->respondJson($response, [
                 'success' => false,
                 'message' => '建立分類時發生錯誤：' . $e->getMessage()
             ], 500);
@@ -160,7 +154,7 @@ class CmsCategoryAction
         
         // 驗證數據
         if (empty($data['name']) || empty($data['slug'])) {
-            return $response->withJson([
+            return $this->respondJson($response, [
                 'success' => false,
                 'message' => '名稱和標識不能為空',
                 'errors' => [
@@ -172,7 +166,7 @@ class CmsCategoryAction
         
         $category = $this->categoryModel->findById($id);
         if (!$category) {
-            return $response->withJson([
+            return $this->respondJson($response, [
                 'success' => false,
                 'message' => '找不到指定的分類'
             ], 404);
@@ -181,7 +175,7 @@ class CmsCategoryAction
         // 檢查標識是否唯一 (排除當前記錄)
         $existingCategory = $this->categoryModel->findBySlug($data['slug']);
         if ($existingCategory && $existingCategory['id'] != $id) {
-            return $response->withJson([
+            return $this->respondJson($response, [
                 'success' => false,
                 'message' => '此標識已被使用',
                 'errors' => [
@@ -192,7 +186,7 @@ class CmsCategoryAction
         
         // 防止將自己設為父分類
         if (!empty($data['parent_id']) && (int)$data['parent_id'] === $id) {
-            return $response->withJson([
+            return $this->respondJson($response, [
                 'success' => false,
                 'message' => '無法將分類設為自己的父分類',
                 'errors' => [
@@ -208,7 +202,7 @@ class CmsCategoryAction
             
             while ($currentParent && $currentParent['parent_id']) {
                 if ((int)$currentParent['parent_id'] === $id) {
-                    return $response->withJson([
+                    return $this->respondJson($response, [
                         'success' => false,
                         'message' => '這會導致分類循環引用',
                         'errors' => [
@@ -234,26 +228,33 @@ class CmsCategoryAction
                 'sort_order' => $data['sort_order'] ?? $category['sort_order']
             ]);
             
-            $updatedCategory = $this->categoryModel->findById($id);
-            
             // 記錄操作日誌
-            LogUtil::adminLog('CMS 更新分類', [
-                'id' => $id,
+            $this->logAction('CMS 更新分類', '分類', $id, [
                 'name' => $data['name'],
                 'slug' => $data['slug']
             ]);
             
-            return $response->withJson([
+            return $this->respondJson($response, [
                 'success' => true,
-                'message' => '分類已成功更新',
-                'data' => $updatedCategory
+                'message' => '分類已成功更新'
             ]);
         } catch (\Exception $e) {
-            return $response->withJson([
+            return $this->respondJson($response, [
                 'success' => false,
                 'message' => '更新分類時發生錯誤：' . $e->getMessage()
             ], 500);
         }
+        
+        // 記錄操作日誌
+        $this->logAction('CMS 更新分類', '分類', $id, [
+            'name' => $data['name'],
+            'slug' => $data['slug']
+        ]);
+        
+        return $response->withJson([
+            'success' => true,
+            'message' => '分類已成功更新'
+        ]);
     }
 
     /**
@@ -264,63 +265,20 @@ class CmsCategoryAction
         $id = (int)$args['id'];
         
         try {
-            $category = $this->categoryModel->findById($id);
-            
-            if (!$category) {
-                return $response->withJson([
-                    'success' => false,
-                    'message' => '找不到指定的分類'
-                ], 404);
-            }
-            
-            // 檢查是否有子分類
-            $childrenCount = $this->db->createQueryBuilder()
-                ->select('COUNT(id)')
-                ->from('cms_categories')
-                ->where('parent_id = :parent_id')
-                ->setParameter('parent_id', $id)
-                ->executeQuery()
-                ->fetchOne();
-                
-            if ($childrenCount > 0) {
-                return $response->withJson([
-                    'success' => false,
-                    'message' => '無法刪除此分類，因為它有 ' . $childrenCount . ' 個子分類'
-                ], 400);
-            }
-            
-            // 檢查是否有內容使用此分類
-            $contentCount = $this->db->createQueryBuilder()
-                ->select('COUNT(cc.content_id)')
-                ->from('cms_content_categories', 'cc')
-                ->where('cc.category_id = :category_id')
-                ->setParameter('category_id', $id)
-                ->executeQuery()
-                ->fetchOne();
-                
-            if ($contentCount > 0) {
-                return $response->withJson([
-                    'success' => false,
-                    'message' => '無法刪除此分類，因為有 ' . $contentCount . ' 個內容正在使用它'
-                ], 400);
-            }
-            
-            // 刪除分類
             $this->categoryModel->delete($id);
             
             // 記錄操作日誌
-            LogUtil::adminLog('CMS 刪除分類', [
-                'id' => $id,
-                'name' => $category['name'],
-                'slug' => $category['slug']
+            $this->logAction('CMS 刪除分類', '分類', $id, [
+                'name' => $request->getParsedBody()['name'],
+                'slug' => $request->getParsedBody()['slug']
             ]);
             
-            return $response->withJson([
+            return $this->respondJson($response, [
                 'success' => true,
                 'message' => '分類已成功刪除'
             ]);
         } catch (\Exception $e) {
-            return $response->withJson([
+            return $this->respondJson($response, [
                 'success' => false,
                 'message' => '刪除分類時發生錯誤：' . $e->getMessage()
             ], 500);
@@ -339,7 +297,7 @@ class CmsCategoryAction
             $category = $this->categoryModel->findById($id);
             
             if (!$category) {
-                return $response->withJson([
+                return $this->respondJson($response, [
                     'success' => false,
                     'message' => '找不到指定的分類'
                 ], 404);
@@ -357,7 +315,7 @@ class CmsCategoryAction
                 'is_active' => $isActive
             ]);
             
-            return $response->withJson([
+            return $this->respondJson($response, [
                 'success' => true,
                 'message' => '分類狀態已更新',
                 'data' => [
@@ -366,7 +324,7 @@ class CmsCategoryAction
                 ]
             ]);
         } catch (\Exception $e) {
-            return $response->withJson([
+            return $this->respondJson($response, [
                 'success' => false,
                 'message' => '更新分類狀態時發生錯誤：' . $e->getMessage()
             ], 500);
@@ -381,7 +339,7 @@ class CmsCategoryAction
         $data = $request->getParsedBody();
         
         if (empty($data['categories']) || !is_array($data['categories'])) {
-            return $response->withJson([
+            return $this->respondJson($response, [
                 'success' => false,
                 'message' => '未提供有效的分類排序數據'
             ], 400);
@@ -405,14 +363,14 @@ class CmsCategoryAction
                 'count' => count($data['categories'])
             ]);
             
-            return $response->withJson([
+            return $this->respondJson($response, [
                 'success' => true,
                 'message' => '分類排序已更新'
             ]);
         } catch (\Exception $e) {
-            $this->db->rollBack();
+            $this->conn->rollBack();
             
-            return $response->withJson([
+            return $this->respondJson($response, [
                 'success' => false,
                 'message' => '更新分類排序時發生錯誤：' . $e->getMessage()
             ], 500);

@@ -12,7 +12,8 @@ export default defineConfig({
         accessRoles: resolve(__dirname, 'src/pages/AccessRoles.jsx'),
         adminUsers: resolve(__dirname, 'src/pages/AdminUsers.jsx'),
         adminUsersCreate: resolve(__dirname, 'src/pages/AdminUsersCreate.jsx'),
-        adminUsersEdit: resolve(__dirname, 'src/pages/AdminUsersEdit.jsx')
+        adminUsersEdit: resolve(__dirname, 'src/pages/AdminUsersEdit.jsx'),
+    cmsCategories: resolve(__dirname, 'src/pages/cms/CmsCategories.jsx')
       },
       output: {
         entryFileNames: '[name].bundle.js'
