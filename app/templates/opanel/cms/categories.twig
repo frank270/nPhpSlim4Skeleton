@@ -1,0 +1,13 @@
+{% extends "opanel/layout.twig" %}
+
+{% block content %}
+<div id="cms-categories-app"></div>
+{% endblock %}
+
+{% block scripts %}
+  {{ parent() }}
+  <script type="module" src="/js/opanel/cmsCategories.bundle.js?v={{ "now"|date("U") }}"></script>
+  <script>
+    console.log('🧪 CMS分類管理模組已載入');
+  </script>
+{% endblock %}
