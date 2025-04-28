@@ -1,5 +1,23 @@
 # Slim 4 專案需求文件
 
+**版本：1.3.0**
+**最後更新：2025-04-28**
+
+## 專案重點摘要
+
+✨ **核心技術梳理**
+1. 基於 **Slim 4 + Twig 3 + PHP-DI + Doctrine DBAL** 的輕量級架構
+2. 後台使用 **React 18 + Vite** 實作前端介面，支援 API 模式
+3. 全面的 **CMS 內容管理系統**，支援多種內容類型、分類和標籤
+4. **Docker 開發環境**，包含 PHP 8.3、Nginx、MySQL、Redis
+5. 動態的 **權限管理系統**，支援自動註冊新功能和群組權限控制
+
+🔥 **開發規範重點**
+1. Action 類別均繼承 BaseAction，使用容器獲取相依服務
+2. API 回應使用標準格式：`{success: true, data: ...}` 或 `{success: false, message: ...}`
+3. 後台 API 路由命名規則：`/opanel/{module}/{resource}/{action}`
+4. 後台操作日誌自動記錄為標準 JSON 格式
+
 ## 專案概述
 
 這是一個基於 Slim 4 框架的 PHP 專案，旨在提供一個輕量級但功能完整的網站框架，包含前台展示和後台管理系統。專案使用 Twig 模板引擎、PHP-DI 依賴注入容器、Doctrine DBAL 資料庫抽象層和 Dotenv 環境變數管理。
@@ -87,8 +105,11 @@
 - 系統概覽
 - 使用者資訊顯示
 
-#### 2.4 內容管理
-- 文章管理 (CRUD 操作)
+#### 2.4 內容管理系統 (CMS)
+- 內容類型管理：支援不同類型的內容（如文章、區塊等）
+- 分類管理：支援分類的新增、編輯、刪除和排序
+- 內容管理：支援內容的 CRUD 操作，包含標題、內文、摘要、SEO 資訊等
+- 標籤管理：支援標籤的搜尋、新增和與內容關聯
 
 ## 資料模型
 
@@ -123,93 +144,83 @@
 - 內容
 - 建立時間
 
+#### 2.2 CMS 內容管理相關資料表
+
+##### 2.2.1 內容類型表 (cms_content_types)
+- id：主鍵
+- name：類型名稱
+- slug：類型標識
+- description：類型描述
+- created_at：建立時間
+- updated_at：更新時間
+
+##### 2.2.2 內容表 (cms_contents)
+- id：主鍵
+- content_type_id：內容類型 ID
+- title：標題
+- slug：標識
+- content：內容
+- summary：摘要
+- featured_image：特色圖片
+- meta_title：SEO 標題
+- meta_description：SEO 描述
+- status：狀態
+- sort_order：排序
+- author_id：作者 ID
+- created_at：建立時間
+- updated_at：更新時間
+
+##### 2.2.3 分類表 (cms_categories)
+- id：主鍵
+- parent_id：父分類 ID
+- name：分類名稱
+- slug：分類標識
+- description：分類描述
+- sort_order：排序
+- created_at：建立時間
+- updated_at：更新時間
+
+##### 2.2.4 標籤表 (cms_tags)
+- id：主鍵
+- name：標籤名稱
+- slug：標籤標識
+- created_at：建立時間
+- updated_at：更新時間
+
+##### 2.2.5 內容與分類關聯表 (cms_content_category)
+- content_id：內容 ID
+- category_id：分類 ID
+
 ## 系統架構
 
-### 1. 目錄結構
+### 1. 主要目錄結構
 ```
 app/
   Actions/      → 控制器類別，處理 HTTP 請求
-    BaseAction.php      → 基礎控制器類別
-    HomeAction.php      → 首頁控制器
-    PostDemoAction.php  → 文章示範控制器
-    Opanel/             → 後台管理相關控制器
   Middleware/    → 中介層類別
-    AdminLogMiddleware.php → 後台操作日誌中介層
-    PermissionMiddleware.php → 權限檢查中介層
   Models/       → 資料模型類別
-    AdminUsersModel.php → 後台使用者模型
-    PostModel.php       → 文章模型
   Routes/       → 路由定義檔案
-    home.php            → 首頁路由
-    opanel_access.php   → 後台權限管理路由
-    opanel_auth.php     → 後台認證路由
-    opanel_dashboard.php → 後台儀表板路由
-    opanel_users.php    → 後台使用者管理路由
-    posts.php           → 文章路由
   Templates/    → Twig 模板檔案
-    hello.twig          → 歡迎頁模板
-    landing.twig        → 首頁模板
-    posts.twig          → 文章列表模板
-    opanel/             → 後台模板目錄
   Utils/         → 工具類別
-    CustomJsonFormatter.php → JSON 格式化工具
-    GptUtils.php        → GPT 相關工具
-    LogUtil.php         → 日誌工具
-    PermissionChecker.php → 權限檢查工具
-  database.php  → 資料庫連線設定 (Doctrine DBAL)
-  dependencies.php → 容器依賴設定
-  middleware.php → 全域中介層設定
-  routes.php    → 路由聚合
-  settings.php  → 應用程式設定
-
-cache/
-  twig/         → Twig 模板快取
-
-docs/           → 文件目錄
-  sql/          → SQL 資料庫結構檔案
-    add_deleted_at_to_admin_users.sql → 使用者軟刪除欄位
-    add_status_to_admin_users.sql     → 使用者狀態欄位
-    auth_table.sql      → 權限管理相關資料表
 
 docker/         → Docker 相關配置
-  mysql/        → MySQL 配置
-    conf.d/     → MySQL 自定義配置
-    init.sql    → 初始化資料庫腳本
+  mysql/        → MySQL 配置和初始化腳本
   nginx/        → Nginx 配置
-    app.conf    → 應用程式 Nginx 配置
-    phpmyadmin.conf → PHPMyAdmin Nginx 配置
-    logs/       → Nginx 日誌目錄
   php/          → PHP 配置
-    php.ini     → PHP 自定義配置
-  phpmyadmin/   → PHPMyAdmin 安裝目錄
   ssl/          → SSL 憑證目錄
-  promtail-config.yml → Promtail 日誌收集配置
-
-logs/          → 應用程式日誌目錄
-  access.log    → 訪問日誌
-  admin_operation-*.log → 後台操作日誌 (依日期分割)
-  app.log       → 應用程式日誌
-  error.log     → 錯誤日誌
-  nginx_*.log   → Nginx 相關日誌
-  php-error.log → PHP 錯誤日誌
 
 public/         → 公開訪問目錄
   index.php     → 應用程式入口點
-  assets/       → 前端靜態資源
-  js/           → JavaScript 檔案
-  tabler-dev/   → Tabler UI 套件
 
 resources/      → 前端資源原始檔
   react-opanel/ → React 後台應用
-  tabler/       → Tabler UI 原始檔
-
-vendor/         → Composer 依賴套件
 ```
 
-### 2. 設計模式
-- MVC 架構
-- 依賴注入模式
-- 資源庫模式 (Repository Pattern)
+### 2. 設計模式與架構特點
+- **MVC 架構**：Action 作為控制器，Model 處理資料，Twig 負責視圖
+- **依賴注入**：使用 PHP-DI 容器自動解析和注入依賴
+- **路由組織**：依功能模組分割路由檔案，方便維護
+- **容器注入**：Action 類別透過容器取得相依服務，降低耦合度
 
 ## 非功能需求
 
@@ -346,26 +357,82 @@ vendor/         → Composer 依賴套件
   window.showToast('提示資訊', 'info');
   ```
 
-## Slim Action 類別設計原則與依賴注入行為
+## 開發規範與標準
 
-### 基本架構
+### 1. Action 類別設計規範
+
+#### 🔥 核心原則
 - 所有 Action 均繼承 BaseAction，統一管理 view/logger/conn 等服務注入
-- BaseAction 提供共用功能，各子類實作具體業務邏輯
+- BaseAction 已包含 ContainerInterface $container 屬性，可用於取得其他服務
+- 方法命名規範：
+  - 前台頁面：`index()`、`show()`、`create()`、`edit()`
+  - API：`apiGetAll()`、`apiGetOne()`、`apiCreate()`、`apiUpdate()`、`apiDelete()`
 
-### 依賴注入規則
-| 情境 | 處理方式 | 說明 |
-|------|---------|------|
-| 無自定 constructor | ✅ 自動解析，不需註冊 | PHP-DI 會自動處理 |
-| constructor 僅使用已註冊服務 | ✅ 自動解析，不需註冊 | 容器會自動注入已知服務 |
-| constructor 含未註冊服務 | ⚠️ 需手動註冊 | 在 dependencies.php 中明確定義 |
-
-### 路由綁定方式
+#### 路由綁定方式
 | 綁定語法 | 觸發方法 | 範例用途 |
 |---------|---------|--------|
 | `SomeAction::class` | 觸發 `__invoke()` | 單一職責的 Action |
-| `[SomeAction::class, 'methodName']` | 呼叫具名方法 | 多功能 Action，如 `stats()` 或 `handleGet()` |
+| `[SomeAction::class, 'methodName']` | 呼叫具名方法 | 多功能 Action，如 `index()` 或 `apiGetAll()` |
 
-### 技術說明
-- PHP 不限制子類別覆寫 `__invoke()`，與繼承 BaseAction 完全相容
-- Slim 只會呼叫路由中具體指定的方法，不會呼叫父類方法
-- 使用具名方法可增加權限中介層的可見性，便於追蹤與除錯
+#### API 回應格式規範
+使用 BaseAction 中的 `respondJson()` 方法返回標準格式的 JSON 回應：
+```php
+// 成功回應
+ return $this->respondJson($response, [
+    'success' => true,
+    'data' => $data
+]);
+
+// 失敗回應
+ return $this->respondJson($response, [
+    'success' => false,
+    'message' => $errorMessage,
+    'errors' => $validationErrors // 可選
+], $statusCode);
+```
+
+### 2. 前端開發規範
+
+#### React 元件開發
+- 使用 React 18 + Vite 實作後台管理介面
+- 元件檔案存放於 `resources/react-opanel/src/pages/` 目錄下
+- 檔案命名規則：使用 PascalCase，如 `CmsCategories.jsx`
+- API 網址直接在 React 元件中定義，而非透過 data 屬性傳遞
+
+#### 後台 API 路由規範
+- 後台頁面路由：`/opanel/{module}/{resource}`
+- 後台 API 路由：`/opanel/{module}/{resource}/{action}`
+- 單一資源操作：`/opanel/{module}/{resource}/{id}/{action}`
+- HTTP 方法：GET（查詢）、POST（建立）、PUT/PATCH（更新）、DELETE（刪除）
+
+## 常見問題解答 (FAQ)
+
+### 1. 開發環境相關
+
+#### Q: 如何快速設置開發環境？
+A: 使用 Docker：`docker compose up -d`。確保已安裝 mkcert 並生成 SSL 憑證。
+
+#### Q: 為何需要使用 mkcert？
+A: 為了生成本地信任的 SSL 憑證，避免瀏覽器顯示安全警告。
+
+#### Q: 資料庫中文顯示亂碼如何解決？
+A: 確保使用 utf8mb4 編碼和 utf8mb4_general_ci 排序規則，相關設定在 docker/mysql/conf.d/charset.cnf 中。
+
+### 2. 後台開發相關
+
+#### Q: 如何建立新的後台功能？
+A: 建立繼承 BaseAction 的控制器類別，在 routes 中註冊路由，權限系統會自動註冊新功能。
+
+#### Q: 如何建立新的 CMS 內容類型？
+A: 在 cms_content_types 資料表中新增記錄，然後使用 CmsContentTypeModel 的方法進行管理。
+
+#### Q: 如何處理後台操作日誌？
+A: 使用 AdminLogMiddleware 自動記錄後台操作，或使用 LogUtil 手動記錄。所有日誌以 JSON 格式存儲。
+
+### 3. 前端開發相關
+
+#### Q: 如何新增 React 元件到後台？
+A: 在 resources/react-opanel/src/pages/ 中新增 JSX 檔案，然後在 vite.config.js 中註冊入口點。
+
+#### Q: 如何處理前端與後端的資料交換？
+A: 使用 fetch API 進行請求，回應格式為標準 JSON：`{success: true, data: ...}` 或 `{success: false, message: ...}`。
