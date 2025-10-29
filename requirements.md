@@ -435,4 +435,4 @@ A: 使用 AdminLogMiddleware 自動記錄後台操作，或使用 LogUtil 手動
 A: 在 resources/react-opanel/src/pages/ 中新增 JSX 檔案，然後在 vite.config.js 中註冊入口點。
 
 #### Q: 如何處理前端與後端的資料交換？
-A: 使用 fetch API 進行請求，回應格式為標準 JSON：`{success: true, data: ...}` 或 `{success: false, message: ...}`。
+A: 使用 fetch API 進行請求，回應格式為標準 JSON：`{success: true, data: ...}` 或 `{success: false, message: ...}`。???

@@ -244,17 +244,6 @@ class CmsCategoryAction extends BaseAction
                 'message' => '更新分類時發生錯誤：' . $e->getMessage()
             ], 500);
         }
-        
-        // 記錄操作日誌
-        $this->logAction('CMS 更新分類', '分類', $id, [
-            'name' => $data['name'],
-            'slug' => $data['slug']
-        ]);
-        
-        return $response->withJson([
-            'success' => true,
-            'message' => '分類已成功更新'
-        ]);
     }
 
     /**
@@ -346,7 +335,7 @@ class CmsCategoryAction extends BaseAction
         }
         
         try {
-            $this->db->beginTransaction();
+            $this->conn->beginTransaction();
             
             foreach ($data['categories'] as $item) {
                 if (isset($item['id'], $item['sort_order'])) {
@@ -356,7 +345,7 @@ class CmsCategoryAction extends BaseAction
                 }
             }
             
-            $this->db->commit();
+            $this->conn->commit();
             
             // 記錄操作日誌
             LogUtil::adminLog('CMS 更新分類排序', [

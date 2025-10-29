@@ -346,7 +346,7 @@ class UserAction extends BaseAction
     }
     
     /**
-     * 刪除使用者（輸删除）
+     * 刪除使用者（軟刪除）
      */
     public function delete(Request $request, Response $response, array $args): Response
     {
@@ -365,7 +365,7 @@ class UserAction extends BaseAction
             return $this->respondJson($response, ['success' => false, 'message' => '無法刪除當前登入的使用者'], 400);
         }
         
-        // 輸刪除使用者（設定 deleted_at 欄位）
+        // 軟刪除使用者（設定 deleted_at 欄位）
         $success = $adminUsersModel->softDelete($userId);
         
         // 記錄操作日誌
