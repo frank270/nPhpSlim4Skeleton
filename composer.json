@@ -22,7 +22,8 @@
     "phpoffice/phpspreadsheet": "^1.29",
     "doctrine/dbal": "^4.2",
     "php-di/php-di": "^7.0",
-    "guzzlehttp/guzzle": "^7.9"
+    "guzzlehttp/guzzle": "^7.9",
+    "doctrine/migrations": "^3.9"
   },
   "autoload": {
     "psr-4": {
