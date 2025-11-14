@@ -12,6 +12,12 @@
 ## Sprint 1：共用內容基礎
 **目標**：完成後續模組所需的共用資產。
 
+**參考文件**：
+- `docs/index/plan.md`（品牌敘事模組）
+- `docs/index/schema.md`
+- `docs/index/todo.md`
+- `docs/about/plan.md`（共用敘事延伸）
+
 | 任務 | 說明 |
 | --- | --- |
 | 媒體資源庫 | 建立媒體上傳、分類、權限與 CDN/檔案儲存設定。 |
@@ -25,6 +31,11 @@
 
 ## Sprint 2：菜單模組（Menu）
 **目標**：上線菜單分類與商品管理。
+
+**參考文件**：
+- `docs/menu/plan.md`
+- `docs/menu/todo.md`
+- `docs/menu/schema.md`
 
 | 任務 | 說明 |
 | --- | --- |
@@ -40,6 +51,11 @@
 ## Sprint 3：門市據點模組（Locations）
 **目標**：提供門市資訊查詢與維護。
 
+**參考文件**：
+- `docs/locations/plan.md`
+- `docs/locations/todo.md`
+- `docs/locations/schema.md`
+
 | 任務 | 說明 |
 | --- | --- |
 | 城市 / 門市資料表 | 建立城市、門市、營業狀態欄位。 |
@@ -53,6 +69,11 @@
 
 ## Sprint 4：食品安全檢驗模組（Food Safety）
 **目標**：上線檢驗報告管理與下載流程。
+
+**參考文件**：
+- `docs/food-safety/plan.md`
+- `docs/food-safety/todo.md`
+- `docs/food-safety/schema.md`
 
 | 任務 | 說明 |
 | --- | --- |
@@ -68,6 +89,11 @@
 ## Sprint 5：最新消息 / 相簿模組（News）
 **目標**：建立消息發布系統與相簿串接。
 
+**參考文件**：
+- `docs/news/plan.md`
+- `docs/news/todo.md`
+- `docs/news/schema.md`
+
 | 任務 | 說明 |
 | --- | --- |
 | 消息資料表 | 分類、內容、圖片、標籤、排程欄位。 |
@@ -81,6 +107,11 @@
 
 ## Sprint 6：加盟合作模組（Franchise）
 **目標**：完成加盟流程展示與表單提交。
+
+**參考文件**：
+- `docs/franchise/plan.md`
+- `docs/franchise/todo.md`
+- `docs/franchise/schema.md`
 
 | 任務 | 說明 |
 | --- | --- |
@@ -96,6 +127,11 @@
 ## Sprint 7：聯絡我們模組（Contact）
 **目標**：提供聯絡資訊維護與客服留言處理。
 
+**參考文件**：
+- `docs/contact/plan.md`
+- `docs/contact/todo.md`
+- `docs/contact/schema.md`
+
 | 任務 | 說明 |
 | --- | --- |
 | 聯絡資訊表 | 地址、Email、電話設定。 |
@@ -109,6 +145,11 @@
 
 ## Sprint 8：FAQ 模組
 **目標**：建立常見問題管理與顯示。
+
+**參考文件**：
+- `docs/faq/plan.md`
+- `docs/faq/todo.md`
+- `docs/faq/schema.md`
 
 | 任務 | 說明 |
 | --- | --- |
