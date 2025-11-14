@@ -13,7 +13,8 @@ export default defineConfig({
         adminUsers: resolve(__dirname, 'src/pages/AdminUsers.jsx'),
         adminUsersCreate: resolve(__dirname, 'src/pages/AdminUsersCreate.jsx'),
         adminUsersEdit: resolve(__dirname, 'src/pages/AdminUsersEdit.jsx'),
-    cmsCategories: resolve(__dirname, 'src/pages/cms/CmsCategories.jsx')
+        cmsCategories: resolve(__dirname, 'src/pages/cms/CmsCategories.jsx'),
+        externalLinks: resolve(__dirname, 'src/pages/ExternalLinks.jsx'),
       },
       output: {
         entryFileNames: '[name].bundle.js'
