@@ -11,12 +11,14 @@
 3. 全面的 **CMS 內容管理系統**，支援多種內容類型、分類和標籤
 4. **Docker 開發環境**，包含 PHP 8.3、Nginx、MySQL、Redis
 5. 動態的 **權限管理系統**，支援自動註冊新功能和群組權限控制
+6. **媒體資源庫模組**：統一上傳路徑 `public/upload/`、支援進度條、狀態管理與連結複製
 
 🔥 **開發規範重點**
 1. Action 類別均繼承 BaseAction，使用容器獲取相依服務
 2. API 回應使用標準格式：`{success: true, data: ...}` 或 `{success: false, message: ...}`
 3. 後台 API 路由命名規則：`/opanel/{module}/{resource}/{action}`
 4. 後台操作日誌自動記錄為標準 JSON 格式
+5. 媒體上傳依 `public/upload/{Y}/{m}/uuid.ext` 命名，前端需顯示進度條與錯誤提示，檔案大小上限 128 MB（配合 Docker PHP/Nginx 設定）
 
 ## 專案概述
 
@@ -110,6 +112,7 @@
 - 分類管理：支援分類的新增、編輯、刪除和排序
 - 內容管理：支援內容的 CRUD 操作，包含標題、內文、摘要、SEO 資訊等
 - 標籤管理：支援標籤的搜尋、新增和與內容關聯
+- 共用內容區塊（參考 `docs/cms/plan.md`）：以 route/section/type/locale 管理 Quill HTML 與媒體區塊，供 Twig SSR 使用
 
 ## 資料模型
 

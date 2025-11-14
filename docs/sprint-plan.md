@@ -17,6 +17,7 @@
 - `docs/index/schema.md`
 - `docs/index/todo.md`
 - `docs/about/plan.md`（共用敘事延伸）
+- `docs/cms/plan.md` / `docs/cms/todo.md` / `docs/cms/schema.md`
 
 | 任務 | 說明 |
 | --- | --- |
@@ -26,6 +27,12 @@
 | API 基礎設施 | 設計統一回應格式、錯誤處理、中介層。 |
 
 **完成標準**：共用模組資料結構、後台 CRUD、API 與文件上線。
+
+**目前進度（2025-11-14）**
+- [x] 外部連結資料表與 Doctrine Migrations 已建立並驗證。
+- [x] 外部連結後端 API（列表、建立、更新、刪除、狀態切換）已完成。
+- [x] React 後台頁面與導航入口已串接並上線。
+- [x] 媒體資源庫完成上傳/列表 API 與 React 介面，檔案儲存至 `public/upload/`，支援狀態切換、描述編輯與上傳進度條；Docker PHP/Nginx 上傳限制調整為 128 MB。
 
 ---
 

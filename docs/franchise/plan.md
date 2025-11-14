@@ -27,7 +27,7 @@
 - `GET /api/admin/franchise/applications`：後台查看申請列表。
 
 ## 依賴與整合
-- 媒體資產管理（流程圖、插圖）。
+- 媒體資產管理（流程圖、插圖）：透過媒體資源庫（`public/upload/{Y}/{m}/uuid.ext`）維護，支援 128 MB 上傳、React 進度條與圖片狀態/描述欄位。
 - 外部連結設定（n.1）。
 - 通知系統（Email / Slack / SMS）。
 

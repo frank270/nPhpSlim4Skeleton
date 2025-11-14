@@ -17,6 +17,7 @@ return function (App $app) {
         (require __DIR__ . '/Routes/opanel_users.php')($group);
         (require __DIR__ . '/Routes/opanel_cms.php')($group); // 添加 CMS 路由
         (require __DIR__ . '/Routes/opanel_external_links.php')($group);
+        (require __DIR__ . '/Routes/opanel_media_assets.php')($group);
         // 其他 ...
     })->add($app->getContainer()->get(AdminLogMiddleware::class)); // 為整個路由群組添加日誌中間件
 };

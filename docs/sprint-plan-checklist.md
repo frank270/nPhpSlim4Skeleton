@@ -13,7 +13,8 @@
 
 ## Sprint 1：共用內容基礎
 ### 起 Sprint 前
-- [ ] 媒體資源庫儲存策略（S3、本地、CDN）確認。
+- [x] 媒體資源庫儲存策略（使用 `public/upload/` 本地存放，可擴充 CDN）；Docker `client_max_body_size` 與 PHP `upload_max_filesize` 調整為 128 MB。
+- [x] 建立 CMS 內容區塊規劃文件：`docs/cms/plan.md`、`docs/cms/todo.md`、`docs/cms/schema.md`。
 - [ ] 品牌敘事資料來源與轉換需求明確。
 - [ ] API 共用中介層、回應格式討論完成。
 
@@ -22,6 +23,12 @@
 - [ ] 外部連結設定可在後台維護並套用至首頁/內頁。
 - [ ] 品牌敘事資料可由後台更新並於前台顯示。
 - [ ] API 測試、文件、快取策略完成。
+
+### 進度記錄（2025-11-14）
+- [x] 外部連結資料表／Doctrine Migrations 已完成並驗證。
+- [x] 外部連結後端 API 與權限檢查完成。
+- [x] 外部連結 React 後台頁面與側邊導航整合完成。
+- [x] 媒體資源庫上傳 API、React 後台與狀態管理完成，落地 `public/upload/` 並顯示上傳進度條；伺服器上傳限制同步放寬。
 
 ---
 

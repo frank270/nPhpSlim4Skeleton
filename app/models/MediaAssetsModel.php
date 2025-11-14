@@ -3,6 +3,7 @@ namespace App\Models;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ParameterType;
+use Doctrine\DBAL\Query\QueryBuilder;
 
 class MediaAssetsModel
 {
@@ -22,21 +23,7 @@ class MediaAssetsModel
             ->setMaxResults($limit)
             ->setFirstResult($offset);
 
-        if (!empty($filters['status'])) {
-            $qb->andWhere('status = :status')
-               ->setParameter('status', $filters['status']);
-        }
-
-        if (!empty($filters['disk'])) {
-            $qb->andWhere('disk = :disk')
-               ->setParameter('disk', $filters['disk']);
-        }
-
-        if (!empty($filters['keyword'])) {
-            $keyword = '%' . $filters['keyword'] . '%';
-            $qb->andWhere('(original_name LIKE :keyword OR path LIKE :keyword)')
-               ->setParameter('keyword', $keyword);
-        }
+        $this->applyFilters($qb, $filters);
 
         return $qb->executeQuery()->fetchAllAssociative();
     }
@@ -47,21 +34,7 @@ class MediaAssetsModel
             ->select('COUNT(id)')
             ->from('media_assets');
 
-        if (!empty($filters['status'])) {
-            $qb->andWhere('status = :status')
-               ->setParameter('status', $filters['status']);
-        }
-
-        if (!empty($filters['disk'])) {
-            $qb->andWhere('disk = :disk')
-               ->setParameter('disk', $filters['disk']);
-        }
-
-        if (!empty($filters['keyword'])) {
-            $keyword = '%' . $filters['keyword'] . '%';
-            $qb->andWhere('(original_name LIKE :keyword OR path LIKE :keyword)')
-               ->setParameter('keyword', $keyword);
-        }
+        $this->applyFilters($qb, $filters);
 
         return (int) $qb->executeQuery()->fetchOne();
     }
@@ -161,5 +134,30 @@ class MediaAssetsModel
         return (bool) $this->db->update('media_assets', [
             'deleted_at' => null
         ], ['id' => $id]);
+    }
+
+    private function applyFilters(QueryBuilder $qb, array $filters): void
+    {
+        if (!empty($filters['status'])) {
+            $qb->andWhere('status = :status')
+               ->setParameter('status', $filters['status']);
+        }
+
+        if (!empty($filters['disk'])) {
+            $qb->andWhere('disk = :disk')
+               ->setParameter('disk', $filters['disk']);
+        }
+
+        if (!empty($filters['keyword'])) {
+            $keyword = '%' . $filters['keyword'] . '%';
+            $qb->andWhere('(original_name LIKE :keyword OR path LIKE :keyword)')
+               ->setParameter('keyword', $keyword);
+        }
+
+        if (!empty($filters['only_deleted'])) {
+            $qb->andWhere('deleted_at IS NOT NULL');
+        } elseif (empty($filters['with_deleted'])) {
+            $qb->andWhere('deleted_at IS NULL');
+        }
     }
 }

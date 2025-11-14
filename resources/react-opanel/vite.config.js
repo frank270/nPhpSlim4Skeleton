@@ -15,6 +15,7 @@ export default defineConfig({
         adminUsersEdit: resolve(__dirname, 'src/pages/AdminUsersEdit.jsx'),
         cmsCategories: resolve(__dirname, 'src/pages/cms/CmsCategories.jsx'),
         externalLinks: resolve(__dirname, 'src/pages/ExternalLinks.jsx'),
+        mediaAssets: resolve(__dirname, 'src/pages/MediaLibrary.jsx'),
       },
       output: {
         entryFileNames: '[name].bundle.js'
