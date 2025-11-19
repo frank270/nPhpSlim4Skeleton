@@ -14,15 +14,26 @@
 - 英雄區副標與主標 (t.9)、圖片 p.1。
 
 ## 後台需求
-- FAQ CRUD、分類管理、排序拖曳。
-- 草稿／發布狀態、審核紀錄與版本存檔。
-- 精選 FAQ 標記，可供首頁引用。
+
+### 已完成 ✅
+- FAQ CRUD、分類管理、排序控制
+- 草稿／發布狀態切換、精選 FAQ 標記
+- React 後台頁面（列表、篩選、表單）
+
+### 待完成 ⏸️
+- 審核紀錄與版本存檔
+- 多語管理（若啟用）
 
 ## 前端與 API
-- `GET /api/front/faqs?category=...`：回傳 FAQ 列表。
-- `GET /api/front/faqs/highlights`：精選 FAQ。
-- 支援搜尋 API（關鍵字查詢）。
-- Cache：FAQ 內容更新時清除快取。
+
+### 已完成 ✅
+- 後台 API：`/opanel/faqs/*`、`/opanel/faqs/categories/*`
+
+### 待完成 ⏸️
+- `GET /api/front/faqs?category=...`：回傳 FAQ 列表
+- `GET /api/front/faqs/highlights`：精選 FAQ
+- 搜尋 API（關鍵字查詢）
+- Cache / 快取策略
 
 ## 依賴與整合
 - 媒體資產管理（FAQ 圖片）：使用媒體資源庫（`public/upload/{Y}/{m}/uuid.ext`），128 MB 上傳限制與進度條，並可設定 alt/caption/狀態。

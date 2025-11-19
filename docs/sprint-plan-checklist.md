@@ -123,14 +123,21 @@
 
 ## Sprint 8：FAQ 模組
 ### 起 Sprint 前
-- [ ] FAQ 結構、分類策略與多語需求確認。
+- [x] FAQ 結構、分類策略確認（2025-11-19）
+- [ ] 多語需求確認（待定）
 - [ ] SEO 結構化資料需求（FAQPage schema）確認。
 
 ### Sprint 結束檢查
-- [ ] 後台可 CRUD、排序、審核 FAQ，支援多語（若需）。
-- [ ] 前台手風琴、搜尋、RWD 測試通過。
+- [x] 後台 CRUD、分類管理、排序、狀態切換完成
+- [ ] 審核／版本管理、前台手風琴、搜尋、RWD 測試通過
 - [ ] SEO schema 與 Analytics 事件設定完成。
 - [ ] FAQ 運維流程文件移交客服。
+
+### 進度記錄（2025-11-19）
+- [x] FAQ 後台 React 介面上線，支援分類與問題雙標籤、篩選、CRUD
+- [x] `/opanel/faqs/*` 與 `/opanel/faqs/categories/*` API 完成
+- [x] `faq_categories`、`faqs` 資料表已建立並執行遷移
+- [ ] 前台 API、SEO 結構化資料、運維文件待開發
 
 ---
 
