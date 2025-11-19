@@ -16,6 +16,7 @@ export default defineConfig({
         cmsCategories: resolve(__dirname, 'src/pages/cms/CmsCategories.jsx'),
         externalLinks: resolve(__dirname, 'src/pages/ExternalLinks.jsx'),
         mediaAssets: resolve(__dirname, 'src/pages/MediaLibrary.jsx'),
+        locations: resolve(__dirname, 'src/pages/Locations.jsx'),
       },
       output: {
         entryFileNames: '[name].bundle.js'

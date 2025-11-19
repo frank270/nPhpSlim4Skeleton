@@ -434,7 +434,16 @@ function MediaLibraryApp({ apiBase }) {
                             <div className="card-body">
                               <div className="d-flex justify-content-between mb-1">
                                 <strong className="text-truncate">{asset.original_name}</strong>
-                                <span className="badge bg-blue">{asset.status || 'active'}</span>
+                                {(() => {
+                                  const statusMap = {
+                                    active: { label: '使用中', class: 'bg-success text-white' },
+                                    draft: { label: '草稿', class: 'bg-warning text-white' },
+                                    archived: { label: '封存', class: 'bg-secondary text-white' },
+                                  };
+                                  const status = asset.status || 'active';
+                                  const statusInfo = statusMap[status] || { label: status, class: 'bg-secondary text-white' };
+                                  return <span className={`badge ${statusInfo.class}`}>{statusInfo.label}</span>;
+                                })()}
                               </div>
                               <div className="text-secondary small mb-2">
                                 {formatBytes(asset.size_bytes)} · {asset.mime_type || '未知格式'}

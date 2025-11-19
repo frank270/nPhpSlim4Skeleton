@@ -249,7 +249,7 @@ function AdminUsersApp() {
                         {user.status === 1 ? (
                           <span className="badge bg-success text-white">啟用</span>
                         ) : (
-                          <span className="badge bg-danger text-white">停用</span>
+                          <span className="badge bg-secondary text-white">停用</span>
                         )}
                       </td>
                       <td>{user.last_login_at || '-'}</td>

@@ -396,9 +396,9 @@ function ExternalLinksApp({ apiBase }) {
                 <td>{link.locale || '-'}</td>
                 <td>
                   {link.is_active ? (
-                    <span className="badge bg-success">啟用</span>
+                    <span className="badge bg-success text-white">啟用</span>
                   ) : (
-                    <span className="badge bg-secondary">停用</span>
+                    <span className="badge bg-secondary text-white">停用</span>
                   )}
                 </td>
                 <td className="text-end">
