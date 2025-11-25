@@ -1,0 +1,41 @@
+{
+  "title": "門市據點列表",
+  "add_new": "新增門市",
+  "edit_store": "編輯門市",
+  "create_store": "建立門市",
+  "cancel_add": "取消新增",
+  "name": "門市名稱",
+  "county": "縣市",
+  "district": "區域",
+  "zipcode": "郵遞區號",
+  "address": "完整地址",
+  "phone": "聯絡電話",
+  "status": "狀態",
+  "sort_order": "排序",
+  "notes": "備註",
+  "latitude": "緯度 (Latitude)",
+  "longitude": "經度 (Longitude)",
+  "map_link_id": "地圖連結 ID",
+  "order_link_id": "點餐連結 ID",
+  "open": "營業中",
+  "closed": "已打烊",
+  "pause": "暫停營業",
+  "toggle_status": "切換狀態",
+  "placeholder": {
+    "name": "請輸入門市名稱",
+    "phone": "02-1234-5678",
+    "address": "例如：新北市中和區中山路二段2巷45弄44號壹樓",
+    "latitude": "25.123456",
+    "longitude": "121.123456",
+    "map_link_id": "外部連結 ID",
+    "order_link_id": "外部連結 ID",
+    "notes": "例如：外送範圍、特殊說明等"
+  },
+  "error": {
+    "load_failed": "載入門市失敗",
+    "save_failed": "儲存門市失敗",
+    "delete_failed": "刪除失敗",
+    "status_failed": "更新狀態失敗",
+    "name_required": "請輸入門市名稱"
+  }
+}

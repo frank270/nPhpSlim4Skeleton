@@ -31,3 +31,17 @@
 1. 嚴禁擅自修改配置或破壞現有結構，除非經過明確指示。
 2. 文件、程式與前端邏輯需保持同步，如新增功能必須同步更新對應的 docs 與 React 程式。
 3. 保持代碼風格與既有檔案一致（縮排、命名、註解風格等）。
+
+## 多語系 (i18n) 開發規範
+1. **禁止 Hardcode**：所有 UI 顯示文字（標題、按鈕、提示訊息、錯誤訊息等）嚴禁直接寫死在程式碼中，必須使用翻譯鍵值。
+   - React: `t('module.key')`
+   - Twig: `{{ t('module.key') }}`
+2. **多語系支援**：新功能必須同時支援以下 4 種語系：
+   - 繁體中文 (`zh-TW`) - **主要開發語系**
+   - 簡體中文 (`zh-CN`)
+   - 英文 (`en`)
+   - 韓文 (`ko`)
+3. **檔案維護**：
+   - **React 前端**：於 `resources/react-opanel/src/locales/{lang}/{module}.json` 新增對應翻譯檔。
+   - **Twig 後端**：於 `resources/lang/{lang}/layout.php` (或其他對應檔案) 新增翻譯。
+4. **鍵值命名**：使用小寫蛇形命名 (snake_case)，層級應清晰，例如 `locations.add_new` 或 `common.error`。

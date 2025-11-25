@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
+import { useTranslation } from 'react-i18next';
+import '../i18n';
 
 function AdminUsersApp() {
+  const { t } = useTranslation();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [groups, setGroups] = useState([]);
@@ -46,7 +49,7 @@ function AdminUsersApp() {
       setUsers(data.users || []);
     } catch (error) {
       console.error('載入使用者列表失敗', error);
-      window.showToast('載入使用者列表失敗', 'error');
+      window.showToast(t('common.error'), 'error');
       setUsers([]);
     } finally {
       setLoading(false);
@@ -62,7 +65,7 @@ function AdminUsersApp() {
       setGroups(data.roles || []);
     } catch (error) {
       console.error('載入角色群組列表失敗', error);
-      window.showToast('載入角色群組列表失敗', 'error');
+      window.showToast(t('common.error'), 'error');
       setGroups([]);
     }
   };
@@ -77,7 +80,7 @@ function AdminUsersApp() {
       const result = await response.json();
       
       if (!result.success) {
-        throw new Error(result.message || '操作失敗');
+        throw new Error(result.message || t('common.error'));
       }
       
       // 更新使用者列表中的狀態
@@ -88,10 +91,10 @@ function AdminUsersApp() {
         return user;
       }));
       
-      window.showToast(result.message || '狀態已更新', 'success');
+      window.showToast(result.message || t('common.status_updated'), 'success');
     } catch (error) {
       console.error('切換使用者狀態失敗', error);
-      window.showToast(error.message || '切換使用者狀態失敗', 'error');
+      window.showToast(error.message || t('common.error'), 'error');
     }
   };
   
@@ -100,7 +103,7 @@ function AdminUsersApp() {
     if (!resetPasswordUser) return;
     
     if (newPassword !== confirmPassword) {
-      window.showToast('兩次輸入的密碼不一致', 'error');
+      window.showToast(t('common.error'), 'error');
       return;
     }
     
@@ -118,16 +121,16 @@ function AdminUsersApp() {
       const result = await response.json();
       
       if (!result.success) {
-        throw new Error(result.message || '重設密碼失敗');
+        throw new Error(result.message || t('common.error'));
       }
       
-      window.showToast('密碼重設成功', 'success');
+      window.showToast(t('common.success'), 'success');
       setShowResetPasswordModal(false);
       setNewPassword('');
       setConfirmPassword('');
     } catch (error) {
       console.error('重設密碼失敗', error);
-      window.showToast(error.message || '重設密碼失敗', 'error');
+      window.showToast(error.message || t('common.error'), 'error');
     } finally {
       setIsResettingPassword(false);
     }
@@ -147,16 +150,16 @@ function AdminUsersApp() {
       const result = await response.json();
       
       if (!result.success) {
-        throw new Error(result.message || '刪除使用者失敗');
+        throw new Error(result.message || t('common.error'));
       }
       
       // 更新使用者列表
       setUsers(users.filter(user => user.id !== userToDelete.id));
-      window.showToast('使用者已刪除', 'success');
+      window.showToast(t('common.deleted'), 'success');
       setShowDeleteModal(false);
     } catch (error) {
       console.error('刪除使用者失敗', error);
-      window.showToast(error.message || '刪除使用者失敗', 'error');
+      window.showToast(error.message || t('common.error'), 'error');
     } finally {
       setIsDeleting(false);
     }
@@ -176,22 +179,22 @@ function AdminUsersApp() {
   return (
     <div className="container-fluid">
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h1 className="h2 mb-0">後台使用者管理</h1>
+        <h1 className="h2 mb-0">{t('admin_users.title')}</h1>
         <a href="/opanel/users/create" className="btn btn-primary">
-          <i className="ti ti-plus"></i> 新增使用者
+          <i className="ti ti-plus"></i> {t('admin_users.add_new')}
         </a>
       </div>
 
       <div className="card shadow mb-4">
         <div className="card-header py-3 d-flex justify-content-between align-items-center">
-          <h3 className="m-0 font-weight-bold text-primary">使用者列表</h3>
+          <h3 className="m-0 font-weight-bold text-primary">{t('admin_users.list_title')}</h3>
           <div className="d-flex">
             <select 
               className="form-control mr-2"
               value={groupFilter}
               onChange={(e) => setGroupFilter(e.target.value)}
             >
-              <option value="">所有角色群組</option>
+              <option value="">{t('admin_users.all_groups')}</option>
               {groups.map(group => (
                 <option key={group.id} value={group.id}>{group.name}</option>
               ))}
@@ -199,7 +202,7 @@ function AdminUsersApp() {
             <input 
               type="text" 
               className="form-control mr-2" 
-              placeholder="搜尋使用者..." 
+              placeholder={t('admin_users.search_placeholder')}
               value={keywordFilter}
               onChange={(e) => setKeywordFilter(e.target.value)}
             />
@@ -207,7 +210,7 @@ function AdminUsersApp() {
               className="btn btn-outline-primary"
               onClick={handleSearch}
             >
-              <i className="ti ti-search me-1"></i> 搜尋
+              <i className="ti ti-search me-1"></i> {t('common.search')}
             </button>
           </div>
         </div>
@@ -217,12 +220,12 @@ function AdminUsersApp() {
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>帳號</th>
-                  <th>顯示名稱</th>
-                  <th>角色群組</th>
-                  <th>狀態</th>
-                  <th>最後登入時間</th>
-                  <th>操作</th>
+                  <th>{t('admin_users.account')}</th>
+                  <th>{t('admin_users.display_name')}</th>
+                  <th>{t('admin_users.group')}</th>
+                  <th>{t('admin_users.status')}</th>
+                  <th>{t('admin_users.last_login')}</th>
+                  <th>{t('common.actions')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -230,13 +233,13 @@ function AdminUsersApp() {
                   <tr>
                     <td colSpan="7" className="text-center">
                       <div className="spinner-border text-primary" role="status">
-                        <span className="visually-hidden">載入中...</span>
+                        <span className="visually-hidden">{t('common.loading')}</span>
                       </div>
                     </td>
                   </tr>
                 ) : users.length === 0 ? (
                   <tr>
-                    <td colSpan="7" className="text-center">沒有符合條件的使用者</td>
+                    <td colSpan="7" className="text-center">{t('admin_users.no_users')}</td>
                   </tr>
                 ) : (
                   users.map(user => (
@@ -247,15 +250,15 @@ function AdminUsersApp() {
                       <td>{user.group_name || '-'}</td>
                       <td>
                         {user.status === 1 ? (
-                          <span className="badge bg-success text-white">啟用</span>
+                          <span className="badge bg-success text-white">{t('admin_users.status_active')}</span>
                         ) : (
-                          <span className="badge bg-secondary text-white">停用</span>
+                          <span className="badge bg-secondary text-white">{t('admin_users.status_inactive')}</span>
                         )}
                       </td>
                       <td>{user.last_login_at || '-'}</td>
                       <td>
                         <div className="d-flex gap-1">
-                          <a href={`/opanel/users/${user.id}/edit`} className="btn btn-sm btn-primary" title="編輯">
+                          <a href={`/opanel/users/${user.id}/edit`} className="btn btn-sm btn-primary" title={t('common.edit')}>
                             <svg xmlns="http://www.w3.org/2000/svg" className="icon" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                               <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
@@ -269,7 +272,7 @@ function AdminUsersApp() {
                               setResetPasswordUser(user);
                               setShowResetPasswordModal(true);
                             }}
-                            title="重設密碼"
+                            title={t('admin_users.reset_password')}
                           >
                             <svg xmlns="http://www.w3.org/2000/svg" className="icon" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -282,7 +285,7 @@ function AdminUsersApp() {
                           <button 
                             className={`btn btn-sm ${user.status === 1 ? 'btn-secondary' : 'btn-success'}`}
                             onClick={() => toggleUserStatus(user.id, user.status)}
-                            title={user.status === 1 ? '停用' : '啟用'}
+                            title={user.status === 1 ? t('admin_users.status_inactive') : t('admin_users.status_active')}
                           >
                             {user.status === 1 ? (
                               <svg xmlns="http://www.w3.org/2000/svg" className="icon" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -303,7 +306,7 @@ function AdminUsersApp() {
                               setUserToDelete(user);
                               setShowDeleteModal(true);
                             }}
-                            title="刪除"
+                            title={t('common.delete')}
                           >
                             <svg xmlns="http://www.w3.org/2000/svg" className="icon" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -332,7 +335,7 @@ function AdminUsersApp() {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">
-                  重設 {resetPasswordUser?.username} 的密碼
+                  {t('admin_users.reset_password_title', { name: resetPasswordUser?.username })}
                 </h5>
                 <button 
                   type="button" 
@@ -347,7 +350,7 @@ function AdminUsersApp() {
               </div>
               <div className="modal-body">
                 <div className="mb-3">
-                  <label htmlFor="new-password" className="form-label">新密碼</label>
+                  <label htmlFor="new-password" className="form-label">{t('admin_users.new_password')}</label>
                   <input 
                     type="password" 
                     className="form-control" 
@@ -358,7 +361,7 @@ function AdminUsersApp() {
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="confirm-password" className="form-label">確認密碼</label>
+                  <label htmlFor="confirm-password" className="form-label">{t('admin_users.confirm_password')}</label>
                   <input 
                     type="password" 
                     className="form-control" 
@@ -380,7 +383,7 @@ function AdminUsersApp() {
                   }}
                   disabled={isResettingPassword}
                 >
-                  取消
+                  {t('common.cancel')}
                 </button>
                 <button 
                   type="button" 
@@ -393,7 +396,7 @@ function AdminUsersApp() {
                       <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                       處理中...
                     </>
-                  ) : '確認重設'}
+                  ) : t('admin_users.confirm_reset')}
                 </button>
               </div>
             </div>
@@ -407,7 +410,7 @@ function AdminUsersApp() {
           <div className="modal-dialog modal-sm">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">確認刪除</h5>
+                <h5 className="modal-title">{t('common.confirm')}</h5>
                 <button 
                   type="button" 
                   className="btn-close" 
@@ -416,8 +419,8 @@ function AdminUsersApp() {
                 ></button>
               </div>
               <div className="modal-body">
-                <p>確定要刪除使用者 <strong>{userToDelete?.username}</strong> 嗎？</p>
-                <p className="text-danger">此操作無法復原。</p>
+                <p>{t('admin_users.delete_confirm', { name: userToDelete?.username })}</p>
+                <p className="text-danger">{t('access_roles.delete_warning')}</p>
               </div>
               <div className="modal-footer">
                 <button 
@@ -426,7 +429,7 @@ function AdminUsersApp() {
                   onClick={() => setShowDeleteModal(false)}
                   disabled={isDeleting}
                 >
-                  取消
+                  {t('common.cancel')}
                 </button>
                 <button 
                   type="button" 
@@ -439,7 +442,7 @@ function AdminUsersApp() {
                       <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                       處理中...
                     </>
-                  ) : '確認刪除'}
+                  ) : t('common.delete')}
                 </button>
               </div>
             </div>

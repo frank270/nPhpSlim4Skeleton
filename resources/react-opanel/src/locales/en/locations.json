@@ -1,0 +1,41 @@
+{
+  "title": "Shop List",
+  "add_new": "Add New Shop",
+  "edit_store": "Edit Shop",
+  "create_store": "Create Shop",
+  "cancel_add": "Cancel Add",
+  "name": "Shop Name",
+  "county": "County",
+  "district": "District",
+  "zipcode": "Zipcode",
+  "address": "Address",
+  "phone": "Phone",
+  "status": "Status",
+  "sort_order": "Sort Order",
+  "notes": "Notes",
+  "latitude": "Latitude",
+  "longitude": "Longitude",
+  "map_link_id": "Map Link ID",
+  "order_link_id": "Order Link ID",
+  "open": "Open",
+  "closed": "Closed",
+  "pause": "Pause",
+  "toggle_status": "Toggle Status",
+  "placeholder": {
+    "name": "Please enter shop name",
+    "phone": "02-1234-5678",
+    "address": "例如：新北市中和區中山路二段2巷45弄44號壹樓",
+    "latitude": "25.123456",
+    "longitude": "121.123456",
+    "map_link_id": "External Link ID",
+    "order_link_id": "External Link ID",
+    "notes": "例如：外送範圍、特殊說明等"
+  },
+  "error": {
+    "load_failed": "Failed to load shops",
+    "save_failed": "Failed to save shop",
+    "delete_failed": "Failed to delete shop",
+    "status_failed": "Failed to update status",
+    "name_required": "Please enter shop name"
+  }
+}

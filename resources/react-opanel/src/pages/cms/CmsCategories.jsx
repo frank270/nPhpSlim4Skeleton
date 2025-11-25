@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
+import { useTranslation } from 'react-i18next';
+import '../../i18n';
 
-function CmsCategoriesApp() {
+function CmsCategoriesApp({ type }) {
+  const { t } = useTranslation();
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,7 +20,7 @@ function CmsCategoriesApp() {
         const data = await response.json();
 
         if (!data.success) {
-          throw new Error(data.message || '載入分類失敗');
+          throw new Error(data.message || t('common.error'));
         }
 
         setCategories(data.data || []);
@@ -48,9 +51,9 @@ function CmsCategoriesApp() {
         <table className="table table-bordered">
           <thead>
             <tr>
-              <th>分類名稱</th>
-              <th>標識</th>
-              <th>操作</th>
+              <th>{t('cms_categories.name')}</th>
+              <th>{t('cms_categories.slug')}</th>
+              <th className="text-end">{t('common.actions')}</th>
             </tr>
           </thead>
           <tbody>

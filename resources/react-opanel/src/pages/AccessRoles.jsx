@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
+import { useTranslation } from 'react-i18next';
+import '../i18n';
 import { mockRoles, mockPermissions, mockMatrix } from '../data/mockAccessRoles';
 
 function AccessRolesApp() {
+  const { t } = useTranslation();
   const [groupId, setGroupId] = useState(null);
   const [matrix, setMatrix] = useState(() => ({ ...mockMatrix }));
   const [loading, setLoading] = useState(false);
@@ -27,7 +30,7 @@ function AccessRolesApp() {
         setPermissions(data.permissions || []);
       })
       .catch(() => {
-        window.Tabler.Toast.show('載入權限失敗', { color: 'red' });
+        window.Tabler.Toast.show(t('common.error'), { color: 'red' });
         setPermissions([]); // 顯示為空表
       })
       .finally(() => {
@@ -48,12 +51,12 @@ function AccessRolesApp() {
       const result = await response.json();
       
       if (!result.success) {
-        throw new Error(result.message || '刪除失敗');
+        throw new Error(result.message || t('access_roles.delete_failed'));
       }
       
       // 更新角色列表
       setRoles(roles.filter(role => role.id !== roleToDelete.id));
-      window.showToast('角色已成功刪除', 'success');
+      window.showToast(t('access_roles.delete_success'), 'success');
       
       // 如果刪除的是當前選中的角色，清空選擇
       if (groupId === roleToDelete.id) {
@@ -64,7 +67,7 @@ function AccessRolesApp() {
       // 關閉確認對話框
       setRoleToDelete(null);
     } catch (error) {
-      window.showToast(`刪除失敗: ${error.message}`, 'error');
+      window.showToast(`${t('access_roles.delete_failed')}: ${error.message}`, 'error');
     } finally {
       setIsDeleting(false);
     }
@@ -90,12 +93,12 @@ function AccessRolesApp() {
       const result = await response.json();
       
       if (!result.success) {
-        throw new Error(result.message || '新增失敗');
+        throw new Error(result.message || t('common.error'));
       }
       
       // 更新角色列表
       setRoles([...roles, result.role]);
-      window.showToast('角色新增成功', 'success');
+      window.showToast(t('access_roles.create_success'), 'success');
       
       // 重置表單並關閉彈窗
       setNewRole({ code: '', name: '', memo: '' });
@@ -115,7 +118,7 @@ function AccessRolesApp() {
         setRoles(data.roles || []);
       })
       .catch(() => {
-        window.showToast('角色清單載入失敗', 'error');
+        window.showToast(t('common.error'), 'error');
       })
       .finally(() => {
         setRolesLoading(false);
@@ -147,12 +150,12 @@ function AccessRolesApp() {
         console.log('伺服器回應:', result); // 除錯訊息
         
         if (!result.success) {
-            throw new Error(result.message || '伺服器錯誤');
+            throw new Error(result.message || t('common.error'));
         }
 
-        window.showToast('權限已更新', 'success');
+        window.showToast(t('access_roles.permission_updated'), 'success');
     } catch (error) {
-        window.showToast(`更新失敗: ${error.message}`, 'error');
+        window.showToast(`${t('common.error')}: ${error.message}`, 'error');
         
         // 還原前端狀態（取消樂觀 UI 更新）
         if (groupId) {
@@ -163,7 +166,7 @@ function AccessRolesApp() {
                     setPermissions(data.permissions || []);
                 })
                 .catch(() => {
-                    window.showToast('重新載入權限失敗', 'error');
+                    window.showToast(t('common.error'), 'error');
                 });
         }
     }
@@ -175,19 +178,19 @@ function AccessRolesApp() {
         <div className="col-md-3">
           <div className="card">
             <div className="card-header d-flex justify-content-between align-items-center">
-              <h3 className="card-title">角色清單</h3>
+              <h3 className="card-title">{t('access_roles.title')}</h3>
               <button 
                 className="btn btn-primary btn-sm" 
                 onClick={() => setShowModal(true)}
               >
-                新增角色
+                {t('access_roles.add_new')}
               </button>
             </div>
             <div className="card-body">
             {rolesLoading ? (
-                <div className="text-muted">角色清單載入中...</div>
+                <div className="text-muted">{t('common.loading')}</div>
               ) : roles.length === 0 ? (
-                <div className="text-danger">找不到角色資料</div>
+                <div className="text-danger">{t('access_roles.no_roles')}</div>
               ) : (
                 roles.map((role) => (
                   <div key={role.id} className="d-flex mb-2 align-items-center">
@@ -201,7 +204,7 @@ function AccessRolesApp() {
                   </button>
                   <button 
                     className="btn btn-outline-danger btn-icon" 
-                    title="刪除角色"
+                    title={t('common.delete')}
                     onClick={(e) => {
                       e.stopPropagation();
                       setRoleToDelete(role);
@@ -227,19 +230,19 @@ function AccessRolesApp() {
         <div className="col-md-9">
           <div className="card">
           <div className="card-header">
-            <h3 className="card-title">權限清單</h3>
+            <h3 className="card-title">{t('access_roles.permissions_list')}</h3>
             </div>
             <div className="card-body">
             {groupId === null ? (
-              <div className="text-muted">請先選擇一個角色</div>
+              <div className="text-muted">{t('access_roles.select_role_hint')}</div>
             ) : loading ? (
-              <div className="text-muted">載入中...</div>
+              <div className="text-muted">{t('common.loading')}</div>
             ) : (
               <table className="table">
                 <thead>
                   <tr>
-                    <th>功能名稱</th>
-                    <th className="text-end">是否啟用</th>
+                    <th>{t('access_roles.func_name')}</th>
+                    <th className="text-end">{t('access_roles.enabled')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -286,7 +289,7 @@ function AccessRolesApp() {
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">新增角色</h5>
+                <h5 className="modal-title">{t('access_roles.add_new')}</h5>
                 <button 
                   type="button" 
                   className="btn-close" 
@@ -301,7 +304,7 @@ function AccessRolesApp() {
                 {formError && <div className="alert alert-danger">{formError}</div>}
                 <form onSubmit={handleCreateRole}>
                   <div className="mb-3">
-                    <label className="form-label">角色代碼</label>
+                    <label className="form-label">{t('access_roles.code')}</label>
                     <input 
                       type="text" 
                       className="form-control" 
@@ -309,10 +312,10 @@ function AccessRolesApp() {
                       onChange={(e) => setNewRole({...newRole, code: e.target.value})}
                       required
                     />
-                    <div className="form-text">英文字母和數字，不含空格，例如：editor</div>
+                    <div className="form-text">{t('access_roles.placeholder.code')}</div>
                   </div>
                   <div className="mb-3">
-                    <label className="form-label">角色名稱</label>
+                    <label className="form-label">{t('access_roles.name')}</label>
                     <input 
                       type="text" 
                       className="form-control" 
@@ -320,10 +323,10 @@ function AccessRolesApp() {
                       onChange={(e) => setNewRole({...newRole, name: e.target.value})}
                       required
                     />
-                    <div className="form-text">顯示用名稱，例如：編輯人員</div>
+                    <div className="form-text">{t('access_roles.placeholder.name')}</div>
                   </div>
                   <div className="mb-3">
-                    <label className="form-label">備註說明</label>
+                    <label className="form-label">{t('access_roles.memo')}</label>
                     <textarea 
                       className="form-control" 
                       value={newRole.memo}
@@ -340,15 +343,15 @@ function AccessRolesApp() {
                         setNewRole({ code: '', name: '', memo: '' });
                       }}
                     >
-                      取消
+                      {t('common.cancel')}
                     </button>
                     <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
                       {isSubmitting ? (
                         <>
                           <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                          處理中...
+                          {t('common.loading')}
                         </>
-                      ) : '新增'}
+                      ) : t('common.confirm')}
                     </button>
                   </div>
                 </form>
@@ -364,7 +367,7 @@ function AccessRolesApp() {
           <div className="modal-dialog modal-sm">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">確認刪除</h5>
+                <h5 className="modal-title">{t('access_roles.delete_confirm')}</h5>
                 <button 
                   type="button" 
                   className="btn-close" 
@@ -373,8 +376,8 @@ function AccessRolesApp() {
                 ></button>
               </div>
               <div className="modal-body">
-                <p>您確定要刪除角色「{roleToDelete.name}」嗎？</p>
-                <p className="text-danger">此操作無法復原，角色的所有權限設定將一併刪除。</p>
+                <p>{t('access_roles.delete_message', { name: roleToDelete.name })}</p>
+                <p className="text-danger">{t('access_roles.delete_warning')}</p>
               </div>
               <div className="modal-footer">
                 <button 
@@ -383,7 +386,7 @@ function AccessRolesApp() {
                   onClick={() => setRoleToDelete(null)}
                   disabled={isDeleting}
                 >
-                  取消
+                  {t('common.cancel')}
                 </button>
                 <button 
                   type="button" 
@@ -394,9 +397,9 @@ function AccessRolesApp() {
                   {isDeleting ? (
                     <>
                       <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                      處理中...
+                      {t('common.loading')}
                     </>
-                  ) : '確認刪除'}
+                  ) : t('access_roles.delete_confirm')}
                 </button>
               </div>
             </div>

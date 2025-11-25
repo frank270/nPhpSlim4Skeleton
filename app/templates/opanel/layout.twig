@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
   <head>
     <meta charset="UTF-8">
-    <title>{% block title %}後台控制台{% endblock %} | EnnovicX</title>
+    <title>{% block title %}{{ t('layout.title') }}{% endblock %} | EnnovicX</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <link rel="icon" type="image/png" href="/favicon-alpha.png">
     <link rel="stylesheet" href="/assets/tabler/css/tabler.min.css?1745207578" />
@@ -78,7 +78,7 @@
                       <path d="M14 16h6v4h-6z" />
                     </svg>
                   </span>
-                  <span class="nav-link-title">控制台</span>
+                  <span class="nav-link-title">{{ t('layout.sidebar.dashboard') }}</span>
                 </a>
               </li>
               
@@ -92,20 +92,20 @@
                     </svg>
                     
                   </span>
-                  <span class="nav-link-title">權限管理</span>
+                  <span class="nav-link-title">{{ t('layout.sidebar.access') }}</span>
                 </a>
                 <div class="dropdown-menu">
                   <a class="dropdown-item" href="/opanel/access/refine-names">
                     <span class="dropdown-item-icon">
                       <i class="ti ti-wand"></i>
                     </span>
-                    <span class="dropdown-item-text">更新權限名稱</span>
+                    <span class="dropdown-item-text">{{ t('layout.sidebar.access_refine') }}</span>
                   </a>
                   <a class="dropdown-item" href="/opanel/access/roles">
                     <span class="dropdown-item-icon">
                       <i class="ti ti-users-group"></i>
                     </span>
-                    <span class="dropdown-item-text">角色權限設定</span>
+                    <span class="dropdown-item-text">{{ t('layout.sidebar.access_roles') }}</span>
                   </a>
                   {# <a class="dropdown-item" href="/opanel/access/permissions">
                     <span class="dropdown-item-icon">
@@ -129,7 +129,7 @@
                       <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
                     </svg>
                   </span>
-                  <span class="nav-link-title">使用者管理</span>
+                  <span class="nav-link-title">{{ t('layout.sidebar.users') }}</span>
                 </a>
               </li>
 
@@ -143,7 +143,7 @@
                       <path d="M14 10a3.5 3.5 0 0 1 4.9 0a3.5 3.5 0 0 1 0 4.9l-5 5a3.5 3.5 0 0 1 -4.9 -4.9" />
                     </svg>
                   </span>
-                  <span class="nav-link-title">外部連結管理</span>
+                  <span class="nav-link-title">{{ t('layout.sidebar.external_links') }}</span>
                 </a>
               </li>
               <!-- 媒體資源庫 -->
@@ -158,7 +158,7 @@
                       <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l2 2" />
                     </svg>
                   </span>
-                  <span class="nav-link-title">媒體資源庫</span>
+                  <span class="nav-link-title">{{ t('layout.sidebar.media_assets') }}</span>
                 </a>
               </li>
               <!-- 門市據點管理 -->
@@ -174,7 +174,7 @@
                       <path d="M5 6h14" />
                     </svg>
                   </span>
-                  <span class="nav-link-title">門市據點管理</span>
+                  <span class="nav-link-title">{{ t('layout.sidebar.locations') }}</span>
                 </a>
               </li>
               <!-- 常見問題管理 -->
@@ -195,7 +195,7 @@
                       <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
                     </svg>
                   </span>
-                  <span class="nav-link-title">常見問題管理</span>
+                  <span class="nav-link-title">{{ t('layout.sidebar.faqs') }}</span>
                 </a>
               </li>
               <!-- 可擴充項目 -->
@@ -215,6 +215,26 @@
               </div>
               <div class="ms-auto">
                 <div class="navbar-nav flex-row">
+                  <!-- 語系切換 -->
+                  <div class="nav-item dropdown me-3">
+                    <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="切換語系">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+                        <path d="M3.6 9h16.8" />
+                        <path d="M3.6 15h16.8" />
+                        <path d="M11.5 3a17 17 0 0 0 0 18" />
+                        <path d="M12.5 3a17 17 0 0 1 0 18" />
+                      </svg>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                      <a href="#" class="dropdown-item" onclick="changeLanguage('zh-TW'); return false;">繁體中文</a>
+                      <a href="#" class="dropdown-item" onclick="changeLanguage('zh-CN'); return false;">简体中文</a>
+                      <a href="#" class="dropdown-item" onclick="changeLanguage('en'); return false;">English</a>
+                      <a href="#" class="dropdown-item" onclick="changeLanguage('ko'); return false;">한국어</a>
+                    </div>
+                  </div>
+
                   <div class="nav-item dropdown">
                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="開啟使用者選單">
                       <span class="avatar avatar-sm" style="background-image: url(/assets/img/avatar.png)"></span>
@@ -224,10 +244,10 @@
                       </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                      <a class="dropdown-item" href="/opanel/profile">個人資料管理</a>
-                      <a class="dropdown-item" href="/opanel/profile/change-password">變更密碼</a>
+                      <a class="dropdown-item" href="/opanel/profile">{{ t('layout.user_menu.profile') }}</a>
+                      <a class="dropdown-item" href="/opanel/profile/change-password">{{ t('layout.user_menu.change_password') }}</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="/opanel/logout">登出</a>
+                      <a class="dropdown-item" href="/opanel/logout">{{ t('layout.user_menu.logout') }}</a>
                     </div>
                   </div>
                 </div>
@@ -260,7 +280,7 @@
         <!-- Footer -->
         <footer class="footer footer-transparent d-print-none">
           <div class="container-xl text-center">
-            <span class="text-muted">© 2025 EnnovicX ・ 此後台技術由 EnnovicX 開發維護，Since 2025</span>
+            <span class="text-muted">{{ t('layout.footer') }}</span>
           </div>
         </footer>
       </div>
@@ -270,6 +290,14 @@
 
     {% block scripts %}{% endblock %}
     <script src="/js/toast.js"></script>
+    <script>
+      function changeLanguage(lang) {
+        // 設定 cookie，有效期 365 天
+        document.cookie = `i18next=${lang}; path=/; max-age=31536000`;
+        // 重新載入頁面
+        window.location.reload();
+      }
+    </script>
     <script src="/assets/tabler/js/tabler.min.js" defer></script>
     
   </body>

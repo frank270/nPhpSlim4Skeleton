@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom/client';
+import { useTranslation } from 'react-i18next';
+import '../i18n';
 
 const initialFormState = {
   name: '',
@@ -35,6 +37,7 @@ const toast = (message, type = 'success') => {
 };
 
 function ExternalLinksApp({ apiBase }) {
+  const { t } = useTranslation();
   const [links, setLinks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -56,7 +59,7 @@ function ExternalLinksApp({ apiBase }) {
       const response = await fetch(listEndpoint);
       const result = await response.json();
       if (!result.success) {
-        throw new Error(result.message || '載入外部連結失敗');
+        throw new Error(result.message || t('common.error'));
       }
       setLinks(result.data || []);
     } catch (err) {
@@ -90,10 +93,10 @@ function ExternalLinksApp({ apiBase }) {
     setIsSubmitting(true);
     try {
       if (!form.name.trim()) {
-        throw new Error('請輸入名稱');
+        throw new Error(t('common.error'));
       }
       if (!form.url.trim()) {
-        throw new Error('請輸入 URL');
+        throw new Error(t('common.error'));
       }
 
       const payload = {
@@ -120,21 +123,21 @@ function ExternalLinksApp({ apiBase }) {
         const text = await response.text();
         try {
           const json = JSON.parse(text);
-          throw new Error(json.message || '建立外部連結失敗');
+          throw new Error(json.message || t('common.error'));
         } catch {
-          throw new Error(text || '建立外部連結失敗');
+          throw new Error(text || t('common.error'));
         }
       }
 
       if (!result.success) {
-        throw new Error(result.message || '建立外部連結失敗');
+        throw new Error(result.message || t('common.error'));
       }
 
-      toast('外部連結已建立', 'success');
+      toast(t('common.success'), 'success');
       resetForm();
       setRefreshKey((prev) => prev + 1);
     } catch (err) {
-      toast(err.message || '建立外部連結失敗', 'error');
+      toast(err.message || t('common.error'), 'error');
     } finally {
       setIsSubmitting(false);
     }
@@ -156,25 +159,25 @@ function ExternalLinksApp({ apiBase }) {
         const text = await response.text();
         try {
           const json = JSON.parse(text);
-          throw new Error(json.message || '更新狀態失敗');
+          throw new Error(json.message || t('common.error'));
         } catch {
-          throw new Error(text || '更新狀態失敗');
+          throw new Error(text || t('common.error'));
         }
       }
 
       if (!result.success) {
-        throw new Error(result.message || '更新狀態失敗');
+        throw new Error(result.message || t('common.error'));
       }
 
-      toast('狀態已更新', 'success');
+      toast(t('common.status_updated'), 'success');
       setLinks((prev) => prev.map((item) => (item.id === link.id ? { ...item, is_active: nextState } : item)));
     } catch (err) {
-      toast(err.message || '更新狀態失敗', 'error');
+      toast(err.message || t('common.error'), 'error');
     }
   };
 
   const handleDelete = async (link) => {
-    if (!window.confirm(`確定要刪除「${link.name}」嗎？`)) {
+    if (!window.confirm(t('external_links.delete_confirm', { name: link.name }))) {
       return;
     }
     setTargetLink(link);
@@ -191,20 +194,20 @@ function ExternalLinksApp({ apiBase }) {
         const text = await response.text();
         try {
           const json = JSON.parse(text);
-          throw new Error(json.message || '刪除失敗');
+          throw new Error(json.message || t('common.error'));
         } catch {
-          throw new Error(text || '刪除失敗');
+          throw new Error(text || t('common.error'));
         }
       }
 
       if (!result.success) {
-        throw new Error(result.message || '刪除失敗');
+        throw new Error(result.message || t('common.error'));
       }
 
-      toast('外部連結已刪除', 'success');
+      toast(t('common.deleted'), 'success');
       setLinks((prev) => prev.filter((item) => item.id !== link.id));
     } catch (err) {
-      toast(err.message || '刪除失敗', 'error');
+      toast(err.message || t('common.error'), 'error');
     } finally {
       setIsDeleting(false);
       setTargetLink(null);
@@ -213,7 +216,7 @@ function ExternalLinksApp({ apiBase }) {
 
   const renderToolbar = () => (
     <div className="d-flex justify-content-between align-items-center mb-3">
-      <h3 className="mb-0">外部連結列表</h3>
+      <h3 className="mb-0">{t('external_links.title')}</h3>
       <div className="d-flex gap-2">
         <button
           className="btn btn-outline-secondary"
@@ -222,14 +225,14 @@ function ExternalLinksApp({ apiBase }) {
           disabled={loading}
         >
           <span className="me-1" aria-hidden="true">⟳</span>
-          重新整理
+          {t('common.refresh')}
         </button>
         <button
           className="btn btn-primary"
           type="button"
           onClick={() => setShowForm((prev) => !prev)}
         >
-          {showForm ? '取消新增' : '新增外部連結'}
+          {showForm ? t('external_links.cancel_add') : t('external_links.add_new')}
         </button>
       </div>
     </div>
@@ -244,7 +247,7 @@ function ExternalLinksApp({ apiBase }) {
           <form onSubmit={handleCreate}>
             <div className="row g-3">
               <div className="col-md-6">
-                <label className="form-label">名稱<span className="text-danger">*</span></label>
+                <label className="form-label">{t('external_links.name')}<span className="text-danger">*</span></label>
                 <input
                   type="text"
                   className="form-control"
@@ -256,7 +259,7 @@ function ExternalLinksApp({ apiBase }) {
                 />
               </div>
               <div className="col-md-6">
-                <label className="form-label">URL<span className="text-danger">*</span></label>
+                <label className="form-label">{t('external_links.url')}<span className="text-danger">*</span></label>
                 <input
                   type="url"
                   className="form-control"
@@ -269,7 +272,7 @@ function ExternalLinksApp({ apiBase }) {
                 />
               </div>
               <div className="col-md-4">
-                <label className="form-label">類型</label>
+                <label className="form-label">{t('external_links.type')}</label>
                 <input
                   type="text"
                   className="form-control"
@@ -281,7 +284,7 @@ function ExternalLinksApp({ apiBase }) {
                 />
               </div>
               <div className="col-md-4">
-                <label className="form-label">語系</label>
+                <label className="form-label">{t('external_links.locale')}</label>
                 <input
                   type="text"
                   className="form-control"
@@ -293,7 +296,7 @@ function ExternalLinksApp({ apiBase }) {
                 />
               </div>
               <div className="col-md-4">
-                <label className="form-label">開啟方式</label>
+                <label className="form-label">{t('external_links.open_method')}</label>
                 <div className="form-check form-switch mt-2">
                   <input
                     className="form-check-input"
@@ -305,12 +308,12 @@ function ExternalLinksApp({ apiBase }) {
                     disabled={isSubmitting}
                   />
                   <label className="form-check-label" htmlFor="opened_in_new_tab">
-                    新分頁開啟
+                    {t('external_links.new_tab')}
                   </label>
                 </div>
               </div>
               <div className="col-12">
-                <label className="form-label">描述</label>
+                <label className="form-label">{t('external_links.description')}</label>
                 <textarea
                   className="form-control"
                   rows="2"
@@ -332,17 +335,17 @@ function ExternalLinksApp({ apiBase }) {
                     disabled={isSubmitting}
                   />
                   <label className="form-check-label" htmlFor="is_active">
-                    啟用此連結
+                    {t('external_links.is_active')}
                   </label>
                 </div>
               </div>
             </div>
             <div className="mt-4 d-flex gap-2">
               <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-                {isSubmitting ? '儲存中…' : '建立外部連結'}
+                {isSubmitting ? t('external_links.saving') : t('external_links.create_btn')}
               </button>
               <button type="button" className="btn btn-outline-secondary" onClick={resetForm} disabled={isSubmitting}>
-                取消
+                {t('common.cancel')}
               </button>
             </div>
           </form>
@@ -356,7 +359,7 @@ function ExternalLinksApp({ apiBase }) {
       return (
         <div className="text-center py-5">
           <div className="spinner-border text-primary" role="status">
-            <span className="visually-hidden">載入中...</span>
+            <span className="visually-hidden">{t('common.loading')}</span>
           </div>
         </div>
       );
@@ -367,7 +370,7 @@ function ExternalLinksApp({ apiBase }) {
     }
 
     if (!links.length) {
-      return <div className="alert alert-info">目前尚未建立任何外部連結。</div>;
+      return <div className="alert alert-info">{t('external_links.no_links')}</div>;
     }
 
     return (
@@ -375,12 +378,12 @@ function ExternalLinksApp({ apiBase }) {
         <table className="table table-hover">
           <thead>
             <tr>
-              <th>名稱</th>
-              <th>URL</th>
-              <th>類型</th>
-              <th>語系</th>
-              <th>狀態</th>
-              <th className="text-end">操作</th>
+              <th>{t('external_links.name')}</th>
+              <th>{t('external_links.url')}</th>
+              <th>{t('external_links.type')}</th>
+              <th>{t('external_links.locale')}</th>
+              <th>{t('common.status')}</th>
+              <th className="text-end">{t('common.actions')}</th>
             </tr>
           </thead>
           <tbody>
@@ -396,9 +399,9 @@ function ExternalLinksApp({ apiBase }) {
                 <td>{link.locale || '-'}</td>
                 <td>
                   {link.is_active ? (
-                    <span className="badge bg-success text-white">啟用</span>
+                    <span className="badge bg-success text-white">{t('admin_users.status_active')}</span>
                   ) : (
-                    <span className="badge bg-secondary text-white">停用</span>
+                    <span className="badge bg-secondary text-white">{t('admin_users.status_inactive')}</span>
                   )}
                 </td>
                 <td className="text-end">
@@ -408,7 +411,7 @@ function ExternalLinksApp({ apiBase }) {
                       className="btn btn-sm btn-ghost-primary"
                       onClick={() => handleToggleActive(link)}
                     >
-                      {link.is_active ? '停用' : '啟用'}
+                      {link.is_active ? t('admin_users.status_inactive') : t('admin_users.status_active')}
                     </button>
                     <button
                       type="button"
@@ -416,7 +419,7 @@ function ExternalLinksApp({ apiBase }) {
                       onClick={() => handleDelete(link)}
                       disabled={isDeleting && targetLink?.id === link.id}
                     >
-                      刪除
+                      {t('common.delete')}
                     </button>
                   </div>
                 </td>

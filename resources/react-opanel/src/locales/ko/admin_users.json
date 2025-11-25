@@ -1,0 +1,20 @@
+{
+  "title": "後台使用者管理",
+  "add_new": "新增使用者",
+  "list_title": "使用者列表",
+  "all_groups": "所有角色群組",
+  "search_placeholder": "搜尋使用者...",
+  "account": "帳號",
+  "display_name": "顯示名稱",
+  "group": "角色群組",
+  "last_login": "最後登入時間",
+  "status_active": "啟用",
+  "status_inactive": "停用",
+  "reset_password": "重設密碼",
+  "reset_password_title": "重設 {{name}} 的密碼",
+  "new_password": "新密碼",
+  "confirm_password": "確認密碼",
+  "confirm_reset": "確認重設",
+  "delete_confirm": "確定要刪除使用者 {{name}} 嗎？",
+  "no_users": "沒有符合條件的使用者"
+}

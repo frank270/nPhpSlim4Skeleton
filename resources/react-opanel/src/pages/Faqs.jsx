@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom/client';
+import { useTranslation } from 'react-i18next';
+import '../i18n';
 
 const toast = (message, type = 'success') => {
   if (window.showToast) {
@@ -29,6 +31,7 @@ const initialFaqForm = {
 };
 
 function FaqsApp({ apiBase }) {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('faqs'); // 'categories' or 'faqs'
 
   // 分類相關狀態
@@ -66,7 +69,7 @@ function FaqsApp({ apiBase }) {
       const response = await fetch(categoriesEndpoint);
       const result = await response.json();
       if (!result.success) {
-        throw new Error(result.message || '載入分類失敗');
+        throw new Error(result.message || t('common.error'));
       }
       setCategories(result.data || []);
     } catch (err) {
@@ -90,7 +93,7 @@ function FaqsApp({ apiBase }) {
       const response = await fetch(`${listEndpoint}?${query.toString()}`);
       const result = await response.json();
       if (!result.success) {
-        throw new Error(result.message || '載入問題失敗');
+        throw new Error(result.message || t('common.error'));
       }
       setFaqs(result.data || []);
     } catch (err) {
@@ -142,10 +145,10 @@ function FaqsApp({ apiBase }) {
     setIsSubmittingCategory(true);
     try {
       if (!categoryForm.name.trim()) {
-        throw new Error('請輸入分類名稱');
+        throw new Error(t('faqs.category_name_required'));
       }
       if (!categoryForm.slug.trim()) {
-        throw new Error('請輸入 slug');
+        throw new Error(t('faqs.slug_required'));
       }
 
       const payload = {
@@ -172,28 +175,28 @@ function FaqsApp({ apiBase }) {
         const text = await response.text();
         try {
           const json = JSON.parse(text);
-          throw new Error(json.message || '儲存分類失敗');
+          throw new Error(json.message || t('common.error_saving_category'));
         } catch {
-          throw new Error(text || '儲存分類失敗');
+          throw new Error(text || t('common.error_saving_category'));
         }
       }
 
       if (!result.success) {
-        throw new Error(result.message || '儲存分類失敗');
+        throw new Error(result.message || t('common.error_saving_category'));
       }
 
-      toast(editingCategory ? '分類已更新' : '分類已建立', 'success');
+      toast(editingCategory ? t('faqs.category_updated') : t('faqs.category_created'), 'success');
       resetCategoryForm();
       loadCategories();
     } catch (err) {
-      toast(err.message || '儲存分類失敗', 'error');
+      toast(err.message || t('common.error_saving_category'), 'error');
     } finally {
       setIsSubmittingCategory(false);
     }
   };
 
   const handleDeleteCategory = async (category) => {
-    if (!window.confirm(`確定要刪除分類「${category.name}」嗎？\n注意：此分類下的問題將不會被刪除，但會變成未分類。`)) {
+    if (!window.confirm(t('faqs.delete_category_confirm', { name: category.name }))) {
       return;
     }
     try {
@@ -208,24 +211,24 @@ function FaqsApp({ apiBase }) {
         const text = await response.text();
         try {
           const json = JSON.parse(text);
-          throw new Error(json.message || '刪除失敗');
+          throw new Error(json.message || t('common.error_deleting'));
         } catch {
-          throw new Error(text || '刪除失敗');
+          throw new Error(text || t('common.error_deleting'));
         }
       }
 
       if (!result.success) {
-        throw new Error(result.message || '刪除失敗');
+        throw new Error(result.message || t('common.error_deleting'));
       }
 
-      toast('分類已刪除', 'success');
+      toast(t('common.success'), 'success');
       loadCategories();
       // 如果刪除的分類正在篩選中，清除篩選
       if (filters.category_id === String(category.id)) {
         setFilters((prev) => ({ ...prev, category_id: '' }));
       }
     } catch (err) {
-      toast(err.message || '刪除失敗', 'error');
+      toast(err.message || t('common.error_deleting'), 'error');
     }
   };
 
@@ -263,10 +266,10 @@ function FaqsApp({ apiBase }) {
     setIsSubmittingFaq(true);
     try {
       if (!faqForm.question.trim()) {
-        throw new Error('請輸入問題');
+        throw new Error(t('faqs.question_required'));
       }
       if (!faqForm.answer.trim()) {
-        throw new Error('請輸入答案');
+        throw new Error(t('faqs.answer_required'));
       }
 
       const payload = {
@@ -295,21 +298,21 @@ function FaqsApp({ apiBase }) {
         const text = await response.text();
         try {
           const json = JSON.parse(text);
-          throw new Error(json.message || '儲存問題失敗');
+          throw new Error(json.message || t('common.error_saving_faq'));
         } catch {
-          throw new Error(text || '儲存問題失敗');
+          throw new Error(text || t('common.error_saving_faq'));
         }
       }
 
       if (!result.success) {
-        throw new Error(result.message || '儲存問題失敗');
+        throw new Error(result.message || t('common.error_saving_faq'));
       }
 
-      toast(editingFaq ? '問題已更新' : '問題已建立', 'success');
+      toast(editingFaq ? t('faqs.faq_updated') : t('faqs.faq_created'), 'success');
       resetFaqForm();
       setRefreshKey((prev) => prev + 1);
     } catch (err) {
-      toast(err.message || '儲存問題失敗', 'error');
+      toast(err.message || t('common.error_saving_faq'), 'error');
     } finally {
       setIsSubmittingFaq(false);
     }
@@ -330,27 +333,27 @@ function FaqsApp({ apiBase }) {
         const text = await response.text();
         try {
           const json = JSON.parse(text);
-          throw new Error(json.message || '更新狀態失敗');
+          throw new Error(json.message || t('common.error_updating_status'));
         } catch {
-          throw new Error(text || '更新狀態失敗');
+          throw new Error(text || t('common.error_updating_status'));
         }
       }
 
       if (!result.success) {
-        throw new Error(result.message || '更新狀態失敗');
+        throw new Error(result.message || t('common.error_updating_status'));
       }
 
-      toast('狀態已更新', 'success');
+      toast(t('faqs.status_updated'), 'success');
       setFaqs((prev) => prev.map((item) =>
         item.id === faq.id ? { ...item, status: result.data.status } : item
       ));
     } catch (err) {
-      toast(err.message || '更新狀態失敗', 'error');
+      toast(err.message || t('common.error_updating_status'), 'error');
     }
   };
 
   const handleDeleteFaq = async (faq) => {
-    if (!window.confirm(`確定要刪除問題「${faq.question}」嗎？`)) {
+    if (!window.confirm(t('faqs.delete_faq_confirm', { name: faq.question }))) {
       return;
     }
     setTargetFaq(faq);
@@ -367,20 +370,20 @@ function FaqsApp({ apiBase }) {
         const text = await response.text();
         try {
           const json = JSON.parse(text);
-          throw new Error(json.message || '刪除失敗');
+          throw new Error(json.message || t('common.error_deleting'));
         } catch {
-          throw new Error(text || '刪除失敗');
+          throw new Error(text || t('common.error_deleting'));
         }
       }
 
       if (!result.success) {
-        throw new Error(result.message || '刪除失敗');
+        throw new Error(result.message || t('common.error_deleting'));
       }
 
-      toast('問題已刪除', 'success');
+      toast(t('common.success'), 'success');
       setFaqs((prev) => prev.filter((item) => item.id !== faq.id));
     } catch (err) {
-      toast(err.message || '刪除失敗', 'error');
+      toast(err.message || t('common.error_deleting'), 'error');
     } finally {
       setIsDeleting(false);
       setTargetFaq(null);
@@ -389,8 +392,8 @@ function FaqsApp({ apiBase }) {
 
   const getStatusBadge = (status) => {
     const statusMap = {
-      published: { label: '已發布', class: 'bg-success text-white' },
-      draft: { label: '草稿', class: 'bg-secondary text-white' },
+      published: { label: t('faqs.status_published'), class: 'bg-success text-white' },
+      draft: { label: t('faqs.status_draft'), class: 'bg-secondary text-white' },
     };
     const statusInfo = statusMap[status] || { label: status, class: 'bg-secondary text-white' };
     return <span className={`badge ${statusInfo.class}`}>{statusInfo.label}</span>;
@@ -408,7 +411,7 @@ function FaqsApp({ apiBase }) {
                 onClick={() => setActiveTab('faqs')}
                 type="button"
               >
-                問題管理
+                {t('faqs.tab_faqs')}
               </button>
             </li>
             <li className="nav-item">
@@ -417,7 +420,7 @@ function FaqsApp({ apiBase }) {
                 onClick={() => setActiveTab('categories')}
                 type="button"
               >
-                分類管理
+                {t('faqs.tab_categories')}
               </button>
             </li>
           </ul>
@@ -429,7 +432,7 @@ function FaqsApp({ apiBase }) {
         <div>
           {/* 工具列 */}
           <div className="d-flex justify-content-between align-items-center mb-3">
-            <h3 className="mb-0">常見問題列表</h3>
+            <h3 className="mb-0">{t('faqs.list_title')}</h3>
             <button
               className="btn btn-primary"
               onClick={() => {
@@ -437,7 +440,7 @@ function FaqsApp({ apiBase }) {
                 setShowFaqForm(true);
               }}
             >
-              新增問題
+              {t('faqs.add_faq')}
             </button>
           </div>
 
@@ -446,13 +449,13 @@ function FaqsApp({ apiBase }) {
             <div className="card-body">
               <div className="row g-3">
                 <div className="col-md-4">
-                  <label className="form-label">分類</label>
+                  <label className="form-label">{t('faqs.category')}</label>
                   <select
                     className="form-select"
                     value={filters.category_id}
                     onChange={(e) => setFilters((prev) => ({ ...prev, category_id: e.target.value }))}
                   >
-                    <option value="">全部</option>
+                    <option value="">{t('common.all')}</option>
                     {categories.map((cat) => (
                       <option key={cat.id} value={cat.id}>
                         {cat.name}
@@ -461,23 +464,23 @@ function FaqsApp({ apiBase }) {
                   </select>
                 </div>
                 <div className="col-md-4">
-                  <label className="form-label">狀態</label>
+                  <label className="form-label">{t('faqs.status')}</label>
                   <select
                     className="form-select"
                     value={filters.status}
                     onChange={(e) => setFilters((prev) => ({ ...prev, status: e.target.value }))}
                   >
-                    <option value="">全部</option>
-                    <option value="published">已發布</option>
-                    <option value="draft">草稿</option>
+                    <option value="">{t('common.all')}</option>
+                    <option value="published">{t('faqs.status_published')}</option>
+                    <option value="draft">{t('faqs.status_draft')}</option>
                   </select>
                 </div>
                 <div className="col-md-4">
-                  <label className="form-label">關鍵字</label>
+                  <label className="form-label">{t('faqs.keyword')}</label>
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="搜尋問題或答案..."
+                    placeholder={t('faqs.keyword_placeholder')}
                     value={filters.keyword}
                     onChange={(e) => setFilters((prev) => ({ ...prev, keyword: e.target.value }))}
                   />
@@ -490,13 +493,13 @@ function FaqsApp({ apiBase }) {
           {showFaqForm && (
             <div className="card mb-3">
               <div className="card-header">
-                <h3 className="card-title">{editingFaq ? '編輯問題' : '新增問題'}</h3>
+                <h3 className="card-title">{editingFaq ? t('faqs.edit_faq') : t('faqs.add_faq')}</h3>
               </div>
               <div className="card-body">
                 <form onSubmit={handleSubmitFaq}>
                   <div className="row g-3">
                     <div className="col-md-6">
-                      <label className="form-label">分類</label>
+                      <label className="form-label">{t('faqs.category')}</label>
                       <select
                         className="form-select"
                         name="category_id"
@@ -504,7 +507,7 @@ function FaqsApp({ apiBase }) {
                         onChange={handleFaqInputChange}
                         disabled={isSubmittingFaq}
                       >
-                        <option value="">未分類</option>
+                        <option value="">{t('faqs.uncategorized')}</option>
                         {categories.map((cat) => (
                           <option key={cat.id} value={cat.id}>
                             {cat.name}
@@ -513,7 +516,7 @@ function FaqsApp({ apiBase }) {
                       </select>
                     </div>
                     <div className="col-md-6">
-                      <label className="form-label">狀態</label>
+                      <label className="form-label">{t('faqs.status')}</label>
                       <select
                         className="form-select"
                         name="status"
@@ -521,12 +524,12 @@ function FaqsApp({ apiBase }) {
                         onChange={handleFaqInputChange}
                         disabled={isSubmittingFaq}
                       >
-                        <option value="draft">草稿</option>
-                        <option value="published">已發布</option>
+                        <option value="draft">{t('faqs.status_draft')}</option>
+                        <option value="published">{t('faqs.status_published')}</option>
                       </select>
                     </div>
                     <div className="col-12">
-                      <label className="form-label">問題<span className="text-danger">*</span></label>
+                      <label className="form-label">{t('faqs.question')}<span className="text-danger">*</span></label>
                       <input
                         type="text"
                         className="form-control"
@@ -539,7 +542,7 @@ function FaqsApp({ apiBase }) {
                       />
                     </div>
                     <div className="col-12">
-                      <label className="form-label">答案<span className="text-danger">*</span></label>
+                      <label className="form-label">{t('faqs.answer')}<span className="text-danger">*</span></label>
                       <textarea
                         className="form-control"
                         name="answer"
@@ -551,7 +554,7 @@ function FaqsApp({ apiBase }) {
                       />
                     </div>
                     <div className="col-md-6">
-                      <label className="form-label">排序</label>
+                      <label className="form-label">{t('faqs.sort_order')}</label>
                       <input
                         type="number"
                         className="form-control"
@@ -572,13 +575,13 @@ function FaqsApp({ apiBase }) {
                           onChange={handleFaqInputChange}
                           disabled={isSubmittingFaq}
                         />
-                        <label className="form-check-label">精選問題</label>
+                        <label className="form-check-label">{t('faqs.is_highlight')}</label>
                       </div>
                     </div>
                   </div>
                   <div className="mt-3">
                     <button type="submit" className="btn btn-primary" disabled={isSubmittingFaq}>
-                      {isSubmittingFaq ? '儲存中...' : '儲存'}
+                      {isSubmittingFaq ? t('common.saving') : t('common.save')}
                     </button>
                     <button
                       type="button"
@@ -586,7 +589,7 @@ function FaqsApp({ apiBase }) {
                       onClick={resetFaqForm}
                       disabled={isSubmittingFaq}
                     >
-                      取消
+                      {t('common.cancel')}
                     </button>
                   </div>
                 </form>
@@ -598,25 +601,25 @@ function FaqsApp({ apiBase }) {
           {faqsLoading ? (
             <div className="text-center py-5">
               <div className="spinner-border text-primary" role="status">
-                <span className="visually-hidden">載入中...</span>
+                <span className="visually-hidden">{t('common.loading')}</span>
               </div>
             </div>
           ) : faqsError ? (
             <div className="alert alert-danger">{faqsError}</div>
           ) : faqs.length === 0 ? (
-            <div className="alert alert-info">目前尚未建立任何問題。</div>
+            <div className="text-center py-5 text-muted">{t('faqs.no_faqs')}</div>
           ) : (
             <div className="card">
               <div className="table-responsive">
                 <table className="table table-hover">
                   <thead>
                     <tr>
-                      <th>問題</th>
-                      <th>分類</th>
-                      <th>狀態</th>
-                      <th>精選</th>
-                      <th>排序</th>
-                      <th className="text-end">操作</th>
+                      <th>{t('faqs.question')}</th>
+                      <th>{t('faqs.category')}</th>
+                      <th>{t('faqs.status')}</th>
+                      <th>{t('faqs.is_highlight_short')}</th>
+                      <th>{t('faqs.sort_order')}</th>
+                      <th className="text-end">{t('common.actions')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -628,13 +631,13 @@ function FaqsApp({ apiBase }) {
                             {faq.answer}
                           </div>
                         </td>
-                        <td>{faq.category_name || <span className="text-muted">未分類</span>}</td>
+                        <td>{faq.category_name || <span className="text-muted">{t('faqs.uncategorized')}</span>}</td>
                         <td>{getStatusBadge(faq.status)}</td>
                         <td>
                           {faq.is_highlight ? (
-                            <span className="badge bg-warning text-white">是</span>
+                            <span className="badge bg-warning text-white">{t('common.yes')}</span>
                           ) : (
-                            <span className="text-muted">否</span>
+                            <span className="text-muted">{t('common.no')}</span>
                           )}
                         </td>
                         <td>{faq.sort_order}</td>
@@ -645,14 +648,14 @@ function FaqsApp({ apiBase }) {
                               className="btn btn-sm btn-ghost-primary"
                               onClick={() => handleToggleStatus(faq)}
                             >
-                              {faq.status === 'published' ? '設為草稿' : '發布'}
+                              {faq.status === 'published' ? t('faqs.set_draft') : t('faqs.publish')}
                             </button>
                             <button
                               type="button"
                               className="btn btn-sm btn-ghost-primary"
                               onClick={() => handleEditFaq(faq)}
                             >
-                              編輯
+                              {t('common.edit')}
                             </button>
                             <button
                               type="button"
@@ -660,7 +663,7 @@ function FaqsApp({ apiBase }) {
                               onClick={() => handleDeleteFaq(faq)}
                               disabled={isDeleting && targetFaq?.id === faq.id}
                             >
-                              {isDeleting && targetFaq?.id === faq.id ? '刪除中...' : '刪除'}
+                              {isDeleting && targetFaq?.id === faq.id ? t('common.deleting') : t('common.delete')}
                             </button>
                           </div>
                         </td>
@@ -679,7 +682,7 @@ function FaqsApp({ apiBase }) {
         <div>
           {/* 工具列 */}
           <div className="d-flex justify-content-between align-items-center mb-3">
-            <h3 className="mb-0">分類列表</h3>
+            <h3 className="mb-0">{t('faqs.category_list')}</h3>
             <button
               className="btn btn-primary"
               onClick={() => {
@@ -687,7 +690,7 @@ function FaqsApp({ apiBase }) {
                 setShowCategoryForm(true);
               }}
             >
-              新增分類
+              {t('faqs.add_category')}
             </button>
           </div>
 
@@ -695,13 +698,13 @@ function FaqsApp({ apiBase }) {
           {showCategoryForm && (
             <div className="card mb-3">
               <div className="card-header">
-                <h3 className="card-title">{editingCategory ? '編輯分類' : '新增分類'}</h3>
+                <h3 className="card-title">{editingCategory ? t('faqs.edit_category') : t('faqs.add_category')}</h3>
               </div>
               <div className="card-body">
                 <form onSubmit={handleSubmitCategory}>
                   <div className="row g-3">
                     <div className="col-md-6">
-                      <label className="form-label">分類名稱<span className="text-danger">*</span></label>
+                      <label className="form-label">{t('faqs.category_name')}<span className="text-danger">*</span></label>
                       <input
                         type="text"
                         className="form-control"
@@ -727,10 +730,10 @@ function FaqsApp({ apiBase }) {
                         pattern="[a-z0-9-]+"
                         placeholder="例如：general"
                       />
-                      <small className="form-hint">只能包含小寫字母、數字和連字號</small>
+                      <small className="form-hint">{t('faqs.slug_hint')}</small>
                     </div>
                     <div className="col-md-6">
-                      <label className="form-label">排序</label>
+                      <label className="form-label">{t('faqs.sort_order')}</label>
                       <input
                         type="number"
                         className="form-control"
@@ -751,13 +754,13 @@ function FaqsApp({ apiBase }) {
                           onChange={handleCategoryInputChange}
                           disabled={isSubmittingCategory}
                         />
-                        <label className="form-check-label">啟用</label>
+                        <label className="form-check-label">{t('faqs.is_active')}</label>
                       </div>
                     </div>
                   </div>
                   <div className="mt-3">
                     <button type="submit" className="btn btn-primary" disabled={isSubmittingCategory}>
-                      {isSubmittingCategory ? '儲存中...' : '儲存'}
+                      {isSubmittingCategory ? t('common.saving') : t('common.save')}
                     </button>
                     <button
                       type="button"
@@ -765,7 +768,7 @@ function FaqsApp({ apiBase }) {
                       onClick={resetCategoryForm}
                       disabled={isSubmittingCategory}
                     >
-                      取消
+                      {t('common.cancel')}
                     </button>
                   </div>
                 </form>
@@ -777,22 +780,22 @@ function FaqsApp({ apiBase }) {
           {categoriesLoading ? (
             <div className="text-center py-5">
               <div className="spinner-border text-primary" role="status">
-                <span className="visually-hidden">載入中...</span>
+                <span className="visually-hidden">{t('common.loading')}</span>
               </div>
             </div>
           ) : categories.length === 0 ? (
-            <div className="alert alert-info">目前尚未建立任何分類。</div>
+            <div className="alert alert-info">{t('faqs.no_categories')}</div>
           ) : (
             <div className="card">
               <div className="table-responsive">
                 <table className="table table-hover">
                   <thead>
                     <tr>
-                      <th>名稱</th>
+                      <th>{t('faqs.name')}</th>
                       <th>Slug</th>
-                      <th>狀態</th>
-                      <th>排序</th>
-                      <th className="text-end">操作</th>
+                      <th>{t('faqs.status')}</th>
+                      <th>{t('faqs.sort_order')}</th>
+                      <th className="text-end">{t('common.actions')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -802,9 +805,9 @@ function FaqsApp({ apiBase }) {
                         <td><code>{category.slug}</code></td>
                         <td>
                           {category.is_active ? (
-                            <span className="badge bg-success text-white">啟用</span>
+                            <span className="badge bg-success text-white">{t('faqs.status_active')}</span>
                           ) : (
-                            <span className="badge bg-secondary text-white">停用</span>
+                            <span className="badge bg-secondary text-white">{t('faqs.status_inactive')}</span>
                           )}
                         </td>
                         <td>{category.sort_order}</td>
@@ -815,14 +818,14 @@ function FaqsApp({ apiBase }) {
                               className="btn btn-sm btn-ghost-primary"
                               onClick={() => handleEditCategory(category)}
                             >
-                              編輯
+                              {t('common.edit')}
                             </button>
                             <button
                               type="button"
                               className="btn btn-sm btn-ghost-danger"
                               onClick={() => handleDeleteCategory(category)}
                             >
-                              刪除
+                              {t('common.delete')}
                             </button>
                           </div>
                         </td>
