@@ -22,4 +22,9 @@ return function (App $app) {
         (require __DIR__ . '/Routes/opanel_faqs.php')($group);
         // 其他 ...
     })->add($app->getContainer()->get(AdminLogMiddleware::class)); // 為整個路由群組添加日誌中間件
+
+    // 前台 API 群組
+    $app->group('/api/front', function (RouteCollectorProxy $group) {
+        (require __DIR__ . '/Routes/front_locations.php')($group);
+    });
 };
