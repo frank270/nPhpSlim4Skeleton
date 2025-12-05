@@ -1,0 +1,29 @@
+{% extends "frontend/master-layout.twig" %}
+
+{% block title %}門市據點 - 1fBreakFast{% endblock %}
+
+{% block content %}
+    <h1>門市據點列表</h1>
+    
+    <div class="locations-list">
+        {% if locations is empty %}
+            <p>目前沒有門市資料。</p>
+        {% else %}
+            <ul>
+                {% for location in locations %}
+                    <li>
+                        <h3>{{ location.name }}</h3>
+                        <p>電話: {{ location.phone }}</p>
+                        <p>地址: {{ location.address }}</p>
+                        <p>狀態: 
+                            {% if location.status == 'open' %}營業中
+                            {% elseif location.status == 'closed' %}已打烊
+                            {% elseif location.status == 'pause' %}暫停營業
+                            {% endif %}
+                        </p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endblock %}

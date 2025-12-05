@@ -1,5 +1,5 @@
 {
-  "name": "分類名稱",
-  "slug": "標識",
-  "no_categories": "尚未建立任何分類"
+  "name": "Category Name",
+  "slug": "Slug",
+  "no_categories": "No categories created yet"
 }

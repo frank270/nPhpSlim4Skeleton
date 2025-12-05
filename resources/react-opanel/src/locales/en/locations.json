@@ -24,12 +24,12 @@
   "placeholder": {
     "name": "Please enter shop name",
     "phone": "02-1234-5678",
-    "address": "例如：新北市中和區中山路二段2巷45弄44號壹樓",
+    "address": "e.g., No. 44, Alley 45, Lane 2, Zhongshan Rd., Zhonghe Dist., New Taipei City",
     "latitude": "25.123456",
     "longitude": "121.123456",
     "map_link_id": "External Link ID",
     "order_link_id": "External Link ID",
-    "notes": "例如：外送範圍、特殊說明等"
+    "notes": "e.g., Delivery range, special instructions, etc."
   },
   "error": {
     "load_failed": "Failed to load shops",

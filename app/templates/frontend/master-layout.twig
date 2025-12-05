@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}1fBreakFast{% endblock %}</title>
+    <!-- 這裡可以加入 CSS 連結 -->
+</head>
+<body>
+    <header>
+        <!-- Header 內容 -->
+        <nav>
+            <ul>
+                <li><a href="/">首頁</a></li>
+                <li><a href="/locations">門市據點</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <!-- Footer 內容 -->
+        <p>&copy; 2025 1fBreakFast</p>
+    </footer>
+
+    <!-- 這裡可以加入 JS 連結 -->
+</body>
+</html>

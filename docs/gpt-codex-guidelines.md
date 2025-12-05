@@ -45,3 +45,4 @@
    - **React 前端**：於 `resources/react-opanel/src/locales/{lang}/{module}.json` 新增對應翻譯檔。
    - **Twig 後端**：於 `resources/lang/{lang}/layout.php` (或其他對應檔案) 新增翻譯。
 4. **鍵值命名**：使用小寫蛇形命名 (snake_case)，層級應清晰，例如 `locations.add_new` 或 `common.error`。
+5. **字串長度與簡寫**：生成語系檔時，需考慮該語系的字串長度是否會過長導致破版。若過長，應使用該國家通用的簡略語 (Abbreviations)。

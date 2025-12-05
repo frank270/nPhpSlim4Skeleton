@@ -78,4 +78,28 @@ class LocationAction extends BaseAction
             'data' => $counties,
         ]);
     }
+
+    /**
+     * 渲染前台門市列表頁面 (SSR)
+     */
+    public function pageList(Request $request, Response $response): Response
+    {
+        $params = $request->getQueryParams();
+        
+        // 前台強制只顯示開啟的門市，或依需求調整
+        $filters = [
+            'county' => $params['county'] ?? null,
+            'keyword' => $params['keyword'] ?? null,
+            'status' => 'open',
+        ];
+
+        // 取得所有符合條件的門市
+        $items = $this->storeModel->paginate($filters, 1000, 0);
+
+        // 使用 Twig 渲染
+        return $this->view->render($response, 'frontend/location/index.twig', [
+            'locations' => $items,
+            'filters' => $filters,
+        ]);
+    }
 }

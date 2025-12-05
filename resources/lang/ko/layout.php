@@ -2,23 +2,23 @@
 
 return [
     'layout' => [
-        'title' => '後台控制台',
+        'title' => '관리자 대시보드',
         'sidebar' => [
-            'dashboard' => '控制台',
-            'access' => '權限管理',
-            'access_refine' => '更新權限名稱',
-            'access_roles' => '角色權限設定',
-            'users' => '使用者管理',
-            'external_links' => '外部連結管理',
-            'media_assets' => '媒體資源庫',
-            'locations' => '門市據點管理',
-            'faqs' => '常見問題管理',
+            'dashboard' => '대시보드',
+            'access' => '권한 관리',
+            'access_refine' => '권한 이름 업데이트',
+            'access_roles' => '역할 및 권한 설정',
+            'users' => '사용자 관리',
+            'external_links' => '외부 링크 관리',
+            'media_assets' => '미디어 라이브러리',
+            'locations' => '매장 관리',
+            'faqs' => 'FAQ 관리',
         ],
         'user_menu' => [
-            'profile' => '個人資料管理',
-            'change_password' => '變更密碼',
-            'logout' => '登出',
+            'profile' => '프로필 관리',
+            'change_password' => '비밀번호 변경',
+            'logout' => '로그아웃',
         ],
-        'footer' => '© 2025 EnnovicX ・ 此後台技術由 EnnovicX 開發維護，Since 2025',
+        'footer' => '© 2025 EnnovicX ・ Powered by EnnovicX, Since 2025',
     ],
 ];
