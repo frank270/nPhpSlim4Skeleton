@@ -15,7 +15,7 @@ log
 *.lock
 **.DS_Store
 **cache/*
-**/tabler-dev/*
+/public/tabler-dev/
 **/.cursor/*
 **mcp.json
 **/upload/*

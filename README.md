@@ -106,13 +106,13 @@ logs/            → 應用程式日誌目錄
 
 public/
   index.php     → 應用程式入口點
-  assets/       → 前端靜態資源
+  assets/       → 前端靜態資源 (生產環境用，包含編譯後的 Tabler: assets/tabler)
   js/           → JavaScript 檔案
-  tabler-dev/   → Tabler UI 套件
+  tabler-dev/   → Tabler 原始碼 (僅供開發參考，已加入 .gitignore)
 
 resources/       → 前端資源原始檔
   react-opanel/ → React 後台應用
-  tabler/       → Tabler UI 原始檔
+  tabler/       → Tabler 原始碼 (供前端編譯引用)
 
 vendor/         → Composer 依賴套件
 ```
