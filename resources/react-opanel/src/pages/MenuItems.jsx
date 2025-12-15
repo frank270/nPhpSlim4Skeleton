@@ -9,7 +9,7 @@ const initialForm = {
   category_id: '',
   price_original: '',
   price_sale: '',
-  media_id: '',
+  image_path: '',
   tags: '',
   is_best_seller: 0,
   status: 'draft',
@@ -25,7 +25,61 @@ const toast = (message, type = 'success') => {
     }
 };
 
+// Custom Tags Input Component
+const TagsInput = ({ value, onChange, placeholder }) => {
+  const [inputValue, setInputValue] = useState('');
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const val = inputValue.trim();
+      if (val && !value.includes(val)) {
+        onChange([...value, val]);
+        setInputValue('');
+      }
+    } else if (e.key === 'Backspace' && !inputValue && value.length > 0) {
+      onChange(value.slice(0, -1));
+    }
+  };
+
+  const removeTag = (index) => {
+    onChange(value.filter((_, i) => i !== index));
+  };
+
+  return (
+    <div className="form-control d-flex flex-wrap gap-2 align-items-center" onClick={() => document.getElementById('tags-input-field')?.focus()}>
+      {value.map((tag, index) => (
+        <span key={index} className="badge bg-secondary text-white d-flex align-items-center gap-1">
+          {tag}
+          <span 
+            className="cursor-pointer text-white opacity-75 hover-opacity-100" 
+            style={{ cursor: 'pointer' }}
+            onClick={(e) => { e.stopPropagation(); removeTag(index); }}
+          >×</span>
+        </span>
+      ))}
+      <input
+        id="tags-input-field"
+        type="text"
+        className="border-0 p-0"
+        style={{ outline: 'none', minWidth: '100px', flex: 1 }}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        onKeyDown={handleKeyDown}
+        placeholder={value.length === 0 ? placeholder : ''}
+      />
+    </div>
+  );
+};
+
+const STATUS_MAP = {
+  draft: '草稿',
+  published: '已發布',
+  archived: '已封存'
+};
+
 function MenuItemsApp({ apiBase, apiCategoryBase }) {
+
   const { t } = useTranslation();
   const [items, setItems] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -34,6 +88,8 @@ function MenuItemsApp({ apiBase, apiCategoryBase }) {
   const [form, setForm] = useState(initialForm);
   const [editingId, setEditingId] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(null);
+  const [uploading, setUploading] = useState(false);
   
   // Filters
   const [filterCategory, setFilterCategory] = useState('');
@@ -83,9 +139,9 @@ function MenuItemsApp({ apiBase, apiCategoryBase }) {
       name: item.name,
       description: item.description || '',
       category_id: item.category_id,
-      price_original: item.price_original,
-      price_sale: item.price_sale || '',
-      media_id: item.media_id || '',
+      price_original: Math.round(item.price_original),
+      price_sale: item.price_sale ? Math.round(item.price_sale) : '',
+      image_path: item.image_path || '',
       tags: item.tags || '',
       is_best_seller: item.is_best_seller,
       status: item.status,
@@ -121,7 +177,7 @@ function MenuItemsApp({ apiBase, apiCategoryBase }) {
       // Prepare payload
       const payload = { ...form };
       if (!payload.price_sale) payload.price_sale = ''; // Send empty string if null
-      if (!payload.media_id) payload.media_id = '';
+      if (!payload.image_path) payload.image_path = '';
 
       const formData = new URLSearchParams();
       for (const key in payload) {
@@ -200,11 +256,11 @@ function MenuItemsApp({ apiBase, apiCategoryBase }) {
                 </div>
                  <div className="col-md-4">
                   <label className="form-label">原價 <span className="text-danger">*</span></label>
-                  <input type="number" step="0.01" className="form-control" name="price_original" value={form.price_original} onChange={handleInputChange} required />
+                  <input type="number" step="1" className="form-control" name="price_original" value={form.price_original} onChange={handleInputChange} required />
                 </div>
                  <div className="col-md-4">
                   <label className="form-label">特價</label>
-                  <input type="number" step="0.01" className="form-control" name="price_sale" value={form.price_sale} onChange={handleInputChange} />
+                  <input type="number" step="1" className="form-control" name="price_sale" value={form.price_sale} onChange={handleInputChange} />
                 </div>
                  <div className="col-md-4">
                    <label className="form-label">狀態</label>
@@ -214,13 +270,102 @@ function MenuItemsApp({ apiBase, apiCategoryBase }) {
                      <option value="archived">已封存</option>
                    </select>
                 </div>
-                 <div className="col-md-6">
-                  <label className="form-label">標籤 (以逗號分隔)</label>
-                  <input type="text" className="form-control" name="tags" value={form.tags} onChange={handleInputChange} placeholder="例如: 熱銷,新品" />
+                   <div className="col-md-6">
+                   <label className="form-label">標籤</label>
+                   <TagsInput 
+                      value={form.tags ? form.tags.split(',').filter(t => t) : []} 
+                      onChange={(tags) => setForm(prev => ({ ...prev, tags: tags.join(',') }))}
+                      placeholder='輸入後按 Enter'
+                   />
                 </div>
-                 <div className="col-md-6">
-                  <label className="form-label">媒體 ID (圖片)</label>
-                  <input type="number" className="form-control" name="media_id" value={form.media_id} onChange={handleInputChange} />
+                <div className="col-12">
+                   <label className="form-label">商品圖片</label>
+                   <div className="d-flex align-items-start gap-4">
+                      {form.image_path && (
+                        <div className="position-relative">
+                          <img 
+                            src={form.image_path.startsWith('http') ? form.image_path : `${window.location.origin}/${form.image_path}`} 
+                            alt="Preview" 
+                            className="img-thumbnail"
+                            style={{ width: '150px', height: '150px', objectFit: 'cover' }}
+                          />
+                          <button 
+                            type="button" 
+                            className="btn-close position-absolute top-0 end-0 bg-white" 
+                            aria-label="Remove"
+                            onClick={() => setForm(prev => ({ ...prev, image_path: '' }))}
+                          ></button>
+                        </div>
+                      )}
+                      
+                      <div className="flex-fill">
+                         <input 
+                            type="file" 
+                            id="menu-item-image-upload"
+                            className="form-control" 
+                            accept="image/*"
+                            disabled={uploading}
+                            onChange={(e) => {
+                              const file = e.target.files[0];
+                              if (!file) return;
+
+                              setUploading(true);
+                              setUploadProgress(0);
+                              const formData = new FormData();
+                              formData.append('file', file);
+                              formData.append('uploaded_from', 'menu-items');
+
+                              const xhr = new XMLHttpRequest();
+                              xhr.open('POST', '/opanel/media-assets/upload');
+                              
+                              xhr.upload.onprogress = (event) => {
+                                if (event.lengthComputable) {
+                                  const percent = Math.round((event.loaded / event.total) * 100);
+                                  setUploadProgress(percent);
+                                }
+                              };
+
+                              xhr.onload = () => {
+                                setUploadProgress(100);
+                                // Artificial delay to let user see 100%
+                                setTimeout(() => {
+                                    try {
+                                      const data = JSON.parse(xhr.responseText);
+                                      if (xhr.status >= 200 && xhr.status < 300 && data.success) {
+                                         setForm(prev => ({ ...prev, image_path: data.data.path }));
+                                         toast('圖片上傳成功');
+                                      } else {
+                                         toast(data.message || '上傳失敗', 'error');
+                                      }
+                                    } catch (err) {
+                                      toast('上傳回應解析錯誤', 'error');
+                                    } finally {
+                                      setUploadProgress(null);
+                                      setUploading(false);
+                                      // Clear input
+                                      const input = document.getElementById('menu-item-image-upload');
+                                      if (input) input.value = '';
+                                    }
+                                }, 500); 
+                              };
+
+                              xhr.onerror = () => {
+                                toast('上傳發生網路錯誤', 'error');
+                                setUploadProgress(null);
+                                setUploading(false);
+                              };
+
+                              xhr.send(formData);
+                            }}
+                         />
+                         <small className="form-text text-muted">支援 jpg, png, webp 格式</small>
+                         {uploadProgress !== null && (
+                            <div className="progress mt-2" style={{ height: '5px' }}>
+                              <div className="progress-bar" style={{ width: `${uploadProgress}%` }}></div>
+                            </div>
+                         )}
+                      </div>
+                   </div>
                 </div>
                 <div className="col-md-6 d-flex align-items-end">
                   <label className="form-check form-switch">
@@ -268,15 +413,15 @@ function MenuItemsApp({ apiBase, apiCategoryBase }) {
                     <td>
                       {item.price_sale ? (
                         <span>
-                          <s className="text-muted">{item.price_original}</s> <b className="text-danger">{item.price_sale}</b>
+                          <s className="text-muted">{Math.round(item.price_original)}</s> <b className="text-danger">{Math.round(item.price_sale)}</b>
                         </span>
                       ) : (
-                        item.price_original
+                        Math.round(item.price_original)
                       )}
                     </td>
                     <td>
-                      <span className={`badge bg-${item.status === 'published' ? 'success' : 'secondary'}`}>
-                        {item.status}
+                      <span className={`badge text-white bg-${item.status === 'published' ? 'success' : 'secondary'}`}>
+                        {STATUS_MAP[item.status] || item.status}
                       </span>
                     </td>
                      <td>{item.tags}</td>

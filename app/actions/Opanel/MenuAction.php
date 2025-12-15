@@ -171,6 +171,11 @@ class MenuAction extends BaseAction
              return $this->respondJson($response, ['success' => false, 'message' => 'Name and Category are required'], 400);
         }
 
+        // Sanitize price_sale
+        if (isset($data['price_sale']) && $data['price_sale'] === '') {
+            $data['price_sale'] = null;
+        }
+
         try {
             $id = $this->itemModel->create($data);
             return $this->respondJson($response, ['success' => true, 'data' => ['id' => $id]]);
@@ -182,6 +187,12 @@ class MenuAction extends BaseAction
     public function updateItem(Request $request, Response $response, array $args): Response
     {
         $data = $request->getParsedBody();
+        
+        // Sanitize price_sale
+        if (isset($data['price_sale']) && $data['price_sale'] === '') {
+            $data['price_sale'] = null;
+        }
+
         try {
             $updated = $this->itemModel->update((int)$args['id'], $data);
             if (!$updated) {

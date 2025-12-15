@@ -65,7 +65,7 @@ class MenuItemModel
             'description' => $data['description'] ?? null,
             'price_original' => $data['price_original'],
             'price_sale' => $data['price_sale'] ?? null,
-            'media_id' => isset($data['media_id']) ? (int)$data['media_id'] : null,
+            'image_path' => $data['image_path'] ?? null,
             'tags' => $data['tags'] ?? null,
             'is_best_seller' => isset($data['is_best_seller']) ? (int)$data['is_best_seller'] : 0,
             'status' => $data['status'] ?? 'draft',
@@ -81,12 +81,12 @@ class MenuItemModel
         $update = [];
         $fields = [
             'category_id', 'name', 'description', 'price_original', 'price_sale',
-            'media_id', 'tags', 'is_best_seller', 'status', 'published_at'
+            'image_path', 'tags', 'is_best_seller', 'status', 'published_at'
         ];
 
         foreach ($fields as $field) {
             if (array_key_exists($field, $data)) {
-                if ($field === 'category_id' || $field === 'media_id') {
+                if ($field === 'category_id') {
                      $update[$field] = $data[$field] !== null ? (int)$data[$field] : null;
                 } elseif ($field === 'is_best_seller') {
                      $update[$field] = (int)$data[$field];
