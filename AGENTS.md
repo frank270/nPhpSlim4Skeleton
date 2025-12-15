@@ -21,6 +21,7 @@
 - Actions: `XxxAction.php`; Models: `XxxModel.php`; route files `snake_case` (e.g., `opanel_users.php`).
 - Twig templates: `snake-case.twig` when possible; keep small, reusable blocks.
 - JS/React: ESLint configured (`npm run lint`). Prefer functional components and hooks; files `PascalCase.jsx` for components.
+- **IMPORTANT**: Opanel React apps MUST use `application/x-www-form-urlencoded` (via `URLSearchParams`) for all POST/PUT requests. Do NOT use JSON.
 
 ## Testing Guidelines
 - PHP tests are not yet configured. Recommended: PHPUnit with tests in `tests/` mirroring `app/` namespaces.

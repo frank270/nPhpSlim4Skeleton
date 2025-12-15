@@ -4,7 +4,7 @@
 - [x] 建立門市資料表（`location_stores`，不包含城市資料表）
 - [x] 完成後台門市管理介面（列表、新增、編輯、刪除、狀態切換）
 - [x] 實作後台 API（`/opanel/locations/*`）
-- [ ] 實作前台 `GET /api/front/locations` 系列 API 與快取
+- [x] 實作前台 `GET /api/front/locations` 系列 API 與快取
 - [ ] 表單（若保留）欄位設定與提交流程
 
 ## 前端（後台）
@@ -15,7 +15,10 @@
 - [x] 列表顯示與分頁
 
 ## 前端（前台）
-- [ ] 城市選單／Accordion 切換與 RWD
+
+- [x] 前台頁面路由 `GET /locations` (SSR)
+- [x] 門市列表與 RWD 排版整合 (Twig)
+- [ ] 城市選單／Accordion 切換與進階互動
 - [ ] Google Maps 與線上點餐按鈕測試
 - [ ] 門市列表卡片排版、Lazyload
 - [ ] 搜尋功能

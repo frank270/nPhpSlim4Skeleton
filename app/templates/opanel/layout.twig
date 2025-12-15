@@ -177,6 +177,27 @@
                   <span class="nav-link-title">{{ t('layout.sidebar.locations') }}</span>
                 </a>
               </li>
+              <!-- 菜單管理 -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#navbar-menu" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
+                  <span class="nav-link-icon">
+                    <!-- Icon: tools-kitchen-2 -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M19 3v12h-5c-.023 -3.681 .184 -7.406 5 -12zm0 12v6h-1v-3m-10 -14v17m-3 -17v3a3 3 0 1 0 6 0v-3" />
+                    </svg>
+                  </span>
+                  <span class="nav-link-title">{{ t('layout.sidebar.menu') }}</span>
+                </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="/opanel/menu/categories">
+                    <span class="dropdown-item-text">{{ t('layout.sidebar.menu_categories') }}</span>
+                  </a>
+                  <a class="dropdown-item" href="/opanel/menu/items">
+                    <span class="dropdown-item-text">{{ t('layout.sidebar.menu_items') }}</span>
+                  </a>
+                </div>
+              </li>
               <!-- 常見問題管理 -->
               <li class="nav-item">
                 <a class="nav-link" href="/opanel/faqs">

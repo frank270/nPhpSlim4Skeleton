@@ -38,11 +38,16 @@
 - ✅ `DELETE /opanel/locations/{id}/delete`：刪除門市
 - ✅ `POST /opanel/locations/{id}/toggle-status`：切換狀態（循環切換）
 
-### 前台 API（待實作）⏸️
-- ⏸️ `GET /api/front/locations/cities`：回傳縣市與門市數量
-- ⏸️ `GET /api/front/locations?county=xxx`：回傳指定縣市門市
-- ⏸️ `GET /api/front/locations/store/{id}`：單一門市資訊
-- ⏸️ Cache：縣市列表可快取；門市更新時清除
+### 前台 API（已完成）✅
+- ✅ `GET /api/front/locations/cities`：回傳縣市與門市數量
+- ✅ `GET /api/front/locations?county=xxx`：回傳指定縣市門市
+- ✅ `GET /api/front/locations/{id}`：單一門市資訊
+- ✅ Cache：縣市列表可快取；門市更新時清除
+
+### 前台頁面（SSR 已完成）✅
+- ✅ `GET /locations`：前台門市列表頁面（整合 Twig 視圖）
+
+
 
 ## 依賴與整合
 

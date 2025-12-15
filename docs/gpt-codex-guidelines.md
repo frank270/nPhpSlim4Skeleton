@@ -21,6 +21,19 @@
    - `DELETE /.../{id}/delete`
    - `POST /.../{id}/toggle-status`
 2. Action 方法回傳 JSON，使用 `respondJson`，並在必要時記錄操作日誌與檢查權限。
+3. **請求格式規範**：
+   - 後台 React 前端發送 POST/PUT 請求時，**必須**使用 `application/x-www-form-urlencoded` 格式 (使用 `URLSearchParams`)。
+   - **嚴禁**使用 `JSON.stringify` 發送資料，因為後端 Slim 框架預設未全域啟用 JSON Body 解析器。
+   - 範例：
+     ```javascript
+     const formData = new URLSearchParams();
+     formData.append('key', value);
+     await fetch(url, {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+         body: formData.toString()
+     });
+     ```
 
 ## 變更流程
 1. 編輯前需先提供預計修改內容與原因，取得確認後再動手。

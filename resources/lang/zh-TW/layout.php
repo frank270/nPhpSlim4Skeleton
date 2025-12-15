@@ -12,6 +12,9 @@ return [
             'external_links' => '外部連結管理',
             'media_assets' => '媒體資源庫',
             'locations' => '門市據點管理',
+            'menu' => '菜單管理',
+            'menu_categories' => '分類管理',
+            'menu_items' => '商品管理',
             'faqs' => '常見問題管理',
         ],
         'user_menu' => [

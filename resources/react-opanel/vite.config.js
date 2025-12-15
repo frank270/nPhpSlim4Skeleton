@@ -17,7 +17,9 @@ export default defineConfig({
         externalLinks: resolve(__dirname, 'src/pages/ExternalLinks.jsx'),
         mediaAssets: resolve(__dirname, 'src/pages/MediaLibrary.jsx'),
         locations: resolve(__dirname, 'src/pages/Locations.jsx'),
-      faqs: resolve(__dirname, 'src/pages/Faqs.jsx'),
+        faqs: resolve(__dirname, 'src/pages/Faqs.jsx'),
+        menuCategories: resolve(__dirname, 'src/pages/MenuCategories.jsx'),
+        menuItems: resolve(__dirname, 'src/pages/MenuItems.jsx'),
       },
       output: {
         entryFileNames: '[name].bundle.js'

@@ -16,16 +16,17 @@
 - 外部連結：n.1 供線上訂餐導向。
 
 ## 後台需求
-- 分類 CRUD、排序與啟用切換。
-- 商品編輯：多語欄位、圖像、價格、標籤、Best Seller 設定。
-- 價格調整紀錄、通知（可選）。
-- 批次匯入／匯出商品資料。
+- ✅ 分類 CRUD、排序與啟用切換。
+- ✅ 商品編輯：圖像 (ID)、價格、標籤 (字串)、Best Seller 設定。
+- ✅ 狀態切換 (草稿/發布/封存)。
+- ⏸️ 價格調整紀錄、通知（已移除）。
+- ⏸️ 批次匯入／匯出商品資料（待實作）。
 
 ## 前端與 API
-- `GET /api/front/menu`：支援 query 參數 `category`, `keyword`, `price_min/max`, `tag`。
-- `GET /api/front/menu/categories`：回傳分類清單與商品數量。
-- `GET /api/front/menu/best-sellers`：熱銷商品。
-- Cache：可依分類快取，更新商品時清除。
+- *本次實作範圍僅限後台 (Opanel)*。
+- ⏸️ `GET /api/front/menu` (待實作)
+- ⏸️ `GET /api/front/menu/categories` (待實作)
+- ⏸️ `GET /api/front/menu/best-sellers` (待實作)
 
 ## 依賴與整合
 - 媒體資產（商品圖片）：透過媒體資源庫（`public/upload/{Y}/{m}/uuid.ext`）管理，支援 128 MB 上傳、進度條、alt/caption 與狀態切換。
