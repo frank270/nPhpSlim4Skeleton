@@ -3,27 +3,54 @@
 {% block title %}{{ item.name }} - 1fBreakFast{% endblock %}
 
 {% block hero %}
-<!-- Page Banner Start -->
-<section class="page-banner-area overlay pt-250 pb-50 rel z-1" style="background-image: url(/assets/wellfood/assets/images/banner/hero-banner.jpg)">
-    <div class="container">
-        <div class="banner-inner text-white">
-            <h1 class="page-title mb-10" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">商品詳情</h1>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb justify-content-center" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1500" data-aos-offset="50">
-                    <li class="breadcrumb-item"><a href="/">首頁</a></li>
-                    <li class="breadcrumb-item"><a href="/menu">菜單</a></li>
-                    <li class="breadcrumb-item active">{{ item.name }}</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-</section>
-<!-- Page Banner End -->
+<!-- Hero Area Start -->
+        <section class="hero-area-three pt-250 pb-220 rpb-100 rel z-1" style="background-image: url(/assets/wellfood/assets/images/background/hero-three.png)">
+           <span class="marquee-wrap style-two text-white">
+               <span class="marquee-inner left">1F BREAFAST</span>
+               <span class="marquee-inner left">1F BREAFAST</span>
+               <span class="marquee-inner left">1F BREAFAST</span>
+            </span>
+            <div class="container">
+                <div class="row align-items-end">
+                    <div class="col-lg-6">
+                        <div class="hero-content-three mt-250 rmt-0 rmb-55 text-white" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+                            <h1>壹樓早餐</h1>
+                            <p>愛美味 吃壹樓</p>
+                            <a href="https://www.yovvip.com/ORD/ORDStores?appbar=f&c=MzM1" class="theme-btn style-two">現在就點餐 <i class="far fa-arrow-alt-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="hero-three-image">
+                            <img src="/upload/website/p.1_773x620.png" alt="Hero">
+                            <div class="offer-badge" style="background-image: url(/assets/wellfood/assets/images/shapes/offer-circle-shape.png)">
+                                <span>50% <br>off</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 {% endblock %}
 
 {% block content %}
+<!-- Food Category Area start -->
+<section class="food-category-area  rpb-65 rel z-1">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-7 col-lg-9">
+                <div class="section-title text-center mb-50" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+                    <span class="sub-title mb-5">Menu</span>
+                    <h2>美味餐點</h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+<!-- Food Category Area end -->
 <!-- Product Details Start -->
-<section class="product-details pb-10 pt-130 rpt-100">
+<section class="product-details pb-10 rpt-100 mb-100">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6">
@@ -49,20 +76,13 @@
                         {% endif %}
                     </span>
                     
-                    <div class="ratting mb-40">
-                       {# Rating placeholder #}
-                       <i class="fas fa-star"></i>
-                       <i class="fas fa-star"></i>
-                       <i class="fas fa-star"></i>
-                       <i class="fas fa-star"></i>
-                       <i class="fas fa-star"></i>
-                       <span>(New)</span>
-                    </div>
+                    {# Rating hidden by default or placeholder #}
+                    {# <div class="ratting mb-40">
+                       <i class="fas fa-star"></i>...
+                    </div> #}
 
-                    <p>{{ item.description|nl2br }}</p>
+                    <p class="mt-20">{{ item.description|nl2br }}</p>
 
-                    {# Add to cart form removed. Just simple info or contact button optionally #}
-                    
                     <ul class="category-tags pt-20 pb-30">
                         <li>
                             <h6>分類</h6> :
@@ -78,7 +98,6 @@
                         {% endif %}
                     </ul>
                     
-                    {# Social share or other widgets #}
                     <div class="social-style-one">
                         <h5>分享</h5>
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -88,8 +107,8 @@
             </div>
         </div>
         
-        {# Optional Tabs for Description/Reviews, can be simple for now #}
-        
+        {# Removed: Add to cart, Reviews, Tabs #}
+
     </div>
 </section>
 <!-- Product Details End -->
