@@ -1,0 +1,121 @@
+{% extends "frontend/master-layout03.twig" %}
+
+{% block title %}美味菜單 - 1fBreakFast{% endblock %}
+
+{% block hero %}
+<!-- Page Banner Start -->
+<section class="page-banner-area overlay pt-250 pb-50 rel z-1" style="background-image: url(/assets/wellfood/assets/images/banner/hero-banner.jpg)">
+    <div class="container">
+        <div class="banner-inner text-white">
+            <h1 class="page-title mb-10" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">美味菜單</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1500" data-aos-offset="50">
+                    <li class="breadcrumb-item"><a href="/">首頁</a></li>
+                    <li class="breadcrumb-item active">菜單</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+<!-- Page Banner End -->
+{% endblock %}
+
+{% block content %}
+<!-- Shop Area Start -->
+<section class="shop-area py-130 rpy-100">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-xl-3 col-lg-4 col-md-8">
+                <div class="shop-sidebar rmb-75">
+                    <!-- Search Widget -->
+                    <div class="widget widget-search" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+                        <h4 class="widget-title">搜尋</h4>
+                        <form action="/menu" class="default-search-form">
+                            <input type="text" name="keyword" placeholder="搜尋商品..." required value="{{ filters.keyword }}">
+                            <button type="submit" class="searchbutton far fa-search"></button>
+                        </form>
+                    </div>
+
+                    <!-- Category Widget -->
+                    <div class="widget widget-category" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1500" data-aos-offset="50">
+                        <h4 class="widget-title">分類</h4>
+                        <ul>
+                            <li><a href="/menu">全部商品</a></li>
+                            {% for cat in categories %}
+                            <li>
+                                <a href="/menu?category_id={{ cat.id }}">
+                                    {{ cat.name }} 
+                                    {# Note: We don't have counts yet efficiently, skipping or need aggregation. 
+                                       For now, let's just list categories. If count needed, we need logic update. #}
+                                    {# <span class="count">8</span> #}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="col-xl-9 col-lg-8">
+                <div class="shop-page-wrap">
+                    <div class="shop-shorter rel z-3 mb-35">
+                        <div class="sort-text mb-15" data-aos="fade-left" data-aos-duration="1500" data-aos-offset="50">
+                            {# Showing count logic can be added later #}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        {% for cat in categories %}
+                            {% if itemsByCat[cat.id] is defined %}
+                                {% for item in itemsByCat[cat.id] %}
+                                <div class="col-xl-4 col-sm-6" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+                                    <div class="product-item-two">
+                                        <div class="image">
+                                            <a href="/menu/details/{{ item.id }}">
+                                                {% if item.image_path %}
+                                                <img src="{{ item.image_path starts with 'http' ? item.image_path : '/' ~ item.image_path }}" alt="{{ item.name }}" style="width: 100%; height: 250px; object-fit: cover;">
+                                                {% else %}
+                                                <img src="/assets/wellfood/assets/images/dishes/dish1.png" alt="Default Image">
+                                                {% endif %}
+                                            </a>
+                                            {% if item.is_best_seller %}
+                                            <span class="badge bg-danger position-absolute top-0 start-0 m-3">熱銷</span>
+                                            {% endif %}
+                                        </div>
+                                        <div class="content">
+                                            <div class="ratting">
+                                                {% if item.tags %}
+                                                    {% for tag in item.tags|split(',') %}
+                                                    <small class="text-muted me-1">#{{ tag }}</small>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <small class="text-muted">{{ cat.name }}</small>
+                                                {% endif %}
+                                            </div>
+                                            <h5><a href="/menu/details/{{ item.id }}">{{ item.name }}</a></h5>
+                                            <span class="price">
+                                                {% if item.price_sale %}
+                                                    <del class="text-muted">${{ item.price_original|round }}</del> <span class="text-danger">${{ item.price_sale|round }}</span>
+                                                {% else %}
+                                                    ${{ item.price_original|round }}
+                                                {% endif %}
+                                            </span>
+                                        </div>
+                                        {# Add to cart removed #}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    
+                    {# Pagination can be added here if needed #}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shop Area End -->
+{% endblock %}

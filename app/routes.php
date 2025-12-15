@@ -28,4 +28,7 @@ return function (App $app) {
     $app->group('/api/front', function (RouteCollectorProxy $group) {
         (require __DIR__ . '/Routes/front_locations.php')($group);
     });
+
+    // 前台路由
+    (require __DIR__ . '/Routes/front_menu.php')($app);
 };
