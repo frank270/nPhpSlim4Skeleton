@@ -1,0 +1,138 @@
+{% extends "frontend/master-layout03.twig" %}
+
+{% block title %}食品安全檢驗 - 1fBreakFast{% endblock %}
+
+{% block hero %}
+<!-- Hero Area Start -->
+        <section class="hero-area-three pt-250 pb-220 rpb-100 rel z-1" style="background-image: url(/assets/wellfood/assets/images/background/hero-three.png)">
+           <span class="marquee-wrap style-two text-white">
+               <span class="marquee-inner left">1F BREAFAST</span>
+               <span class="marquee-inner left">1F BREAFAST</span>
+               <span class="marquee-inner left">1F BREAFAST</span>
+            </span>
+            <div class="container">
+                <div class="row align-items-end">
+                    <div class="col-lg-6">
+                        <div class="hero-content-three mt-250 rmt-0 rmb-55 text-white" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+                            <h1>壹樓早餐</h1>
+                            <p>愛美味 吃壹樓</p>
+                            <a href="https://www.yovvip.com/ORD/ORDStores?appbar=f&c=MzM1" class="theme-btn style-two">現在就點餐 <i class="far fa-arrow-alt-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="hero-three-image">
+                            <img src="/upload/website/p.1_773x620.png" alt="Hero">
+                            <div class="offer-badge" style="background-image: url(/assets/wellfood/assets/images/shapes/offer-circle-shape.png)">
+                                <span>50% <br>off</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock %}
+
+{% block content %}
+
+<!-- Food Category Area start -->
+        <section class="food-category-area  rpb-65 rel z-1">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-7 col-lg-9">
+                        <div class="section-title text-center mb-50" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+                            <span class="sub-title mb-5">Food Safety Report </span>
+                            <h2>食品安全檢驗</h2>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+        <!-- Food Category Area end -->
+
+<!-- Shop Area Start -->
+<section class="shop-area  rpy-100">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-xl-3 col-lg-4 col-md-8">
+                <div class="shop-sidebar rmb-75">
+                    <!-- Search Widget -->
+                    <div class="widget widget-search" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+                        <h4 class="widget-title">搜尋</h4>
+                        <form action="/food-safety" class="default-search-form">
+                            <input type="text" name="keyword" placeholder="搜尋報告..." required value="{{ queryParams.keyword }}">
+                            <button type="submit" class="searchbutton far fa-search"></button>
+                        </form>
+                    </div>
+
+                    <!-- Category Widget -->
+                    <div class="widget widget-category" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1500" data-aos-offset="50">
+                        <h4 class="widget-title">分類</h4>
+                        <ul>
+                            <li><a href="/food-safety">全部報告</a></li>
+                            {% for cat in categories %}
+                            <li>
+                                <a href="/food-safety?category_id={{ cat.id }}">
+                                    {{ cat.name }} 
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="col-xl-9 col-lg-8">
+                <div class="shop-page-wrap">
+                    <div class="shop-shorter rel z-3 mb-35">
+                         <div class="sort-text mb-15">
+                            Showing Results
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        {% for cat in categories %}
+                            {% if itemsByCat[cat.id] is defined %}
+                                {% for item in itemsByCat[cat.id] %}
+                                <div class="col-xl-4 col-sm-6" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+                                    <div class="product-item-two">
+                                        <div class="image">
+                                            <a href="/food-safety/details/{{ item.id }}">
+                                                {% if item.image_path %}
+                                                <img src="{{ item.image_path starts with 'http' ? item.image_path : '/' ~ item.image_path }}" alt="{{ item.name }}" style="width: 100%; height: 250px; object-fit: cover;">
+                                                {% else %}
+                                                <img src="/assets/wellfood/assets/images/dishes/dish1.png" alt="Default Image">
+                                                {% endif %}
+                                            </a>
+                                            {% if item.is_highlight %}
+                                            <span class="badge bg-warning position-absolute top-0 start-0 m-3 text-dark">重點</span>
+                                            {% endif %}
+                                        </div>
+                                        <div class="content">
+                                            <div class="ratting">
+                                                <small class="text-muted">{{ cat.name }}</small>
+                                            </div>
+                                            <h5><a href="/food-safety/details/{{ item.id }}">{{ item.name }}</a></h5>
+                                            <span class="price">
+                                                <span class="text-muted" style="font-size: 0.9em;">
+                                                    <i class="far fa-calendar-alt"></i> 
+                                                    {{ item.report_date ? item.report_date : '無日期' }}
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shop Area End -->
+{% endblock %}

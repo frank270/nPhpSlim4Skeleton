@@ -20,6 +20,8 @@ export default defineConfig({
         faqs: resolve(__dirname, 'src/pages/Faqs.jsx'),
         menuCategories: resolve(__dirname, 'src/pages/MenuCategories.jsx'),
         menuItems: resolve(__dirname, 'src/pages/MenuItems.jsx'),
+        foodSafetyCategories: resolve(__dirname, 'src/pages/FoodSafetyCategories.jsx'),
+        foodSafetyItems: resolve(__dirname, 'src/pages/FoodSafetyItems.jsx'),
       },
       output: {
         entryFileNames: '[name].bundle.js'

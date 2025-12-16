@@ -1,0 +1,14 @@
+{% extends "opanel/layout.twig" %}
+
+{% block content %}
+<div id="food-safety-categories-root"></div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    window.PAGE_CONFIG = {
+        apiBase: '{{ apiBase }}'
+    };
+</script>
+<script type="module" src="/js/opanel/foodSafetyCategories.bundle.js?v={{ 'now'|date('U') }}"></script>
+{% endblock %}

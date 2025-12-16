@@ -21,6 +21,7 @@ return function (App $app) {
         (require __DIR__ . '/Routes/opanel_locations.php')($group);
         (require __DIR__ . '/Routes/opanel_faqs.php')($group);
         (require __DIR__ . '/Routes/opanel_menu.php')($group);
+        (require __DIR__ . '/Routes/opanel_food_safety.php')($group);
         // 其他 ...
     })->add($app->getContainer()->get(AdminLogMiddleware::class)); // 為整個路由群組添加日誌中間件
 
@@ -31,4 +32,5 @@ return function (App $app) {
 
     // 前台路由
     (require __DIR__ . '/Routes/front_menu.php')($app);
+    (require __DIR__ . '/Routes/front_food_safety.php')($app);
 };
