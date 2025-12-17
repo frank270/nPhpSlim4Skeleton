@@ -4,6 +4,7 @@
 1. 遵循既有資料夾與檔案拆分方式，例如每個後台功能使用獨立的 `app/Routes/opanel_*.php` 以及 `App\Actions\Opanel\*Action`。
 2. 不得將多個大功能攏統放入同一檔案；新增功能必須依現有結構建立專屬 Route 與 Action。
 3. 保持命名規則，例如 URL 路徑使用 `/module/resource/...`，動作以 `create/edit/delete/toggle-status/update-order` 等既有字尾。
+4. **側邊欄選單**：新增後台模組時，**務必**於 `app/Templates/opanel/layout.twig` 增加對應的連結項目，切勿遺漏。
 
 ## 後台技術棧
 1. 後台畫面採用 React（位於 `resources/react-opanel/`），非 Twig；新增 UI 功能需在 React 程式碼中實作。

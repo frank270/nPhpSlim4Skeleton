@@ -1,0 +1,13 @@
+{% extends "opanel/layout.twig" %}
+
+{% block styles %}
+<link rel="stylesheet" href="/js/opanel/assets/cmsApp.css?v={{ "now"|date("U") }}">
+{% endblock %}
+
+{% block content %}
+<div id="cms-app-root" data-api-base="{{ apiBase }}"></div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="/js/opanel/cmsApp.bundle.js?v={{ "now"|date("U") }}"></script>
+{% endblock %}

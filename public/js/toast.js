@@ -82,4 +82,12 @@ window.showToast = function (message, type = 'info') {
       bsToast.show();
     }
   };
+
+  // Shorthand helpers
+  window.toast = {
+      success: (msg) => window.showToast(msg, 'success'),
+      error: (msg) => window.showToast(msg, 'error'),
+      info: (msg) => window.showToast(msg, 'info'),
+      warning: (msg) => window.showToast(msg, 'warning')
+  };
   

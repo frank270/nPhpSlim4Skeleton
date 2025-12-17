@@ -13,7 +13,8 @@ export default defineConfig({
         adminUsers: resolve(__dirname, 'src/pages/AdminUsers.jsx'),
         adminUsersCreate: resolve(__dirname, 'src/pages/AdminUsersCreate.jsx'),
         adminUsersEdit: resolve(__dirname, 'src/pages/AdminUsersEdit.jsx'),
-        cmsCategories: resolve(__dirname, 'src/pages/cms/CmsCategories.jsx'),
+        adminUsersEdit: resolve(__dirname, 'src/pages/AdminUsersEdit.jsx'),
+        cmsApp: resolve(__dirname, 'src/pages/cms/CmsApp.jsx'),
         externalLinks: resolve(__dirname, 'src/pages/ExternalLinks.jsx'),
         mediaAssets: resolve(__dirname, 'src/pages/MediaLibrary.jsx'),
         locations: resolve(__dirname, 'src/pages/Locations.jsx'),
@@ -24,7 +25,11 @@ export default defineConfig({
         foodSafetyItems: resolve(__dirname, 'src/pages/FoodSafetyItems.jsx'),
       },
       output: {
-        entryFileNames: '[name].bundle.js'
+        entryFileNames: '[name].bundle.js',
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name === 'style.css') return 'cmsApp.css'; // Hacky but might work if vite bundles it as style.css first
+          return 'assets/[name][extname]';
+        }
       }
     }
   }
