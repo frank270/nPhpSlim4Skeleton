@@ -2,7 +2,69 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
+// Custom Tags Input Component (Reused)
+const TagsInput = ({ value, onChange, placeholder }) => {
+  const [inputValue, setInputValue] = useState('');
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const val = inputValue.trim();
+      if (val && !value.includes(val)) {
+        onChange([...value, val]);
+        setInputValue('');
+      }
+    } else if (e.key === 'Backspace' && !inputValue && value.length > 0) {
+      onChange(value.slice(0, -1));
+    }
+  };
+
+  const removeTag = (index) => {
+    onChange(value.filter((_, i) => i !== index));
+  };
+
+  return (
+    <div className="form-control d-flex flex-wrap gap-2 align-items-center" onClick={() => document.getElementById('tags-input-field')?.focus()}>
+      {value.map((tag, index) => (
+        <span key={index} className="badge bg-secondary text-white d-flex align-items-center gap-1">
+          {tag}
+          <span 
+            className="cursor-pointer text-white opacity-75 hover-opacity-100" 
+            style={{ cursor: 'pointer' }}
+            onClick={(e) => { e.stopPropagation(); removeTag(index); }}
+          >×</span>
+        </span>
+      ))}
+      <input
+        id="tags-input-field"
+        type="text"
+        className="border-0 p-0"
+        style={{ outline: 'none', minWidth: '100px', flex: 1 }}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        onKeyDown={handleKeyDown}
+        placeholder={value.length === 0 ? placeholder : ''}
+      />
+    </div>
+  );
+};
+
 function CmsEditor({ id, onBack }) {
+  // ... (rest of CmsEditor logic) ...
+// Note: Since I am replacing the entire component definition if I use replace, I should be careful. 
+// Actually I only need to insert the TagsInput definition BEFORE CmsEditor, and then replace the JSX of the tags input.
+// I will use multi_replace for safety and precision.
+// But wait, the previous tool call was viewing the file.
+// I will just use `replace_file_content` to insert the component and `multi_replace` or another call to fix the JSX.
+// Actually, I can do it in two steps.
+// Step 1: Insert TagsInput component definition at top level.
+// Step 2: Replace the JSX in render.
+// LIMITATION: `replace_file_content` works on contiguous block.
+// Let's do a smart replacement. I will insert TagsInput before CmsEditor function.
+// And then replace the input JSX inside CmsEditor.
+// Wait, I can't do two separate non-contiguous edits in one `replace_file_content` call.
+// I should use `multi_replace_file_content`.
+
   const isEdit = !!id;
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -246,9 +308,34 @@ function CmsEditor({ id, onBack }) {
                   </div>
 
                   <div className="mb-3">
-                    <label className="form-label">標籤 (Tags)</label>
-                    <input type="text" className="form-control" name="tags" placeholder="逗號分隔..." value={formData.tags} onChange={handleChange} />
-                  </div>
+                <label className="form-label">
+                  標籤 (逗號分隔)
+                </label>
+                <div className="mb-2">
+                    <TagsInput 
+                      value={formData.tags ? formData.tags.split(',').filter(t => t) : []} 
+                      onChange={(tags) => setFormData(prev => ({ ...prev, tags: tags.join(',') }))}
+                      placeholder='輸入後按 Enter'
+                   />
+                </div>
+                {/* 預設標籤快捷鍵 */}
+                <div className="d-flex gap-2">
+                    {['活動新品', '展店消息', '會員活動'].map(tag => (
+                        <button 
+                            key={tag}
+                            type="button" 
+                            className="btn btn-sm btn-outline-secondary"
+                            onClick={() => {
+                                const currentTags = formData.tags ? formData.tags.split(',').map(t => t.trim()).filter(Boolean) : [];
+                                if (!currentTags.includes(tag)) {
+                                    const newTags = [...currentTags, tag].join(',');
+                                    setFormData(prev => ({ ...prev, tags: newTags }));
+                                }
+                            }}
+                        >
+                            + {tag}
+                        </button>
+                    ))}
                 </div>
               </div>
               
@@ -259,10 +346,12 @@ function CmsEditor({ id, onBack }) {
               </div>
             </div>
           </div>
-        </form>
+        </div>
       </div>
-    </div>
-  );
+    </form>
+  </div>
+</div>
+);
 }
 
 export default CmsEditor;

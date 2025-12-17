@@ -13,7 +13,7 @@ export default defineConfig({
         adminUsers: resolve(__dirname, 'src/pages/AdminUsers.jsx'),
         adminUsersCreate: resolve(__dirname, 'src/pages/AdminUsersCreate.jsx'),
         adminUsersEdit: resolve(__dirname, 'src/pages/AdminUsersEdit.jsx'),
-        adminUsersEdit: resolve(__dirname, 'src/pages/AdminUsersEdit.jsx'),
+
         cmsApp: resolve(__dirname, 'src/pages/cms/CmsApp.jsx'),
         externalLinks: resolve(__dirname, 'src/pages/ExternalLinks.jsx'),
         mediaAssets: resolve(__dirname, 'src/pages/MediaLibrary.jsx'),

@@ -100,9 +100,20 @@ class CmsPostModel
                ->setParameter('status', $filters['status']);
         }
 
+        if (!empty($filters['type'])) {
+            $qb->andWhere('type = :type')
+               ->setParameter('type', $filters['type']);
+        }
+
         if (!empty($filters['keyword'])) {
             $qb->andWhere('title LIKE :keyword')
                ->setParameter('keyword', '%' . $filters['keyword'] . '%');
+        }
+
+        // Tag search support
+        if (!empty($filters['tag_like'])) {
+            $qb->andWhere('tags LIKE :tag_like')
+               ->setParameter('tag_like', '%' . $filters['tag_like'] . '%');
         }
     }
 }
