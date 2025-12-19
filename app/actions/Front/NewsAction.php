@@ -73,4 +73,29 @@ class NewsAction extends BaseAction
             'post' => $post,
         ]);
     }
+
+    public function privacyPolicy(Request $request, Response $response, array $args): Response
+    {
+        return $this->renderStaticPage($response, 'privacy-policy');
+    }
+
+    public function termsOfUse(Request $request, Response $response, array $args): Response
+    {
+        return $this->renderStaticPage($response, 'terms-of-use');
+    }
+
+    private function renderStaticPage(Response $response, string $slug): Response
+    {
+        $post = $this->postModel->findBySlug($slug);
+
+        // Allow 'statics' type or 'news' type, as long asslug matches
+        if (!$post || $post['status'] !== 'published') {
+             $response->getBody()->write("頁面不存在或已下架");
+             return $response->withStatus(404);
+        }
+
+        return $this->view->render($response, 'frontend/news/detail.twig', [
+            'post' => $post,
+        ]);
+    }
 }

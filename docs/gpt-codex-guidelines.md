@@ -8,7 +8,13 @@
 
 ## 後台技術棧
 1. 後台畫面採用 React（位於 `resources/react-opanel/`），非 Twig；新增 UI 功能需在 React 程式碼中實作。
-2. PHP 端提供資料（JSON API）與權限/日誌處理。
+2. **編譯要求 (Critical)**：任何對 `resources/react-opanel/` 目錄下的修改，**必須**隨後執行 `npm run build` (於該目錄下)，否則變更不會生效。禁止將修改 React 視為修改 interpreted language。
+3. **UI 一致性**：新增 UI 元件 (如 Input, Select, Tags) 前，**必須**先檢查既有模組 (e.g., Food Safety) 的實作方式，確保風格與操作體驗一致，嚴禁擅自創造非標準的介面。
+4. PHP 端提供資料（JSON API）與權限/日誌處理。
+
+## 邏輯確認原則 (Logic Verification)
+1. **需求確認**：在進行任何「複雜邏輯修改」或「排版結構變更」前，**必須**先向使用者複述理解並要求確認 (e.g., "請確認你理解")，**嚴禁**在未獲批准前直接寫 Code。
+2. **參數傳遞驗證**：新增篩選、排序等功能時，必須追蹤資料流 (Controller -> Model)，確認參數 (如 `keyword`, `tag`) 確實被傳遞並用於 SQL 查詢，不可假設參數會自動生效。
 
 ## 資料存取層
 1. 透過 Doctrine DBAL `Connection` 搭配 `app/Models/` 下的 Model 類別處理資料庫操作。
