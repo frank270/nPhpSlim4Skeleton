@@ -22,6 +22,15 @@ return [
                     'template_path' => __DIR__ . '/Templates',
                     'cache_path'    => __DIR__ . '/../cache/twig',
                 ],
+                'smtp' => [
+                    'host'       => $_ENV['SMTP_HOST'] ?? 'smtp.gmail.com',
+                    'port'       => $_ENV['SMTP_PORT'] ?? 587,
+                    'username'   => $_ENV['SMTP_USER'] ?? '',
+                    'password'   => $_ENV['SMTP_PASS'] ?? '',
+                    'secure'     => $_ENV['SMTP_SECURE'] ?? 'tls',
+                    'from_email' => $_ENV['SMTP_FROM_EMAIL'] ?? 'noreply@example.com',
+                    'from_name'  => $_ENV['SMTP_FROM_NAME'] ?? 'Contact Form',
+                ],
             ];
         });
 

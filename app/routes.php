@@ -34,4 +34,5 @@ return function (App $app) {
     (require __DIR__ . '/Routes/front_menu.php')($app);
     (require __DIR__ . '/Routes/front_food_safety.php')($app);
     (require __DIR__ . '/Routes/front_news.php')($app);
+    (require __DIR__ . '/Routes/front_contact.php')($app);
 };
