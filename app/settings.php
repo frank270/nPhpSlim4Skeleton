@@ -23,7 +23,7 @@ return [
                     'cache_path'    => __DIR__ . '/../cache/twig',
                 ],
                 'smtp' => [
-                    'host'       => $_ENV['SMTP_HOST'] ?? 'smtp.gmail.com',
+                    'host'       => $_ENV['SMTP_HOST'] ?? 'smtp.dreamhost.com',
                     'port'       => $_ENV['SMTP_PORT'] ?? 587,
                     'username'   => $_ENV['SMTP_USER'] ?? '',
                     'password'   => $_ENV['SMTP_PASS'] ?? '',
