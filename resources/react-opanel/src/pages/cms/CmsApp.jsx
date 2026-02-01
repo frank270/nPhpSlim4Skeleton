@@ -11,6 +11,10 @@ function CmsApp() {
   const { t } = useTranslation();
   const [view, setView] = useState('list'); // 'list' or 'editor'
   const [editingId, setEditingId] = useState(null);
+  
+  // Read forcedType from root element dataset
+  const rootElement = document.getElementById('cms-app-root');
+  const forcedType = rootElement?.dataset.forcedType || null;
 
   // Router logic based on function calls from children
   const handleEdit = (id) => {
@@ -31,10 +35,10 @@ function CmsApp() {
   return (
     <div className="container-fluid">
       {view === 'list' && (
-        <CmsList onCreate={handleCreate} onEdit={handleEdit} />
+        <CmsList onCreate={handleCreate} onEdit={handleEdit} forcedType={forcedType} />
       )}
       {view === 'editor' && (
-        <CmsEditor id={editingId} onBack={handleBack} />
+        <CmsEditor id={editingId} onBack={handleBack} forcedType={forcedType} />
       )}
     </div>
   );

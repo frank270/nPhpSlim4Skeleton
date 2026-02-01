@@ -45,4 +45,4 @@ rsync -avz --delete \
 
 echo "✅ QA 部署完成！"
 echo "   請記得在遠端執行資料庫遷移 (如需):"
-echo "   ssh $REMOTE_USER@$REMOTE_HOST 'cd $REMOTE_ROOT && php vendor/bin/doctrine-migrations migrate'"
+echo "   ssh $REMOTE_USER@$REMOTE_HOST 'cd $REMOTE_ROOT && php-8.3 vendor/bin/doctrine-migrations migrate --no-all-or-nothing'"

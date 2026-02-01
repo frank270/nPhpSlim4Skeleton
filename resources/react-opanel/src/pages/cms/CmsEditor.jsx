@@ -49,7 +49,7 @@ const TagsInput = ({ value, onChange, placeholder }) => {
   );
 };
 
-function CmsEditor({ id, onBack }) {
+function CmsEditor({ id, onBack, forcedType }) {
   // ... (rest of CmsEditor logic) ...
 // Note: Since I am replacing the entire component definition if I use replace, I should be careful. 
 // Actually I only need to insert the TagsInput definition BEFORE CmsEditor, and then replace the JSX of the tags input.
@@ -73,7 +73,7 @@ function CmsEditor({ id, onBack }) {
     cover_image: '',
     content: '',
     tags: '',
-    type: 'news',
+    type: forcedType || 'news',
     status: 'draft',
     sort_order: 0,
     published_at: ''
@@ -240,7 +240,12 @@ function CmsEditor({ id, onBack }) {
   return (
     <div className="card">
       <div className="card-header">
-        <h3 className="card-title">{isEdit ? '編輯文章' : '新增文章'}</h3>
+        <h3 className="card-title">
+            {forcedType === 'history' 
+                ? (isEdit ? '編輯歷程' : '新增歷程')
+                : (isEdit ? '編輯文章' : '新增文章')
+            }
+        </h3>
         <button className="btn btn-secondary ms-auto" onClick={onBack}>回列表</button>
       </div>
       <div className="card-body">
@@ -279,15 +284,17 @@ function CmsEditor({ id, onBack }) {
                       <option value="draft">草稿</option>
                       <option value="published">已發布</option>
                     </select>
+                    {!forcedType && (
                     <select className="form-select mb-2" name="type" value={formData.type} onChange={handleChange}>
                       <option value="news">最新消息</option>
                       <option value="article">專欄文章</option>
                       <option value="statics">靜態頁面</option>
                     </select>
+                    )}
                   </div>
 
                   <div className="mb-3">
-                    <label className="form-label">發布時間</label>
+                    <label className="form-label">{forcedType === 'history' ? '歷程時間 (選填)' : '發布時間'}</label>
                     <input type="datetime-local" className="form-control" name="published_at" value={formData.published_at || ''} onChange={handleChange} />
                   </div>
 
@@ -341,7 +348,7 @@ function CmsEditor({ id, onBack }) {
               
               <div className="mt-3">
                 <button type="submit" className="btn btn-primary w-100" disabled={loading}>
-                  {loading ? '儲存中...' : '儲存文章'}
+                  {loading ? '儲存中...' : (forcedType === 'history' ? '儲存歷程' : '儲存文章')}
                 </button>
               </div>
             </div>

@@ -11,7 +11,7 @@ CREATE TABLE `cms_posts` (
   `cover_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '列表封面圖',
   `content` longtext COLLATE utf8mb4_unicode_ci COMMENT 'Quill HTML 內容',
   `tags` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '標籤 (逗號分隔)',
-  `type` enum('news','article','statics') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'news' COMMENT '文章類型',
+  `type` enum('news','article','statics','history') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'news' COMMENT '文章類型',
   `status` enum('draft','published') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'draft' COMMENT '狀態',
   `sort_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序(置頂用)',
   `published_at` datetime DEFAULT NULL COMMENT '發布時間',

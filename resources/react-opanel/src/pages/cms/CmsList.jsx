@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-function CmsList({ onCreate, onEdit }) {
+function CmsList({ onCreate, onEdit, forcedType }) {
   const { t } = useTranslation();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
     keyword: '',
     status: '',
-    type: ''
+    type: forcedType || ''
   });
   const [pagination, setPagination] = useState({
     current_page: 1,
@@ -72,17 +72,18 @@ function CmsList({ onCreate, onEdit }) {
   return (
     <div className="card">
         <div className="card-header">
-            <h3 className="card-title">文章管理</h3>
+            <h3 className="card-title">{forcedType === 'history' ? '品牌歷程' : '文章管理'}</h3>
             <div className="card-actions">
                 <button className="btn btn-primary" onClick={onCreate}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="icon" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-                    新增文章
+                    {forcedType === 'history' ? '新增歷程' : '新增文章'}
                 </button>
             </div>
         </div>
         <div className="card-body border-bottom py-3">
             <div className="d-flex">
                 <div className="text-muted">
+                    {!forcedType && (
                     <select className="form-select form-select-sm d-inline-block w-auto" 
                         value={filters.type} 
                         onChange={(e) => setFilters({...filters, type: e.target.value})}
@@ -92,6 +93,7 @@ function CmsList({ onCreate, onEdit }) {
                         <option value="article">專欄文章</option>
                         <option value="statics">靜態頁面</option>
                     </select>
+                    )}
                 </div>
                 <div className="text-muted ms-2">
                     <select className="form-select form-select-sm d-inline-block w-auto" 

@@ -5,6 +5,7 @@ use App\Actions\Opanel\CmsCategoryAction;
 return function (RouteCollectorProxy $group) {
     // CMS Post Management
     $group->get('/cms', [App\Actions\Opanel\CmsPostAction::class, 'pageIndex']);
+    $group->get('/cms/history', [App\Actions\Opanel\CmsPostAction::class, 'historyIndex']);
 
     $group->get('/cms/posts/list', [App\Actions\Opanel\CmsPostAction::class, 'list']);
     $group->get('/cms/posts/{id:[0-9]+}', [App\Actions\Opanel\CmsPostAction::class, 'get']);

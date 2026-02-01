@@ -26,6 +26,16 @@ class CmsPostAction extends BaseAction
         ]);
     }
 
+    public function historyIndex(Request $request, Response $response): Response
+    {
+        // Render the React container with forcedType = history
+        return $this->view->render($response, 'opanel/cms/index.twig', [
+            'title' => '品牌歷程',
+            'apiBase' => '/opanel/cms/posts',
+            'forcedType' => 'history'
+        ]);
+    }
+
     public function list(Request $request, Response $response): Response
     {
         $params = $request->getQueryParams();
@@ -36,6 +46,7 @@ class CmsPostAction extends BaseAction
         $filters = [
             'keyword' => $params['keyword'] ?? null,
             'status' => $params['status'] ?? null,
+            'type' => $params['type'] ?? null, // Fix: Capture type filter
         ];
 
         $items = $this->model->paginate($filters, $limit, $offset);

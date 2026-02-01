@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<div id="cms-app-root" data-api-base="{{ apiBase }}"></div>
+<div id="cms-app-root" data-api-base="{{ apiBase }}" data-forced-type="{{ forcedType|default('') }}"></div>
 {% endblock %}
 
 {% block scripts %}
