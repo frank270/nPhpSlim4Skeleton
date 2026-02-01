@@ -11,8 +11,13 @@ class ContactAction extends BaseAction
 {
     public function index(Request $request, Response $response, array $args): Response
     {
+        // 產生簡單數學驗證碼
+        $num1 = rand(1, 9);
+        $num2 = rand(1, 9);
+        $_SESSION['captcha_answer'] = $num1 + $num2;
+        
         return $this->view->render($response, 'frontend/contact/index.twig', [
-            // Any data needed for the view can be passed here
+            'captcha_question' => "{$num1} + {$num2} = ?",
         ]);
     }
 
@@ -24,11 +29,22 @@ class ContactAction extends BaseAction
         $phone = $data['phone'] ?? '';
         $subject = $data['subject'] ?? 'Contact Form Submission';
         $messageBody = $data['message'] ?? '';
+        $captcha = $data['captcha'] ?? '';
 
         if (empty($name) || empty($email) || empty($messageBody)) {
             $response->getBody()->write(json_encode(['success' => false, 'message' => '請填寫所有必填欄位']));
             return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
         }
+
+        // 驗證碼檢查
+        if (!isset($_SESSION['captcha_answer']) || intval($captcha) !== $_SESSION['captcha_answer']) {
+            $response->getBody()->write(json_encode(['success' => false, 'message' => '驗證碼錯誤，請重新計算']));
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+        }
+        
+        // 驗證成功後，清除 (但考慮到 AJAX 失敗可能要重試，這裡可以選擇是否清除，或是在成功寄出後清除)
+        // 策略: 若只要防機器人，保持 Session 直到過期也行，但為了安全最好更新
+        // 這裡暫不清除，讓使用者如果信件發送失敗還可以重試，不需要重新刷頁面看新題目
 
         $settings = $this->container->get('settings')['smtp'];
         $mail = new \PHPMailer\PHPMailer\PHPMailer(true);

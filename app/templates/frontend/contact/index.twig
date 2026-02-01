@@ -101,6 +101,12 @@
                                     <textarea name="message" class="form-control" rows="5" placeholder="訊息內容" required></textarea>
                                 </div>
                             </div>
+                            <div class="col-md-6 mb-20">
+                                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                                    <label for="captcha" style="white-space: nowrap; margin-bottom: 0; font-weight: bold;">驗證碼 ({{ captcha_question }}):</label>
+                                    <input type="text" name="captcha" id="captcha" class="form-control" placeholder="請輸入答案" required style="width: 120px;">
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <button type="submit" class="theme-btn style-two">送出訊息 <i class="far fa-arrow-alt-right"></i></button>
                             </div>
