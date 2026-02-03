@@ -3,15 +3,16 @@
 {% block title %}聯絡我們 - 1fBreakFast{% endblock %}
 
 {% block hero %}
+
 <!-- Hero Area Start -->
         <div class="hero-area-two bgs-cover pt-205 rpt-150 pb-100 rel z-1" style="background-image: url(/assets/wellfood/assets/images/background/hero-two.jpg)">
             <div class="container container-1520">
                 <div class="row align-items-center">
                     <div class="col-lg-7">
                         <div class="hero-two-left mb-90 rmb-60">
-                            <span class="hero-title mb-40" data-aos="fade-left" data-aos-delay="150" data-aos-duration="1500" data-aos-offset="50">1F</span>
+                            <span class="hero-title mb-40" data-aos="fade-left" data-aos-delay="150" data-aos-duration="1500" data-aos-offset="50">1F{{ short_code('home_hero_text') }}</span>
                             <div class="hero-content-two text-white" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
-                                <p>科技早餐先驅，導入多項全自動設備，提升製程效率與品質穩定度</p>
+                                <p>{{ short_code('contact_hero_text') }}</p>
                                 {# <span class="price">price only $55</span> #}
                                 <a href="/" class="theme-btn">order now <i class="far fa-arrow-alt-right"></i></a>
                             </div>
@@ -35,7 +36,7 @@
                     <img src="/assets/wellfood/assets/images/shapes/hero-shape3.png" alt="Hero Shape">
                 </div>
                 <div class="pizza">
-                    <img src="/assets/img/contact_p.1_773x620.png" alt="Pizza">
+                    {{ short_code('home_hero_img') }}
                 </div>
                 <div class="letter-shape-one">
                     <img src="/assets/wellfood/assets/images/hero/letter-shape.png" alt="Leter Shape">

@@ -1,0 +1,17 @@
+{% extends 'opanel/layout.twig' %}
+
+{% block content %}
+
+<div id="content-blocks-app" 
+     data-page="contentBlocks" 
+     data-props="{{ {'apiBase': apiBase}|json_encode|e('html_attr') }}">
+     <div class="container-xl d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+        <div class="spinner-border text-primary" role="status"></div>
+     </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+    <script type="module" src="{{ base_path() }}/js/opanel/contentBlocks.bundle.js?v=1.5"></script>
+{% endblock %}

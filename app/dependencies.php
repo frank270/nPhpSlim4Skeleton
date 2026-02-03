@@ -46,6 +46,28 @@ return function (App $app) {
             return $i18n->t($key, $replace);
         }));
 
+        // Add short_code() function
+        $db = $c->get(\Doctrine\DBAL\Connection::class);
+        // Avoid re-instantiating if possible, but here it's fine
+        $contentBlockModel = new \App\Models\ContentBlockModel($db);
+        
+        $twig->getEnvironment()->addFunction(new \Twig\TwigFunction('short_code', function ($code) use ($contentBlockModel) {
+            $block = $contentBlockModel->findByShortCode($code);
+            if (!$block) {
+                return '';
+            }
+
+            switch ($block['type']) {
+                case 'image':
+                    return '<img src="' . htmlspecialchars($block['content']) . '" alt="' . htmlspecialchars($code) . '">';
+                case 'html':
+                    return $block['content']; // Raw HTML
+                case 'raw_text':
+                default:
+                    return nl2br(htmlspecialchars($block['content']));
+            }
+        }, ['is_safe' => ['html']]));
+
         return $twig;
     });
 

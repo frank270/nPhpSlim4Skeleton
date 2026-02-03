@@ -24,6 +24,7 @@ export default defineConfig({
         foodSafetyCategories: resolve(__dirname, 'src/pages/FoodSafetyCategories.jsx'),
         foodSafetyItems: resolve(__dirname, 'src/pages/FoodSafetyItems.jsx'),
         franchiseInquiries: resolve(__dirname, 'src/pages/FranchiseInquiries.jsx'),
+        contentBlocks: resolve(__dirname, 'src/pages/ContentBlocks.jsx'),
       },
       output: {
         entryFileNames: '[name].bundle.js',
