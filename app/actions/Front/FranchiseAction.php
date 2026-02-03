@@ -43,6 +43,22 @@ class FranchiseAction extends BaseAction
             return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
         }
 
+        // 儲存至資料庫
+        try {
+            $model = new \App\Models\FranchiseInquiriesModel($this->conn);
+            $model->create([
+                'name' => $name,
+                'email' => $email,
+                'phone' => $phone,
+                'subject' => $subject,
+                'message' => $messageBody,
+                'ip_address' => $request->getServerParams()['REMOTE_ADDR'] ?? null,
+            ]);
+        } catch (\Exception $e) {
+            $this->logger->error("Database Error: " . $e->getMessage());
+            // 資料庫錯誤不阻擋寄信，但記錄 Log
+        }
+
         $settings = $this->container->get('settings')['smtp'];
         $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
 
