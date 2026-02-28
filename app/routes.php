@@ -42,6 +42,7 @@ return function (App $app) {
     (require __DIR__ . '/Routes/front_menu.php')($app);
     (require __DIR__ . '/Routes/front_food_safety.php')($app);
     (require __DIR__ . '/Routes/front_news.php')($app);
+    (require __DIR__ . '/Routes/front_faq.php')($app);
     (require __DIR__ . '/Routes/front_about.php')($app); // 新增 About/History 路由
     (require __DIR__ . '/Routes/front_franchise.php')($app); // 新增 Franchise 路由
     (require __DIR__ . '/Routes/front_contact.php')($app);
