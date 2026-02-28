@@ -67,10 +67,10 @@
                         <div class="content" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
                             <ul class="blog-meta-two">
                                 <li>
-                                    <a href="#">壹樓早餐</a>
+                                    <a href="/news">壹樓早餐</a>
                                 </li>
                                 <li>
-                                    <a href="#">{{ post.published_at|date("F d, Y") }}</a>
+                                    <a href="/news">{{ post.published_at|date("F d, Y") }}</a>
                                 </li>
                                 {# <li><a href="#">comments (0)</a></li> #}
                             </ul>
@@ -89,10 +89,10 @@
                             <div class="tags">
                                 {% if post.tags %}
                                     {% for tag in post.tags|split(',') %}
-                                    <a href="#">{{ tag }}</a>
+                                    <a href="/news?keyword={{ tag|url_encode }}">{{ tag }}</a>
                                     {% endfor %}
                                 {% else %}
-                                    <a href="#">News</a>
+                                    <a href="/news">News</a>
                                 {% endif %}
                             </div>
                         </div>
@@ -100,10 +100,10 @@
                         <div class="item" data-aos="fade-right" data-aos-duration="1500" data-aos-offset="50">
                             <h6>Share News</h6>
                             <div class="social-style-one">
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#"><i class="fab fa-instagram"></i></a>
-                                <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                                <a href="/contact"><i class="fab fa-twitter"></i></a>
+                                <a href="/contact"><i class="fab fa-facebook-f"></i></a>
+                                <a href="/contact"><i class="fab fa-instagram"></i></a>
+                                <a href="/contact"><i class="fab fa-pinterest-p"></i></a>
                             </div>
                         </div>
                     </div>
