@@ -58,7 +58,7 @@
                <div class="checkout-faqs" id="checkout-faqs">
                     
                     <div class="alert bgc-lighter wow fadeInUp delay-0-2s">
-                        <h6>{{ location.name }}<a href="#" class="collapsed card-header" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5"> {{ location.phone }}</a> {{ location.county }}{{ location.district }} {{ location.zipcode}} {{ location.address }}
+                        <h6>{{ location.name }}<a href="javascript:void(0);" class="collapsed card-header" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5"> {{ location.phone }}</a> {{ location.county }}{{ location.district }} {{ location.zipcode}} {{ location.address }}
                         {% if location.status == 'open' %}營業中
                             {% elseif location.status == 'closed' %}已打烊
                             {% elseif location.status == 'pause' %}暫停營業
