@@ -12,8 +12,8 @@ const initialFormState = {
   phone: '',
   latitude: '',
   longitude: '',
-  map_link_id: '',
-  order_link_id: '',
+  map_url: '',
+  order_url: '',
   status: 'open',
   sort_order: 0,
   notes: '',
@@ -184,8 +184,8 @@ function LocationsApp({ apiBase }) {
       phone: store.phone || '',
       latitude: store.latitude || '',
       longitude: store.longitude || '',
-      map_link_id: store.map_link_id || '',
-      order_link_id: store.order_link_id || '',
+      map_url: store.map_url || '',
+      order_url: store.order_url || '',
       status: store.status || 'open',
       sort_order: store.sort_order || 0,
       notes: store.notes || '',
@@ -229,8 +229,8 @@ function LocationsApp({ apiBase }) {
         phone: form.phone.trim() || null,
         latitude: form.latitude ? parseFloat(form.latitude) : null,
         longitude: form.longitude ? parseFloat(form.longitude) : null,
-        map_link_id: form.map_link_id ? parseInt(form.map_link_id) : null,
-        order_link_id: form.order_link_id ? parseInt(form.order_link_id) : null,
+        map_url: form.map_url.trim() || null,
+        order_url: form.order_url.trim() || null,
         status: form.status,
         sort_order: parseInt(form.sort_order) || 0,
         notes: form.notes.trim() || null,
@@ -460,27 +460,27 @@ function LocationsApp({ apiBase }) {
                 />
               </div>
               <div className="col-md-6">
-                <label className="form-label">{t('locations.map_link_id')}</label>
+                <label className="form-label">{t('locations.map_url')}</label>
                 <input
-                  type="number"
+                  type="url"
                   className="form-control"
-                  name="map_link_id"
-                  value={form.map_link_id}
+                  name="map_url"
+                  value={form.map_url}
                   onChange={handleInputChange}
                   disabled={isSubmitting}
-                  placeholder="外部連結 ID"
+                  placeholder="https://maps.google.com/..."
                 />
               </div>
               <div className="col-md-6">
-                <label className="form-label">{t('locations.order_link_id')}</label>
+                <label className="form-label">{t('locations.order_url')}</label>
                 <input
-                  type="number"
+                  type="url"
                   className="form-control"
-                  name="order_link_id"
-                  value={form.order_link_id}
+                  name="order_url"
+                  value={form.order_url}
                   onChange={handleInputChange}
                   disabled={isSubmitting}
-                  placeholder="外部連結 ID"
+                  placeholder="https://www.yovvip.com/..."
                 />
               </div>
               <div className="col-md-4">

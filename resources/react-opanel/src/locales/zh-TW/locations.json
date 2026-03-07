@@ -15,8 +15,8 @@
   "notes": "備註",
   "latitude": "緯度 (Latitude)",
   "longitude": "經度 (Longitude)",
-  "map_link_id": "地圖連結 ID",
-  "order_link_id": "點餐連結 ID",
+  "map_url": "交通地圖網址",
+  "order_url": "線上點餐網址",
   "open": "營業中",
   "closed": "已打烊",
   "pause": "暫停營業",
@@ -27,8 +27,8 @@
     "address": "例如：新北市中和區中山路二段2巷45弄44號壹樓",
     "latitude": "25.123456",
     "longitude": "121.123456",
-    "map_link_id": "外部連結 ID",
-    "order_link_id": "外部連結 ID",
+    "map_url": "https://maps.google.com/...",
+    "order_url": "https://www.yovvip.com/...",
     "notes": "例如：外送範圍、特殊說明等"
   },
   "error": {

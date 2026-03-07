@@ -96,9 +96,16 @@ class LocationAction extends BaseAction
         // 取得所有符合條件的門市
         $items = $this->storeModel->paginate($filters, 1000, 0);
 
+        // 依據縣市分群
+        $grouped = [];
+        foreach ($items as $item) {
+            $county = $item['county'] ?? '其他';
+            $grouped[$county][] = $item;
+        }
+
         // 使用 Twig 渲染
         return $this->view->render($response, 'frontend/location/index.twig', [
-            'locations' => $items,
+            'groupedLocations' => $grouped,
             'filters' => $filters,
         ]);
     }

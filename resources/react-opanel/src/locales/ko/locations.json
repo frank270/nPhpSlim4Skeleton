@@ -15,8 +15,8 @@
   "notes": "비고",
   "latitude": "위도 (Latitude)",
   "longitude": "경도 (Longitude)",
-  "map_link_id": "지도 링크 ID",
-  "order_link_id": "주문 링크 ID",
+  "map_url": "지도 URL",
+  "order_url": "주문 URL",
   "open": "영업 중",
   "closed": "영업 종료",
   "pause": "일시 중지",
@@ -27,8 +27,8 @@
     "address": "예: 서울특별시 강남구 테헤란로 123",
     "latitude": "37.123456",
     "longitude": "127.123456",
-    "map_link_id": "외부 링크 ID",
-    "order_link_id": "외부 링크 ID",
+    "map_url": "https://maps.google.com/...",
+    "order_url": "https://www.yovvip.com/...",
     "notes": "예: 배달 범위, 특이 사항 등"
   },
   "error": {

@@ -15,8 +15,8 @@
   "notes": "Notes",
   "latitude": "Latitude",
   "longitude": "Longitude",
-  "map_link_id": "Map Link ID",
-  "order_link_id": "Order Link ID",
+  "map_url": "Map URL",
+  "order_url": "Order URL",
   "open": "Open",
   "closed": "Closed",
   "pause": "Pause",
@@ -27,8 +27,8 @@
     "address": "e.g., No. 44, Alley 45, Lane 2, Zhongshan Rd., Zhonghe Dist., New Taipei City",
     "latitude": "25.123456",
     "longitude": "121.123456",
-    "map_link_id": "External Link ID",
-    "order_link_id": "External Link ID",
+    "map_url": "https://maps.google.com/...",
+    "order_url": "https://www.yovvip.com/...",
     "notes": "e.g., Delivery range, special instructions, etc."
   },
   "error": {
