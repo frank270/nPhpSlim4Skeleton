@@ -1,0 +1,17 @@
+{
+  "title": "External Links List",
+  "add_new": "Add New External Link",
+  "cancel_add": "Cancel Add",
+  "name": "Name",
+  "url": "URL",
+  "type": "Type",
+  "locale": "Locale",
+  "open_method": "Open Method",
+  "new_tab": "New Tab",
+  "description": "Description",
+  "is_active": "Enable Link",
+  "create_btn": "Create External Link",
+  "saving": "Saving...",
+  "no_links": "No external links created yet",
+  "delete_confirm": "Are you sure you want to delete \"{{name}}\"?"
+}

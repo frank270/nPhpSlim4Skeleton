@@ -1,0 +1,96 @@
+{% extends "frontend/master-layout03.twig" %}
+
+{% block title %}門市據點 - 1fBreakFast{% endblock %}
+{% block hero %}
+<!-- Hero Area Start -->
+        <section class="hero-area-three pt-250 pb-220 rpb-100 rel z-1" style="background-image: url(/assets/wellfood/assets/images/background/hero-three.png)">
+           <span class="marquee-wrap style-two text-white">
+               <span class="marquee-inner left">1F BREAFAST</span>
+               <span class="marquee-inner left">1F BREAFAST</span>
+               <span class="marquee-inner left">1F BREAFAST</span>
+            </span>
+            <div class="container">
+                <div class="row align-items-end">
+                    <div class="col-lg-6">
+                        <div class="hero-content-three mt-250 rmt-0 rmb-55 text-white" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+                            <h1>壹樓早餐</h1>
+                            <p>愛美味 吃壹樓</p>
+                            <a href="https://www.yovvip.com/ORD/ORDStores?appbar=f&c=MzM1" class="theme-btn style-two">現在就點餐 <i class="far fa-arrow-alt-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="hero-three-image">
+                            <img src="/upload/website/p.1_773x620.png" alt="Hero">
+                            <div class="offer-badge" style="background-image: url(/assets/wellfood/assets/images/shapes/offer-circle-shape.png)">
+                                <span>50% <br>off</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock %}
+{% block content %}
+
+<!-- Food Category Area start -->
+        <section class="food-category-area  rpb-65 rel z-1">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-7 col-lg-9">
+                        <div class="section-title text-center mb-50" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+                            <span class="sub-title mb-5">Locations</span>
+                            <h2>門市據點</h2>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+        <!-- Food Category Area end -->
+    <!-- Checkout Form Area Start -->
+        <div class="checkout-form-area pb-130">
+            <div class="container">
+                {% if groupedLocations is empty %}
+                    <p>目前沒有門市資料。</p>
+                {% else %}
+                    {% for county, stores in groupedLocations %}
+                    <h4 class="mt-4 mb-3" style="color: #e25822; font-weight: bold;">{{ county }}</h4>
+                    <div class="checkout-faqs mb-4" id="checkout-faqs-{{ loop.index }}">
+                        {% for store in stores %}
+                        <div class="alert bgc-lighter wow fadeInUp delay-0-2s mb-2">
+                            <h6 class="mb-0">
+                                <a href="javascript:void(0);" class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-{{ loop.parent.loop.index }}-{{ loop.index }}" aria-expanded="false" aria-controls="collapse-{{ loop.parent.loop.index }}-{{ loop.index }}" style="text-decoration: none; color: inherit; display: block;">
+                                    {{ store.name }}
+                                </a>
+                            </h6>
+                            <div id="collapse-{{ loop.parent.loop.index }}-{{ loop.index }}" class="collapse">
+                                <div class="pt-3">
+                                    <p class="mb-1"><strong>聯絡電話：</strong>{{ store.phone }}</p>
+                                    <p class="mb-2"><strong>店鋪地址：</strong>{{ store.county }}{{ store.district }} {{ store.zipcode }} {{ store.address }}</p>
+                                    <div class="d-flex gap-2">
+                                        {% set fullAddress = store.county ~ store.district ~ store.address %}
+                                        {% if store.map_url %}
+                                        <a href="{{ store.map_url }}" target="_blank" class="theme-btn style-two py-2 px-3" style="font-size: 14px;">交通地圖</a>
+                                        {% else %}
+                                        <a href="https://www.google.com/maps/search/{{ fullAddress|url_encode }}" target="_blank" class="theme-btn style-two py-2 px-3" style="font-size: 14px;">交通地圖</a>
+                                        {% endif %}
+                                        {% if store.order_url %}
+                                        <a href="{{ store.order_url }}" target="_blank" class="theme-btn py-2 px-3" style="font-size: 14px;">線上點餐</a>
+                                        {% else %}
+                                        <a href="javascript:void(0);" onclick="Swal.fire({icon:'info',title:'尚未提供線上點餐',text:'{{ store.name }} 目前尚未提供線上點餐服務，敬請見諒。',confirmButtonText:'我知道了',confirmButtonColor:'#e25822'})" class="theme-btn py-2 px-3" style="font-size: 14px;">線上點餐</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <!-- Checkout Form Area End -->
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% endblock %}

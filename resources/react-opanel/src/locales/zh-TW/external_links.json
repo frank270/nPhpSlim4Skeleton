@@ -1,0 +1,17 @@
+{
+  "title": "外部連結列表",
+  "add_new": "新增外部連結",
+  "cancel_add": "取消新增",
+  "name": "名稱",
+  "url": "URL",
+  "type": "類型",
+  "locale": "語系",
+  "open_method": "開啟方式",
+  "new_tab": "新分頁開啟",
+  "description": "描述",
+  "is_active": "啟用此連結",
+  "create_btn": "建立外部連結",
+  "saving": "儲存中…",
+  "no_links": "目前尚未建立任何外部連結",
+  "delete_confirm": "確定要刪除「{{name}}」嗎？"
+}

@@ -1,0 +1,24 @@
+{% extends 'opanel/layout.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container-xl">
+  <div class="page-header d-print-none">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="page-title">{{ title }}</h2>
+      </div>
+    </div>
+  </div>
+
+  <div id="faqs-app"
+       data-api-base="{{ apiBase }}"
+       class="mt-3"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="/js/opanel/faqs.bundle.js"></script>
+{% endblock %}
+

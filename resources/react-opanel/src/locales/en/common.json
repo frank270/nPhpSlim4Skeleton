@@ -1,0 +1,19 @@
+{
+  "actions": "Actions",
+  "edit": "Edit",
+  "delete": "Delete",
+  "save": "Save",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "search": "Search",
+  "loading": "Loading...",
+  "success": "Success",
+  "error": "Error",
+  "refresh": "Refresh",
+  "status_updated": "Status Updated",
+  "deleted": "Deleted",
+  "saved": "Saved",
+  "confirm_delete": "Are you sure you want to delete \"{{name}}\"?",
+  "all_status": "All Status",
+  "pagination": "Page {{page}} / {{total}}"
+}

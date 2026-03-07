@@ -1,0 +1,22 @@
+{
+  "title": "역할 목록",
+  "add_new": "새 역할 추가",
+  "code": "역할 코드",
+  "name": "역할 이름",
+  "memo": "설명",
+  "permissions_list": "권한 목록",
+  "func_name": "기능 이름",
+  "enabled": "활성화 여부",
+  "select_role_hint": "먼저 역할을 선택하세요",
+  "no_roles": "역할을 찾을 수 없습니다",
+  "delete_confirm": "삭제 확인",
+  "delete_message": "정말 역할 \"{{name}}\"을(를) 삭제하시겠습니까?",
+  "delete_warning": "이 작업은 되돌릴 수 없으며, 이 역할의 모든 권한 설정이 삭제됩니다.",
+  "create_success": "역할 생성 성공",
+  "delete_success": "역할 삭제 성공",
+  "permission_updated": "권한 업데이트됨",
+  "placeholder": {
+    "code": "영문자와 숫자, 공백 없음, 예: editor",
+    "name": "표시 이름, 예: 편집자"
+  }
+}

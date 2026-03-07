@@ -1,0 +1,20 @@
+{
+  "title": "관리자 사용자 관리",
+  "add_new": "새 사용자 추가",
+  "list_title": "사용자 목록",
+  "all_groups": "모든 역할 그룹",
+  "search_placeholder": "사용자 검색...",
+  "account": "계정",
+  "display_name": "표시 이름",
+  "group": "역할 그룹",
+  "last_login": "마지막 로그인",
+  "status_active": "활성",
+  "status_inactive": "비활성",
+  "reset_password": "비밀번호 재설정",
+  "reset_password_title": "{{name}}의 비밀번호 재설정",
+  "new_password": "새 비밀번호",
+  "confirm_password": "비밀번호 확인",
+  "confirm_reset": "재설정 확인",
+  "delete_confirm": "정말 사용자 {{name}}을(를) 삭제하시겠습니까?",
+  "no_users": "일치하는 사용자가 없습니다"
+}

@@ -1,0 +1,20 @@
+{
+  "title": "Admin User Management",
+  "add_new": "Add New User",
+  "list_title": "User List",
+  "all_groups": "All Role Groups",
+  "search_placeholder": "Search users...",
+  "account": "Account",
+  "display_name": "Display Name",
+  "group": "Role Group",
+  "last_login": "Last Login",
+  "status_active": "Active",
+  "status_inactive": "Inactive",
+  "reset_password": "Reset Password",
+  "reset_password_title": "Reset Password for {{name}}",
+  "new_password": "New Password",
+  "confirm_password": "Confirm Password",
+  "confirm_reset": "Confirm Reset",
+  "delete_confirm": "Are you sure you want to delete user {{name}}?",
+  "no_users": "No matching users found"
+}

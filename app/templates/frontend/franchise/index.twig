@@ -1,0 +1,282 @@
+{% extends "frontend/master-layout03.twig" %}
+
+{% block title %}{{ title }} - 1fBreakFast{% endblock %}
+
+{% block hero %}
+<!-- Hero Area Start -->
+        <section class="hero-area-three pt-250 pb-220 rpb-100 rel z-1" style="background-image: url(/assets/wellfood/assets/images/background/hero-three.png)">
+           <span class="marquee-wrap style-two text-white">
+               <span class="marquee-inner left">1F BREAFAST</span>
+               <span class="marquee-inner left">1F BREAFAST</span>
+               <span class="marquee-inner left">1F BREAFAST</span>
+            </span>
+            <div class="container">
+                <div class="row align-items-end">
+                    <div class="col-lg-6">
+                        <div class="hero-content-three mt-250 rmt-0 rmb-55 text-white" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+                            <h1>壹樓早餐</h1>
+                            <p>愛美味 吃壹樓</p>
+                            <a href="https://www.yovvip.com/ORD/ORDStores?appbar=f&c=MzM1" class="theme-btn style-two">現在就點餐 <i class="far fa-arrow-alt-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="hero-three-image">
+                            <img src="/assets/img/franchise_p.1_773x620.png" alt="Hero">
+                            <div class="offer-badge" style="background-image: url(/assets/wellfood/assets/images/shapes/offer-circle-shape.png)">
+                                <span>Yummy</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock %}
+
+{% block content %}
+<section class="franchise-img-area p-50 rp-10">
+    <img class="image" src="/assets/img/franchise_p.2_1290x1290_加盟.png" alt="Franchise">
+</section>
+<!-- Booking Table Area start -->
+<section class="booking-table-area pb-180 rpb-150 rel z-1">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xxl-6 col-xl-7 col-lg-9">
+                <div class="section-title text-center mb-50" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+                    <span class="sub-title mb-5">1F BreakFast</span>
+                    <h2>加盟合作</h2>
+                </div>
+            </div>
+        </div>
+        <div class="booking-table-wrap overlay" style="background-image: url(/assets/wellfood/assets/images/background/booking-table.jpg);">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="booking-table-content" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+                       <a href="https://www.youtube.com/watch?v=9Y7ma241N8k" class="mfp-iframe video-play"><i class="fas fa-play"></i></a>
+                        <div class="section-title mt-30 text-white mb-20">
+                            <span class="sub-title mb-5">想加盟壹樓早餐?</span>
+                            <h2>現在就加入壹樓早餐</h2>
+                        </div>
+                        <div class="contact--number">
+                            <div class="icon"><i class="fas fa-phone"></i></div>
+                            <div class="number">
+                                <span class="title">Contact Us</span>
+                                <a href="callto:+0800030909">+0800-030-909</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1500" data-aos-offset="50">
+                    <div class="booking-table-form rmt-50" style="background-image: url(/assets/wellfood/assets/images/background/form-bg.png)">
+                       <div class="section-title">
+                            <h2>填寫加盟表單</h2>
+                        </div>
+                        <p>專人將盡快與您聯繫</p>
+                        <form id="booking-form" class="booking-form mt-25" name="booking-form" method="post">
+                            <div class="row gap-20">
+                                <div class="col-md-6 mb-20">
+                                    <div class="form-group">
+                                        <label for="name"><i class="far fa-user"></i></label>
+                                        <input type="text" id="name" name="name" class="form-control" value="" placeholder="聯絡姓名" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="phone"><i class="far fa-phone"></i></label>
+                                        <input type="text" id="phone" name="phone" class="form-control" value="" placeholder="聯絡電話" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="email"><i class="far fa-envelope"></i></label>
+                                        <input type="email" id="email" name="email" class="form-control" value="" placeholder="電子信箱" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <select name="subject" id="subject">
+                                            <option value="想了解加盟" selected>想了解加盟</option>
+                                            <option value="其他">其他</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="message"><i class="far fa-edit"></i></label>
+                                        <input type="text" id="message" name="message" class="form-control" value="" placeholder="預計加盟地點 / 備註" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                                        <label for="captcha" style="white-space: nowrap; margin-bottom: 0; font-weight: bold;">驗證碼 ({{ captcha_question }}):</label>
+                                        <input type="text" name="captcha" id="captcha" class="form-control" placeholder="請輸入答案" required style="width: 120px;">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group mb-0">
+                                        <button type="submit" class="theme-btn">送出申請 <i class="far fa-arrow-alt-right"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Booking Table Area end -->
+
+<!-- Testimonials Six Area start -->
+        <section class="testimonials-six rel z-1 pt-250 pb-130 rpb-100" style="background-image: url(/assets/wellfood/assets/images/background/testimonials.jpg);">
+            <div class="container pt-100 rpt-70">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-xl-6 col-lg-8">
+                        <div class="testimonials-three-content rel z-1 text-white rmb-55">
+                            <div class="section-title mb-45" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+                                <span class="sub-title text-white mb-5">加盟主心聲</span>
+                                <h2>看看加盟主的心聲</h2>
+                            </div>
+                            <div class="testimonials-two-carousel" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+                                <div class="testimonial-two-item style-two">
+                                    <div class="content">
+                                        <div class="icon"><img src="/assets/wellfood/assets/images/testimonials/author1.jpg" alt=""></div>
+                                        <div class="text">Renowned for its versatility in the kitchen, Red King Crab can prepared in various ways, from simple steaming or boiling to elaborate preparations such as grilling incorporating weather loving</div>
+                                        <span class="author">Randy R. Pennington</span>
+                                        <span class="designation">web designer</span>
+                                    </div>
+                                </div>
+                                <div class="testimonial-two-item style-two">
+                                    <div class="content">
+                                        <div class="icon"><img src="/assets/wellfood/assets/images/testimonials/author2.jpg" alt=""></div>
+                                        <div class="text">Renowned for its versatility in the kitchen, Red King Crab can prepared in various ways, from simple steaming or boiling to elaborate preparations such as grilling incorporating weather loving</div>
+                                        <span class="author">Randy R. Pennington</span>
+                                        <span class="designation">web designer</span>
+                                    </div>
+                                </div>
+                                <div class="testimonial-two-item style-two">
+                                    <div class="content">
+                                        <div class="icon"><img src="/assets/wellfood/assets/images/testimonials/author3.jpg" alt=""></div>
+                                        <div class="text">Renowned for its versatility in the kitchen, Red King Crab can prepared in various ways, from simple steaming or boiling to elaborate preparations such as grilling incorporating weather loving</div>
+                                        <span class="author">Randy R. Pennington</span>
+                                        <span class="designation">web designer</span>
+                                    </div>
+                                </div>
+                                <div class="testimonial-two-item style-two">
+                                    <div class="content">
+                                        <div class="icon"><img src="/assets/wellfood/assets/images/testimonials/author1.jpg" alt=""></div>
+                                        <div class="text">Renowned for its versatility in the kitchen, Red King Crab can prepared in various ways, from simple steaming or boiling to elaborate preparations such as grilling incorporating weather loving</div>
+                                        <span class="author">Randy R. Pennington</span>
+                                        <span class="designation">web designer</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="testimonial-quote-badge" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
+                            <div class="testi-badge"><img src="/assets/wellfood/assets/images/testimonials/badge.png" alt="Badge"></div>
+                            <div class="quote"><i class="flaticon-quote"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Testimonials Six Area end -->
+
+<!-- Instagram area start -->
+    <div class="instagram-area">
+        <div class="row no-gap row-cols-xxl-5 row-cols-xl-4 row-cols-lg-3 row-cols-sm-2 row-cols-1 justify-content-center">
+            <div class="col" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+                <div class="instagram-item">
+                    <img src="/upload/website/footer_0.p.1_384x400.png" alt="Instagram">
+                    <a href="/upload/website/footer_0.p.1_384x400.png"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="col" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1500" data-aos-offset="50">
+                <div class="instagram-item">
+                    <img src="/upload/website/footer_0.p.2_384x400.png" alt="Instagram">
+                    <a href="/upload/website/footer_0.p.2_384x400.png"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="col" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
+                <div class="instagram-item">
+                    <img src="/upload/website/footer_0.p.3_384x400.png" alt="Instagram">
+                    <a href="/upload/website/footer_0.p.3_384x400.png"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="col" data-aos="fade-up" data-aos-delay="150" data-aos-duration="1500" data-aos-offset="50">
+                <div class="instagram-item">
+                    <img src="/upload/website/footer_0.p.4_384x400.png" alt="Instagram">
+                    <a href="/upload/website/footer_0.p.4_384x400.png"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="col" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1500" data-aos-offset="50">
+                <div class="instagram-item">
+                    <img src="/upload/website/footer_0.p.5_384x400.png" alt="Instagram">
+                    <a href="/upload/website/footer_0.p.5_384x400.png"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Instagram area end -->
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+    $(document).ready(function(){
+        $('#booking-form').on('submit', function(e){
+            e.preventDefault();
+            
+            var form = $(this);
+            var btn = form.find('button[type="submit"]');
+            var originalText = btn.html();
+            
+            // Disable button
+            btn.prop('disabled', true).html('傳送中... <i class="fas fa-spinner fa-spin"></i>');
+            
+            $.ajax({
+                url: '/franchise/submit',
+                type: 'POST',
+                data: form.serialize(),
+                dataType: 'json',
+                success: function(response){
+                    if(response.success){
+                        Swal.fire({
+                            icon: 'success',
+                            title: '成功',
+                            text: response.message,
+                            confirmButtonColor: '#EC3D08'
+                        });
+                        form[0].reset();
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '錯誤',
+                            text: response.message,
+                            confirmButtonColor: '#EC3D08'
+                        });
+                    }
+                },
+                error: function(xhr){
+                    var msg = '發送失敗，請稍後再試。';
+                    if(xhr.responseJSON && xhr.responseJSON.message){
+                        msg = xhr.responseJSON.message;
+                    }
+                    Swal.fire({
+                        icon: 'error',
+                        title: '錯誤',
+                        text: msg,
+                        confirmButtonColor: '#EC3D08'
+                    });
+                },
+                complete: function(){
+                    btn.prop('disabled', false).html(originalText);
+                }
+            });
+        });
+    });
+    </script>
+{% endblock %}

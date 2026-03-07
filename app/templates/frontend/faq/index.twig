@@ -1,0 +1,93 @@
+{% extends "frontend/master-layout03.twig" %}
+
+{% block title %}{{ title }} - 1fBreakFast{% endblock %}
+
+{% block hero %}
+<section class="hero-area-three pt-250 pb-220 rpb-100 rel z-1" style="background-image: url(/assets/wellfood/assets/images/background/hero-three.png)">
+    <span class="marquee-wrap style-two text-white">
+        <span class="marquee-inner left">1F BREAFAST</span>
+        <span class="marquee-inner left">1F BREAFAST</span>
+        <span class="marquee-inner left">1F BREAFAST</span>
+    </span>
+    <div class="container">
+        <div class="row align-items-end">
+            <div class="col-lg-6">
+                <div class="hero-content-three mt-250 rmt-0 rmb-55 text-white" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+                    <h1>壹樓早餐</h1>
+                    <p>愛美味 吃壹樓</p>
+                    <a href="https://www.yovvip.com/ORD/ORDStores?appbar=f&c=MzM1" class="theme-btn style-two">現在就點餐 <i class="far fa-arrow-alt-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-three-image">
+                    <img src="/assets/wellfood/assets/images/about/faq.jpg" alt="FAQ Hero">
+                    <div class="offer-badge" style="background-image: url(/assets/wellfood/assets/images/shapes/offer-circle-shape.png)">
+                        <span>FAQ</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<section class="faq-area pt-130 rpt-100 pb-120 rpb-90 rel z-1">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="faq-content-part rmb-55" data-aos="fade-left" data-aos-duration="1500" data-aos-offset="50">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <div class="section-title mb-50">
+                                <span class="sub-title mb-5">FAQS</span>
+                                <h2>常見問題</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="image">
+                        <img src="/assets/wellfood/assets/images/about/faq.jpg" alt="FAQ">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="fpq-part" data-aos="fade-right" data-aos-duration="1500" data-aos-offset="50">
+                    <div class="accordion" id="faq-accordion">
+                        {% if faqs is not empty %}
+                            {% for faq in faqs %}
+                                {% set collapse_id = "faq-collapse-" ~ loop.index %}
+                                <div class="accordion-item">
+                                    <h5 class="accordion-header">
+                                        <button class="accordion-button{{ loop.first ? '' : ' collapsed' }}" data-bs-toggle="collapse" data-bs-target="#{{ collapse_id }}" aria-expanded="{{ loop.first ? 'true' : 'false' }}" aria-controls="{{ collapse_id }}">
+                                            {{ faq.question }}
+                                        </button>
+                                    </h5>
+                                    <div id="{{ collapse_id }}" class="accordion-collapse collapse{{ loop.first ? ' show' : '' }}" data-bs-parent="#faq-accordion">
+                                        <div class="accordion-body">
+                                            {% if faq.category_name %}
+                                                <p><strong>{{ faq.category_name }}</strong></p>
+                                            {% endif %}
+                                            <p>{{ faq.answer|nl2br }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="accordion-item">
+                                <h5 class="accordion-header">
+                                    <button class="accordion-button" type="button" aria-expanded="true">
+                                        目前尚無常見問題
+                                    </button>
+                                </h5>
+                                <div class="accordion-body">
+                                    <p>內容整理中，請稍後再查看。</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

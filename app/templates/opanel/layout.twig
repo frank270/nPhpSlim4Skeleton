@@ -2,8 +2,9 @@
 <html lang="zh-Hant">
   <head>
     <meta charset="UTF-8">
-    <title>{% block title %}後台控制台{% endblock %} | EnnovicX</title>
+    <title>{% block title %}{{ t('layout.title') }}{% endblock %} | EnnovicX</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link rel="icon" type="image/png" href="/favicon-alpha.png">
     <link rel="stylesheet" href="/assets/tabler/css/tabler.min.css?1745207578" />
 	
     <link
@@ -29,6 +30,7 @@
     <link
       href="/assets/tabler/css/tabler-themes.min.css?1745207578"
       rel="stylesheet" />
+    <link rel="stylesheet" href="{{ base_path() }}/js/opanel/assets/quill.css">
     {% block styles %}{% endblock %}
   </head>
   <body>
@@ -77,44 +79,187 @@
                       <path d="M14 16h6v4h-6z" />
                     </svg>
                   </span>
-                  <span class="nav-link-title">控制台</span>
+                  <span class="nav-link-title">{{ t('layout.sidebar.dashboard') }}</span>
                 </a>
               </li>
-              
-              <!-- 權限管理菜單組 -->
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#navbar-access" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
+
+              <!-- 加盟諮詢管理 (Business Lead - High Priority) -->
+              <li class="nav-item">
+                <a class="nav-link" href="/opanel/franchise-inquiries">
                   <span class="nav-link-icon">
-                    <!-- 使用 SVG 圖示 -->
-                    <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.5 11.5 11 13l4-3.5M12 20a16.405 16.405 0 0 1-5.092-5.804A16.694 16.694 0 0 1 5 6.666L12 4l7 2.667a16.695 16.695 0 0 1-1.908 7.529A16.406 16.406 0 0 1 12 20Z"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M3 5m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                      <path d="M3 7l9 6l9 -6" />
                     </svg>
-                    
                   </span>
-                  <span class="nav-link-title">權限管理</span>
+                  <span class="nav-link-title">加盟諮詢</span>
+                </a>
+              </li>
+
+              <!-- 門市據點管理 -->
+              <li class="nav-item">
+                <a class="nav-link" href="/opanel/locations">
+                  <span class="nav-link-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2 -2V9a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2z" />
+                      <path d="M7 10l0 4" />
+                      <path d="M11 10l0 4" />
+                      <path d="M15 10l0 4" />
+                      <path d="M5 6h14" />
+                    </svg>
+                  </span>
+                  <span class="nav-link-title">{{ t('layout.sidebar.locations') }}</span>
+                </a>
+              </li>
+
+              <!-- 菜單管理 -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#navbar-menu" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
+                  <span class="nav-link-icon">
+                    <!-- Icon: tools-kitchen-2 -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M19 3v12h-5c-.023 -3.681 .184 -7.406 5 -12zm0 12v6h-1v-3m-10 -14v17m-3 -17v3a3 3 0 1 0 6 0v-3" />
+                    </svg>
+                  </span>
+                  <span class="nav-link-title">{{ t('layout.sidebar.menu') }}</span>
                 </a>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="/opanel/access/refine-names">
-                    <span class="dropdown-item-icon">
-                      <i class="ti ti-wand"></i>
-                    </span>
-                    <span class="dropdown-item-text">更新權限名稱</span>
+                  <a class="dropdown-item" href="/opanel/menu/categories">
+                    <span class="dropdown-item-text">{{ t('layout.sidebar.menu_categories') }}</span>
                   </a>
-                  <a class="dropdown-item" href="/opanel/access/roles">
-                    <span class="dropdown-item-icon">
-                      <i class="ti ti-users-group"></i>
-                    </span>
-                    <span class="dropdown-item-text">角色權限設定</span>
+                  <a class="dropdown-item" href="/opanel/menu/items">
+                    <span class="dropdown-item-text">{{ t('layout.sidebar.menu_items') }}</span>
                   </a>
-                  {# <a class="dropdown-item" href="/opanel/access/permissions">
-                    <span class="dropdown-item-icon">
-                      <i class="ti ti-checklist"></i>
-                    </span>
-                    <span class="dropdown-item-text">功能權限管理</span>
-                  </a> #}
                 </div>
               </li>
-              
+
+              <!-- 食安檢驗管理 -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#navbar-food-safety" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
+                  <span class="nav-link-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                      <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+                      <path d="M9 14l2 2l4 -4" />
+                    </svg>
+                  </span>
+                  <span class="nav-link-title">食安檢驗</span>
+                </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="/opanel/food-safety/categories">
+                    <span class="dropdown-item-text">分類管理</span>
+                  </a>
+                  <a class="dropdown-item" href="/opanel/food-safety">
+                    <span class="dropdown-item-text">報告管理</span>
+                  </a>
+                </div>
+              </li>
+
+              <!-- 文章管理 (CMS) -->
+              <li class="nav-item">
+                <a class="nav-link" href="/opanel/cms">
+                  <span class="nav-link-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                      <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                      <path d="M9 9l1 0" />
+                      <path d="M9 13l6 0" />
+                      <path d="M9 17l6 0" />
+                    </svg>
+                  </span>
+                  <span class="nav-link-title">文章管理</span>
+                </a>
+                </a>
+              </li>
+
+              <!-- 頁面區塊管理 -->
+              <li class="nav-item">
+                <a class="nav-link" href="/opanel/content-blocks">
+                  <span class="nav-link-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M4 4h6v6h-6z" />
+                      <path d="M14 4h6v6h-6z" />
+                      <path d="M4 14h6v6h-6z" />
+                      <path d="M14 14h6v6h-6z" />
+                    </svg>
+                  </span>
+                  <span class="nav-link-title">頁面區塊管理</span>
+                </a>
+              </li>
+
+              <!-- 關於我們 (Brand History) -->
+              <li class="nav-item">
+                <a class="nav-link" href="/opanel/cms/history">
+                  <span class="nav-link-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+                      <path d="M12 9h.01" />
+                      <path d="M11 12h1v4h1" />
+                    </svg>
+                  </span>
+                  <span class="nav-link-title">品牌歷程</span>
+                </a>
+              </li>
+
+              <!-- 常見問題管理 (FAQs) -->
+              <li class="nav-item">
+                <a class="nav-link" href="/opanel/faqs">
+                  <span class="nav-link-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <path d="M8 8h.01" />
+                      <path d="M12 8h.01" />
+                      <path d="M16 8h.01" />
+                      <path d="M8 12h.01" />
+                      <path d="M12 12h.01" />
+                      <path d="M16 12h.01" />
+                      <path d="M8 16h.01" />
+                      <path d="M12 16h.01" />
+                      <path d="M16 16h.01" />
+                      <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+                    </svg>
+                  </span>
+                  <span class="nav-link-title">{{ t('layout.sidebar.faqs') }}</span>
+                </a>
+              </li>
+
+              <!-- 媒體資源庫 -->
+              <li class="nav-item">
+                <a class="nav-link" href="/opanel/media-assets">
+                  <span class="nav-link-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <path d="M15 8h.01" />
+                      <path d="M12 20H6a2 2 0 0 1 -2 -2V6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v7" />
+                      <path d="M16 19l2 2l4 -4" />
+                      <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l2 2" />
+                    </svg>
+                  </span>
+                  <span class="nav-link-title">{{ t('layout.sidebar.media_assets') }}</span>
+                </a>
+              </li>
+
+              <!-- 外部連結管理 -->
+              <li class="nav-item">
+                <a class="nav-link" href="/opanel/external-links">
+                  <span class="nav-link-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <path d="M10 14a3.5 3.5 0 0 1 -4.9 0a3.5 3.5 0 0 1 0 -4.9l5-5a3.5 3.5 0 0 1 4.9 4.9" />
+                      <path d="M14 10a3.5 3.5 0 0 1 4.9 0a3.5 3.5 0 0 1 0 4.9l-5 5a3.5 3.5 0 0 1 -4.9 -4.9" />
+                    </svg>
+                  </span>
+                  <span class="nav-link-title">{{ t('layout.sidebar.external_links') }}</span>
+                </a>
+              </li>
+
               <!-- 使用者管理菜單 -->
               <li class="nav-item">
                 <a class="nav-link" href="/opanel/users">
@@ -128,9 +273,38 @@
                       <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
                     </svg>
                   </span>
-                  <span class="nav-link-title">使用者管理</span>
+                  <span class="nav-link-title">{{ t('layout.sidebar.users') }}</span>
                 </a>
               </li>
+
+              <!-- 權限管理菜單組 -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#navbar-access" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
+                  <span class="nav-link-icon">
+                    <!-- 使用 SVG 圖示 -->
+                    <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.5 11.5 11 13l4-3.5M12 20a16.405 16.405 0 0 1-5.092-5.804A16.694 16.694 0 0 1 5 6.666L12 4l7 2.667a16.695 16.695 0 0 1-1.908 7.529A16.406 16.406 0 0 1 12 20Z"/>
+                    </svg>
+                    
+                  </span>
+                  <span class="nav-link-title">{{ t('layout.sidebar.access') }}</span>
+                </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="/opanel/access/refine-names">
+                    <span class="dropdown-item-icon">
+                      <i class="ti ti-wand"></i>
+                    </span>
+                    <span class="dropdown-item-text">{{ t('layout.sidebar.access_refine') }}</span>
+                  </a>
+                  <a class="dropdown-item" href="/opanel/access/roles">
+                    <span class="dropdown-item-icon">
+                      <i class="ti ti-users-group"></i>
+                    </span>
+                    <span class="dropdown-item-text">{{ t('layout.sidebar.access_roles') }}</span>
+                  </a>
+                </div>
+              </li>
+              
               <!-- 可擴充項目 -->
             </ul>
           </div>
@@ -148,6 +322,26 @@
               </div>
               <div class="ms-auto">
                 <div class="navbar-nav flex-row">
+                  <!-- 語系切換 -->
+                  <div class="nav-item dropdown me-3">
+                    <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="切換語系">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+                        <path d="M3.6 9h16.8" />
+                        <path d="M3.6 15h16.8" />
+                        <path d="M11.5 3a17 17 0 0 0 0 18" />
+                        <path d="M12.5 3a17 17 0 0 1 0 18" />
+                      </svg>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                      <a href="#" class="dropdown-item" onclick="changeLanguage('zh-TW'); return false;">繁體中文</a>
+                      <a href="#" class="dropdown-item" onclick="changeLanguage('zh-CN'); return false;">简体中文</a>
+                      <a href="#" class="dropdown-item" onclick="changeLanguage('en'); return false;">English</a>
+                      <a href="#" class="dropdown-item" onclick="changeLanguage('ko'); return false;">한국어</a>
+                    </div>
+                  </div>
+
                   <div class="nav-item dropdown">
                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="開啟使用者選單">
                       <span class="avatar avatar-sm" style="background-image: url(/assets/img/avatar.png)"></span>
@@ -157,10 +351,10 @@
                       </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                      <a class="dropdown-item" href="/opanel/profile">個人資料管理</a>
-                      <a class="dropdown-item" href="/opanel/profile/change-password">變更密碼</a>
+                      <a class="dropdown-item" href="/opanel/profile">{{ t('layout.user_menu.profile') }}</a>
+                      <a class="dropdown-item" href="/opanel/profile/change-password">{{ t('layout.user_menu.change_password') }}</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="/opanel/logout">登出</a>
+                      <a class="dropdown-item" href="/opanel/logout">{{ t('layout.user_menu.logout') }}</a>
                     </div>
                   </div>
                 </div>
@@ -193,7 +387,7 @@
         <!-- Footer -->
         <footer class="footer footer-transparent d-print-none">
           <div class="container-xl text-center">
-            <span class="text-muted">© 2025 EnnovicX</span>
+            <span class="text-muted">{{ t('layout.footer') }}</span>
           </div>
         </footer>
       </div>
@@ -203,6 +397,14 @@
 
     {% block scripts %}{% endblock %}
     <script src="/js/toast.js"></script>
+    <script>
+      function changeLanguage(lang) {
+        // 設定 cookie，有效期 365 天
+        document.cookie = `i18next=${lang}; path=/; max-age=31536000`;
+        // 重新載入頁面
+        window.location.reload();
+      }
+    </script>
     <script src="/assets/tabler/js/tabler.min.js" defer></script>
     
   </body>

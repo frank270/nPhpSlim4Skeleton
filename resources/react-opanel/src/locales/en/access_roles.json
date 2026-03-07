@@ -1,0 +1,22 @@
+{
+  "title": "Roles List",
+  "add_new": "Add New Role",
+  "code": "Role Code",
+  "name": "Role Name",
+  "memo": "Description",
+  "permissions_list": "Permissions List",
+  "func_name": "Function Name",
+  "enabled": "Enabled",
+  "select_role_hint": "Please select a role first",
+  "no_roles": "No roles found",
+  "delete_confirm": "Confirm Delete",
+  "delete_message": "Are you sure you want to delete the role \"{{name}}\"?",
+  "delete_warning": "This action cannot be undone. All permission settings for this role will be deleted.",
+  "create_success": "Role created successfully",
+  "delete_success": "Role deleted successfully",
+  "permission_updated": "Permissions updated",
+  "placeholder": {
+    "code": "Alphanumeric, no spaces, e.g., editor",
+    "name": "Display name, e.g., Editor"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "actions": "작업",
+  "edit": "편집",
+  "delete": "삭제",
+  "save": "저장",
+  "cancel": "취소",
+  "confirm": "확인",
+  "search": "검색",
+  "loading": "로딩 중...",
+  "success": "성공",
+  "error": "오류",
+  "refresh": "새로 고침",
+  "status_updated": "상태 업데이트됨",
+  "deleted": "삭제됨",
+  "saved": "저장됨",
+  "confirm_delete": "정말 \"{{name}}\"을(를) 삭제하시겠습니까?",
+  "all_status": "모든 상태",
+  "pagination": "페이지 {{page}} / {{total}}"
+}

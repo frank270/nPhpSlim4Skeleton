@@ -1,0 +1,19 @@
+{
+  "actions": "操作",
+  "edit": "編輯",
+  "delete": "刪除",
+  "save": "儲存",
+  "cancel": "取消",
+  "confirm": "確認",
+  "search": "搜尋",
+  "loading": "載入中...",
+  "success": "成功",
+  "error": "錯誤",
+  "refresh": "重新整理",
+  "status_updated": "狀態已更新",
+  "deleted": "已刪除",
+  "saved": "已儲存",
+  "confirm_delete": "確定要刪除「{{name}}」嗎？",
+  "all_status": "全部狀態",
+  "pagination": "第 {{page}} / {{total}} 頁"
+}

@@ -106,13 +106,13 @@ logs/            → 應用程式日誌目錄
 
 public/
   index.php     → 應用程式入口點
-  assets/       → 前端靜態資源
+  assets/       → 前端靜態資源 (生產環境用，包含編譯後的 Tabler: assets/tabler)
   js/           → JavaScript 檔案
-  tabler-dev/   → Tabler UI 套件
+  tabler-dev/   → Tabler 原始碼 (僅供開發參考，已加入 .gitignore)
 
 resources/       → 前端資源原始檔
   react-opanel/ → React 後台應用
-  tabler/       → Tabler UI 原始檔
+  tabler/       → Tabler 原始碼 (供前端編譯引用)
 
 vendor/         → Composer 依賴套件
 ```
@@ -291,6 +291,40 @@ This project is open-sourced under the [MIT license](LICENSE).
 ---
 
 ## 更新新聞
+
+### 2026-02-03
+- 完成聯絡我們模組前台功能,包含表單提交與 Email 通知
+- 完成門市據點前台頁面與 API,支援縣市篩選與門市查詢
+- 完成品牌歷程模組,使用 CMS Posts 管理時間軸事件
+- 完成 CMS 內容區塊 HTML 原始碼編輯模式
+- 建立完整的專案文件,包含專案完成總結、資料庫結構概覽、API 端點總覽、部署指南與下一階段規劃
+
+### 2025-12-17
+- 完成加盟合作模組,包含前台表單提交與後台管理功能
+- 實作 Email 通知功能,支援 SMTP 發送
+- 整合 SweetAlert2 提供更好的使用者回饋
+
+### 2025-12-16
+- 完成食品安全檢驗模組,包含前後台完整功能
+- 實作 PDF 檔案上傳與下載功能
+- 建立檢驗分類與報告管理系統
+
+### 2025-12-15
+- 完成菜單模組後台功能,包含分類與商品管理
+- 實作商品價格管理、標籤系統與 Best Seller 標記
+- 支援商品狀態管理 (draft/published/archived)
+
+### 2025-11-19
+- 完成門市據點模組後台功能
+- 實作台灣郵遞區號三層聯動地址選擇器
+- 完成 FAQ 模組後台功能,支援分類與問題管理
+- 實作精選標記與排序功能
+
+### 2025-11-14
+- 完成媒體資源庫模組,支援 128 MB 大檔案上傳
+- 實作上傳進度條與圖片預覽功能
+- 完成外部連結管理模組
+- 完成 CMS 內容區塊模組,整合 Quill 富文本編輯器
 
 ### 2025-04-28
 - 新增 CMS 內容管理系統功能

@@ -1,0 +1,41 @@
+{
+  "title": "매장 목록",
+  "add_new": "새 매장 추가",
+  "edit_store": "매장 편집",
+  "create_store": "매장 생성",
+  "cancel_add": "추가 취소",
+  "name": "매장명",
+  "county": "시/도",
+  "district": "구/군",
+  "zipcode": "우편번호",
+  "address": "주소",
+  "phone": "전화번호",
+  "status": "상태",
+  "sort_order": "정렬 순서",
+  "notes": "비고",
+  "latitude": "위도 (Latitude)",
+  "longitude": "경도 (Longitude)",
+  "map_url": "지도 URL",
+  "order_url": "주문 URL",
+  "open": "영업 중",
+  "closed": "영업 종료",
+  "pause": "일시 중지",
+  "toggle_status": "상태 전환",
+  "placeholder": {
+    "name": "매장명을 입력하세요",
+    "phone": "02-1234-5678",
+    "address": "예: 서울특별시 강남구 테헤란로 123",
+    "latitude": "37.123456",
+    "longitude": "127.123456",
+    "map_url": "https://maps.google.com/...",
+    "order_url": "https://www.yovvip.com/...",
+    "notes": "예: 배달 범위, 특이 사항 등"
+  },
+  "error": {
+    "load_failed": "매장 로드 실패",
+    "save_failed": "매장 저장 실패",
+    "delete_failed": "삭제 실패",
+    "status_failed": "상태 업데이트 실패",
+    "name_required": "매장명을 입력하세요"
+  }
+}

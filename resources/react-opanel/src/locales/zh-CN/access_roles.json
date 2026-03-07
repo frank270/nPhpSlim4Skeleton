@@ -1,0 +1,22 @@
+{
+  "title": "角色列表",
+  "add_new": "新增角色",
+  "code": "角色代码",
+  "name": "角色名称",
+  "memo": "备注说明",
+  "permissions_list": "权限列表",
+  "func_name": "功能名称",
+  "enabled": "是否启用",
+  "select_role_hint": "请先选择一个角色",
+  "no_roles": "找不到角色资料",
+  "delete_confirm": "确认删除",
+  "delete_message": "您确定要删除角色“{{name}}”吗？",
+  "delete_warning": "此操作无法恢复，角色的所有权限设置将一并删除。",
+  "create_success": "角色新增成功",
+  "delete_success": "角色已成功删除",
+  "permission_updated": "权限已更新",
+  "placeholder": {
+    "code": "英文字母和数字，不含空格，例如：editor",
+    "name": "显示用名称，例如：编辑人员"
+  }
+}

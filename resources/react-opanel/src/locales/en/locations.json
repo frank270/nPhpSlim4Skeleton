@@ -1,0 +1,41 @@
+{
+  "title": "Shop List",
+  "add_new": "Add New Shop",
+  "edit_store": "Edit Shop",
+  "create_store": "Create Shop",
+  "cancel_add": "Cancel Add",
+  "name": "Shop Name",
+  "county": "County",
+  "district": "District",
+  "zipcode": "Zipcode",
+  "address": "Address",
+  "phone": "Phone",
+  "status": "Status",
+  "sort_order": "Sort Order",
+  "notes": "Notes",
+  "latitude": "Latitude",
+  "longitude": "Longitude",
+  "map_url": "Map URL",
+  "order_url": "Order URL",
+  "open": "Open",
+  "closed": "Closed",
+  "pause": "Pause",
+  "toggle_status": "Toggle Status",
+  "placeholder": {
+    "name": "Please enter shop name",
+    "phone": "02-1234-5678",
+    "address": "e.g., No. 44, Alley 45, Lane 2, Zhongshan Rd., Zhonghe Dist., New Taipei City",
+    "latitude": "25.123456",
+    "longitude": "121.123456",
+    "map_url": "https://maps.google.com/...",
+    "order_url": "https://www.yovvip.com/...",
+    "notes": "e.g., Delivery range, special instructions, etc."
+  },
+  "error": {
+    "load_failed": "Failed to load shops",
+    "save_failed": "Failed to save shop",
+    "delete_failed": "Failed to delete shop",
+    "status_failed": "Failed to update status",
+    "name_required": "Please enter shop name"
+  }
+}

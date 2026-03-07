@@ -1,0 +1,17 @@
+{
+  "title": "외부 링크 목록",
+  "add_new": "새 외부 링크 추가",
+  "cancel_add": "추가 취소",
+  "name": "이름",
+  "url": "URL",
+  "type": "유형",
+  "locale": "언어",
+  "open_method": "열기 방식",
+  "new_tab": "새 탭에서 열기",
+  "description": "설명",
+  "is_active": "링크 활성화",
+  "create_btn": "외부 링크 생성",
+  "saving": "저장 중...",
+  "no_links": "아직 생성된 외부 링크가 없습니다",
+  "delete_confirm": "정말 \"{{name}}\"을(를) 삭제하시겠습니까?"
+}

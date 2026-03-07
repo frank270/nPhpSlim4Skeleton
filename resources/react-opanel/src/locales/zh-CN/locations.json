@@ -1,0 +1,41 @@
+{
+  "title": "门店据点列表",
+  "add_new": "新增门店",
+  "edit_store": "编辑门店",
+  "create_store": "建立门店",
+  "cancel_add": "取消新增",
+  "name": "门店名称",
+  "county": "县市",
+  "district": "区域",
+  "zipcode": "邮政编码",
+  "address": "完整地址",
+  "phone": "联系电话",
+  "status": "状态",
+  "sort_order": "排序",
+  "notes": "备注",
+  "latitude": "纬度 (Latitude)",
+  "longitude": "经度 (Longitude)",
+  "map_url": "交通地图网址",
+  "order_url": "线上点餐网址",
+  "open": "营业中",
+  "closed": "已打烊",
+  "pause": "暂停营业",
+  "toggle_status": "切换状态",
+  "placeholder": {
+    "name": "请输入门店名称",
+    "phone": "02-1234-5678",
+    "address": "例如：新北市中和区中山路二段2巷45弄44号壹楼",
+    "latitude": "25.123456",
+    "longitude": "121.123456",
+    "map_url": "https://maps.google.com/...",
+    "order_url": "https://www.yovvip.com/...",
+    "notes": "例如：外送范围、特殊说明等"
+  },
+  "error": {
+    "load_failed": "加载门店失败",
+    "save_failed": "保存门店失败",
+    "delete_failed": "删除失败",
+    "status_failed": "更新状态失败",
+    "name_required": "请输入门店名称"
+  }
+}

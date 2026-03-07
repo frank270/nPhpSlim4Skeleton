@@ -17,12 +17,58 @@ return function (App $app) {
     /** @var ContainerInterface $container */
     $container = $app->getContainer();
 
+    // I18n Service
+    $container->set(\App\Services\I18nService::class, function () {
+        $service = new \App\Services\I18nService(__DIR__ . '/../resources/lang');
+        
+        // 從 Cookie 讀取語系設定，預設為 zh-TW
+        $locale = $_COOKIE['i18next'] ?? 'zh-TW';
+        
+        // 簡單的安全性檢查，避免路徑遍歷
+        if (!in_array($locale, ['zh-TW', 'zh-CN', 'en', 'ko'])) {
+            $locale = 'zh-TW';
+        }
+        
+        $service->loadTranslations($locale);
+        return $service;
+    });
+
     // Twig View
-    $container->set('view', function () {
-        return Twig::create(__DIR__ . '/Templates', [
+    $container->set('view', function (ContainerInterface $c) {
+        $twig = Twig::create(__DIR__ . '/Templates', [
             'cache' => __DIR__ . '/../cache/twig', // 建議開發時設 false，正式上線用快取
             'auto_reload' => true,
         ]);
+
+        // Add t() function to Twig
+        $i18n = $c->get(\App\Services\I18nService::class);
+        $twig->getEnvironment()->addFunction(new \Twig\TwigFunction('t', function ($key, $replace = []) use ($i18n) {
+            return $i18n->t($key, $replace);
+        }));
+
+        // Add short_code() function
+        $db = $c->get(\Doctrine\DBAL\Connection::class);
+        // Avoid re-instantiating if possible, but here it's fine
+        $contentBlockModel = new \App\Models\ContentBlockModel($db);
+        
+        $twig->getEnvironment()->addFunction(new \Twig\TwigFunction('short_code', function ($code) use ($contentBlockModel) {
+            $block = $contentBlockModel->findByShortCode($code);
+            if (!$block) {
+                return '';
+            }
+
+            switch ($block['type']) {
+                case 'image':
+                    return '<img src="' . htmlspecialchars($block['content']) . '" alt="' . htmlspecialchars($code) . '">';
+                case 'html':
+                    return $block['content']; // Raw HTML
+                case 'raw_text':
+                default:
+                    return nl2br(htmlspecialchars($block['content']));
+            }
+        }, ['is_safe' => ['html']]));
+
+        return $twig;
     });
 
     // Monolog Logger

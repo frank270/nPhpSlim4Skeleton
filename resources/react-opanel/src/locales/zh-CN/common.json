@@ -1,0 +1,19 @@
+{
+  "actions": "操作",
+  "edit": "编辑",
+  "delete": "删除",
+  "save": "保存",
+  "cancel": "取消",
+  "confirm": "确认",
+  "search": "搜索",
+  "loading": "加载中...",
+  "success": "成功",
+  "error": "错误",
+  "refresh": "刷新",
+  "status_updated": "状态已更新",
+  "deleted": "已删除",
+  "saved": "已保存",
+  "confirm_delete": "确定要删除“{{name}}”吗？",
+  "all_status": "全部状态",
+  "pagination": "第 {{page}} / {{total}} 页"
+}
