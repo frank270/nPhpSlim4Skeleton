@@ -60,7 +60,7 @@
 ### Sprint 結束檢查
 - [x] 後台門市列表可顯示、切換狀態（2025-11-19）
 - [ ] 後台門市列表可搜尋、排序（待實作）
-- [ ] 前台可依縣市顯示門市與連結，地圖正常（待實作）
+- [x] 前台可依縣市顯示門市與連結，手風琴卡片展開（2026-03-07）
 - [ ] 表單（若保留）提交流程與通知測試（待實作）
 - [x] 更新流程文件與操作手冊（2025-11-19）
 
@@ -72,6 +72,14 @@
 - [x] 狀態顯示配色問題已修正（使用 `text-white`）
 - [x] Favicon 設定完成（`favicon-alpha.png`）
 - [x] 開發筆記與文件已更新
+
+### 進度記錄（2026-03-07）
+- [x] DB Migration `Version20260307090546`：將 `map_link_id`/`order_link_id` (bigint) 改為 `map_url`/`order_url` (varchar 255)
+- [x] 後端 Model (`LocationStoresModel.php`) 與 Controller (`LocationAction.php` Opanel/Front) 更新
+- [x] 前台 Twig 模板改為縣市分群 + 手風琴折疊卡片，支援交通地圖/線上點餐按鈕
+- [x] React 後台表單 (`Locations.jsx`) 改為 URL 文字欄位輸入
+- [x] 所有語系檔 (zh-TW, en, zh-CN, ko) 同步更新
+- [x] React 資產重新編譯完成
 
 ---
 

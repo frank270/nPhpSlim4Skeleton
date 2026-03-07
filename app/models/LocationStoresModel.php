@@ -96,8 +96,8 @@ class LocationStoresModel
             'phone' => $data['phone'] ?? null,
             'latitude' => isset($data['latitude']) ? (string)$data['latitude'] : null,
             'longitude' => isset($data['longitude']) ? (string)$data['longitude'] : null,
-            'map_link_id' => isset($data['map_link_id']) ? (int)$data['map_link_id'] : null,
-            'order_link_id' => isset($data['order_link_id']) ? (int)$data['order_link_id'] : null,
+            'map_url' => $data['map_url'] ?? null,
+            'order_url' => $data['order_url'] ?? null,
             'status' => $data['status'] ?? 'open',
             'sort_order' => isset($data['sort_order']) ? (int)$data['sort_order'] : 0,
             'notes' => $data['notes'] ?? null,
@@ -112,14 +112,14 @@ class LocationStoresModel
 
         foreach ([
             'name', 'county', 'district', 'zipcode', 'address', 'phone',
-            'latitude', 'longitude', 'map_link_id', 'order_link_id',
+            'latitude', 'longitude', 'map_url', 'order_url',
             'status', 'sort_order', 'notes'
         ] as $field) {
             if (array_key_exists($field, $data)) {
                 if ($field === 'latitude' || $field === 'longitude') {
                     $update[$field] = $data[$field] !== null ? (string)$data[$field] : null;
-                } elseif ($field === 'map_link_id' || $field === 'order_link_id') {
-                    $update[$field] = $data[$field] !== null ? (int)$data[$field] : null;
+                } elseif ($field === 'map_url' || $field === 'order_url') {
+                    $update[$field] = $data[$field] !== null ? (string)$data[$field] : null;
                 } elseif ($field === 'sort_order') {
                     $update[$field] = (int)$data[$field];
                 } else {

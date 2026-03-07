@@ -117,8 +117,8 @@ class LocationAction extends BaseAction
             'phone' => $data['phone'] ?? null,
             'latitude' => $data['latitude'] ?? null,
             'longitude' => $data['longitude'] ?? null,
-            'map_link_id' => $data['map_link_id'] ?? null,
-            'order_link_id' => $data['order_link_id'] ?? null,
+            'map_url' => $data['map_url'] ?? null,
+            'order_url' => $data['order_url'] ?? null,
             'status' => $data['status'] ?? 'open',
             'sort_order' => isset($data['sort_order']) ? (int)$data['sort_order'] : 0,
             'notes' => $data['notes'] ?? null,
@@ -161,7 +161,7 @@ class LocationAction extends BaseAction
         $updateData = [];
         foreach ([
             'name', 'county', 'district', 'zipcode', 'address', 'phone',
-            'latitude', 'longitude', 'map_link_id', 'order_link_id',
+            'latitude', 'longitude', 'map_url', 'order_url',
             'status', 'sort_order', 'notes'
         ] as $field) {
             if (array_key_exists($field, $data)) {

@@ -49,27 +49,48 @@
         </section>
         <!-- Food Category Area end -->
     <!-- Checkout Form Area Start -->
-        <div class="checkout-form-area  pb-130">
+        <div class="checkout-form-area pb-130">
             <div class="container">
-                {% if locations is empty %}
+                {% if groupedLocations is empty %}
                     <p>目前沒有門市資料。</p>
                 {% else %}
-                {% for location in locations %}
-               <div class="checkout-faqs" id="checkout-faqs">
-                    
-                    <div class="alert bgc-lighter wow fadeInUp delay-0-2s">
-                        <h6>{{ location.name }}<a href="javascript:void(0);" class="collapsed card-header" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5"> {{ location.phone }}</a> {{ location.county }}{{ location.district }} {{ location.zipcode}} {{ location.address }}
-                        {% if location.status == 'open' %}營業中
-                            {% elseif location.status == 'closed' %}已打烊
-                            {% elseif location.status == 'pause' %}暫停營業
-                            {% endif %}</h6>
-                        
+                    {% for county, stores in groupedLocations %}
+                    <h4 class="mt-4 mb-3" style="color: #e25822; font-weight: bold;">{{ county }}</h4>
+                    <div class="checkout-faqs mb-4" id="checkout-faqs-{{ loop.index }}">
+                        {% for store in stores %}
+                        <div class="alert bgc-lighter wow fadeInUp delay-0-2s mb-2">
+                            <h6 class="mb-0">
+                                <a href="javascript:void(0);" class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-{{ loop.parent.loop.index }}-{{ loop.index }}" aria-expanded="false" aria-controls="collapse-{{ loop.parent.loop.index }}-{{ loop.index }}" style="text-decoration: none; color: inherit; display: block;">
+                                    {{ store.name }}
+                                </a>
+                            </h6>
+                            <div id="collapse-{{ loop.parent.loop.index }}-{{ loop.index }}" class="collapse">
+                                <div class="pt-3">
+                                    <p class="mb-1"><strong>聯絡電話：</strong>{{ store.phone }}</p>
+                                    <p class="mb-2"><strong>店鋪地址：</strong>{{ store.county }}{{ store.district }} {{ store.zipcode }} {{ store.address }}</p>
+                                    <div class="d-flex gap-2">
+                                        {% set fullAddress = store.county ~ store.district ~ store.address %}
+                                        {% if store.map_url %}
+                                        <a href="{{ store.map_url }}" target="_blank" class="theme-btn style-two py-2 px-3" style="font-size: 14px;">交通地圖</a>
+                                        {% else %}
+                                        <a href="https://www.google.com/maps/search/{{ fullAddress|url_encode }}" target="_blank" class="theme-btn style-two py-2 px-3" style="font-size: 14px;">交通地圖</a>
+                                        {% endif %}
+                                        {% if store.order_url %}
+                                        <a href="{{ store.order_url }}" target="_blank" class="theme-btn py-2 px-3" style="font-size: 14px;">線上點餐</a>
+                                        {% else %}
+                                        <a href="javascript:void(0);" onclick="Swal.fire({icon:'info',title:'尚未提供線上點餐',text:'{{ store.name }} 目前尚未提供線上點餐服務，敬請見諒。',confirmButtonText:'我知道了',confirmButtonColor:'#e25822'})" class="theme-btn py-2 px-3" style="font-size: 14px;">線上點餐</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
                     </div>
-
-                   
-                {% endfor %}
-        {% endif %}
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
         <!-- Checkout Form Area End -->
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {% endblock %}
