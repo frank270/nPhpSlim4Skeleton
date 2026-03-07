@@ -96,6 +96,7 @@ class NewsAction extends BaseAction
 
         return $this->view->render($response, 'frontend/news/detail.twig', [
             'post' => $post,
+            'hideShare' => true,
         ]);
     }
 }

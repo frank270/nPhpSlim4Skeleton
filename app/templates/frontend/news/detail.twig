@@ -83,6 +83,7 @@
                         </div>
                     </div>
                     
+                    {% if not hideShare|default(false) %}
                     <div class="tag-share">
                         <div class="item" data-aos="fade-left" data-aos-duration="1500" data-aos-offset="50">
                             <h6>Tags : </h6>
@@ -107,6 +108,7 @@
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                     
                     <div class="next-prev-blog pt-45 pb-15">
                         <div class="item" data-aos="fade-left" data-aos-duration="1500" data-aos-offset="50">
