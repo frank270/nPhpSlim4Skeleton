@@ -244,6 +244,7 @@ function ContentBlocks() {
                     <option value="raw_text">純文字 (Raw Text)</option>
                     <option value="html">HTML (Rich Editor)</option>
                     <option value="image">圖片 (Image)</option>
+                    <option value="image_url">圖片網址 (Image URL)</option>
                   </select>
                 </div>
 
@@ -288,7 +289,7 @@ function ContentBlocks() {
                     </div>
                   )}
 
-                  {formData.type === 'image' && (
+                  {(formData.type === 'image' || formData.type === 'image_url') && (
                     <div>
                       {formData.content && (
                         <div className="mb-2 p-2 border rounded">
@@ -300,6 +301,9 @@ function ContentBlocks() {
                         value={formData.content}
                         onChange={e => setFormData({...formData, content: e.target.value})}
                       />
+                      {formData.type === 'image_url' && (
+                        <div className="form-text text-muted">此類型僅輸出純網址，用於 CSS background-image 或自訂 &lt;img src&gt;</div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -380,12 +384,12 @@ function ContentBlocks() {
                 </td>
                 <td>{item.group_name || '-'}</td>
                 <td>
-                    <span className={`badge text-white ${item.type === 'image' ? 'bg-indigo' : item.type === 'html' ? 'bg-orange' : 'bg-secondary'}`}>
+                    <span className={`badge text-white ${item.type === 'image' ? 'bg-indigo' : item.type === 'image_url' ? 'bg-purple' : item.type === 'html' ? 'bg-orange' : 'bg-secondary'}`}>
                         {item.type}
                     </span>
                 </td>
                 <td style={{ maxWidth: '300px', whiteSpace: 'normal' }}>
-                    {item.type === 'image' ? (
+                    {(item.type === 'image' || item.type === 'image_url') ? (
                         <img src={item.content} alt="preview" style={{ height: '50px', objectFit: 'cover' }} />
                     ) : (
                         <div className="text-truncate">{item.content?.replace(/<[^>]+>/g, '').substring(0, 50)}</div>

@@ -5,24 +5,24 @@
 <!-- Hero Area Start -->
         <section class="hero-area-three pt-250 pb-220 rpb-100 rel z-1" style="background-image: url(/assets/wellfood/assets/images/background/hero-three.png)">
            <span class="marquee-wrap style-two text-white">
-               <span class="marquee-inner left">1F BREAFAST</span>
-               <span class="marquee-inner left">1F BREAFAST</span>
-               <span class="marquee-inner left">1F BREAFAST</span>
+               <span class="marquee-inner left">{{ short_code('home_hero_marquee') }}</span>
+               <span class="marquee-inner left">{{ short_code('home_hero_marquee') }}</span>
+               <span class="marquee-inner left">{{ short_code('home_hero_marquee') }}</span>
             </span>
             <div class="container">
                 <div class="row align-items-end">
                     <div class="col-lg-6">
                         <div class="hero-content-three mt-250 rmt-0 rmb-55 text-white" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
-                            <h1>壹樓早餐</h1>
-                            <p>愛美味 吃壹樓</p>
-                            <a href="https://www.yovvip.com/ORD/ORDStores?appbar=f&c=MzM1" class="theme-btn style-two">現在就點餐 <i class="far fa-arrow-alt-right"></i></a>
+                            <h1>{{ short_code('home_hero_title') }}</h1>
+                            <p>{{ short_code('home_hero_subtitle') }}</p>
+                            <a href="{{ short_code('home_hero_btn_url') }}" class="theme-btn style-two">{{ short_code('home_hero_btn_text') }} <i class="far fa-arrow-alt-right"></i></a>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="hero-three-image">
-                            <img src="/upload/website/home_p.1_773x620.png" alt="Hero">
+                            {{ short_code('home_hero_image') }}
                             <div class="offer-badge" style="background-image: url(/assets/wellfood/assets/images/shapes/offer-circle-shape.png)">
-                                <span>Yummy</span>
+                                <span>{{ short_code('home_hero_badge') }}</span>
                             </div>
                         </div>
                     </div>
@@ -37,8 +37,8 @@
             <div class="row justify-content-center">
                 <div class="col-xl-7 col-lg-9">
                     <div class="section-title text-center mb-50" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
-                        <span class="sub-title mb-5">壹樓早餐</span>
-                        <h2>品牌使命與願景</h2>
+                        <span class="sub-title mb-5">{{ short_code('home_brand_subtitle') }}</span>
+                        <h2>{{ short_code('home_brand_title') }}</h2>
                     </div>
                 </div>
             </div>
@@ -49,8 +49,8 @@
                             <i class="flaticon-recommended-food"></i>
                         </div>
                         <div class="content">
-                            <h4>使命 Mission</h4>
-                            <p>打造良好的加盟環境，讓創業更安心，共創長遠發展</p>
+                            <h4>{{ short_code('home_brand_mission_title') }}</h4>
+                            <p>{{ short_code('home_brand_mission_text') }}</p>
                         </div>
                     </div>
                 </div>
@@ -60,8 +60,8 @@
                             <i class="flaticon-fast-delivery"></i>
                         </div>
                         <div class="content">
-                            <h4>堅持 Persistence</h4>
-                            <p>建堅持品質與創新科技，帶來穩定美味與高效體驗。</p>
+                            <h4>{{ short_code('home_brand_persistence_title') }}</h4>
+                            <p>{{ short_code('home_brand_persistence_text') }}</p>
                         </div>
                     </div>
                 </div>
@@ -71,8 +71,8 @@
                             <i class="flaticon-cashback"></i>
                         </div>
                         <div class="content">
-                            <h4>願景 Vision</h4>
-                            <p>建立穩定成長的連鎖餐飲平台，成為台灣科技早餐的領導品牌</p>
+                            <h4>{{ short_code('home_brand_vision_title') }}</h4>
+                            <p>{{ short_code('home_brand_vision_text') }}</p>
                         </div>
                     </div>
                 </div>
@@ -94,34 +94,31 @@
             <div class="row row-cols-lg-3 row-cols-sm-2 row-cols-1 justify-content-center">
                 <div class="col" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
                     <div class="category-banner-item style-two" style="background-image: url(assets/wellfood/assets/images/banner/category-banner-two1.png);">
-                        <span class="price">About Us</span>
-                        <h5>關於我們</h5>
-                        
+                        <span class="price">{{ short_code('home_banner_about_label') }}</span>
+                        <h5>{{ short_code('home_banner_about_title') }}</h5>
                         <a href="/about" class="theme-btn style-two">了解更多 <i class="far fa-arrow-alt-right"></i></a>
                         <div class="food-image">
-                            <img src="/upload/website/home_p.2_230x230.png" alt="Food">
+                            <img src="{{ short_code('home_banner_about_image') }}" alt="Food">
                         </div>
                     </div>
                 </div>
                 <div class="col" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1500" data-aos-offset="50">
                     <div class="category-banner-item style-two color-black" style="background-image: url(assets/wellfood/assets/images/banner/category-banner-two2.png);">
-                        <span class="price">Menu</span>
-                        <h5>美味菜單</h5>
-                       
+                        <span class="price">{{ short_code('home_banner_menu_label') }}</span>
+                        <h5>{{ short_code('home_banner_menu_title') }}</h5>
                         <a href="/menu" class="theme-btn">了解更多 <i class="far fa-arrow-alt-right"></i></a>
                         <div class="food-image">
-                            <img src="/upload/website/home_p.3_230x230.png" alt="Food">
+                            <img src="{{ short_code('home_banner_menu_image') }}" alt="Food">
                         </div>
                     </div>
                 </div>
                 <div class="col" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
                     <div class="category-banner-item style-two" style="background-image: url(assets/wellfood/assets/images/banner/category-banner-two1.png);">
-                        <span class="price">News</span>
-                        <h5>最新消息</h5>
-                        
+                        <span class="price">{{ short_code('home_banner_news_label') }}</span>
+                        <h5>{{ short_code('home_banner_news_title') }}</h5>
                         <a href="/news" class="theme-btn style-two">了解更多 <i class="far fa-arrow-alt-right"></i></a>
                         <div class="food-image">
-                            <img src="/upload/website/home_p.4_230x230.png" alt="Food">
+                            <img src="{{ short_code('home_banner_news_image') }}" alt="Food">
                         </div>
                     </div>
                 </div>
@@ -129,34 +126,31 @@
             <div class="row row-cols-lg-3 row-cols-sm-2 row-cols-1 justify-content-center">
                 <div class="col" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
                     <div class="category-banner-item style-two" style="background-image: url(assets/wellfood/assets/images/banner/category-banner-two1.png);">
-                        <span class="price">Locations</span>
-                        <h5>門市據點</h5>
-                        
+                        <span class="price">{{ short_code('home_banner_locations_label') }}</span>
+                        <h5>{{ short_code('home_banner_locations_title') }}</h5>
                         <a href="/locations" class="theme-btn style-two">了解更多 <i class="far fa-arrow-alt-right"></i></a>
                         <div class="food-image">
-                            <img src="/upload/website/home_p.5_230x230.png" alt="Food">
+                            <img src="{{ short_code('home_banner_locations_image') }}" alt="Food">
                         </div>
                     </div>
                 </div>
                 <div class="col" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1500" data-aos-offset="50">
                     <div class="category-banner-item style-two color-black" style="background-image: url(assets/wellfood/assets/images/banner/category-banner-two2.png);">
-                        <span class="price">Franchise</span>
-                        <h5>加盟合作</h5>
-                        
+                        <span class="price">{{ short_code('home_banner_franchise_label') }}</span>
+                        <h5>{{ short_code('home_banner_franchise_title') }}</h5>
                         <a href="/franchise" class="theme-btn">了解更多 <i class="far fa-arrow-alt-right"></i></a>
                         <div class="food-image">
-                            <img src="/upload/website/home_p.6_230x230.png" alt="Food">
+                            <img src="{{ short_code('home_banner_franchise_image') }}" alt="Food">
                         </div>
                     </div>
                 </div>
                 <div class="col" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
                     <div class="category-banner-item style-two" style="background-image: url(assets/wellfood/assets/images/banner/category-banner-two1.png);">
-                        <span class="price">Contact Us</span>
-                        <h5>聯絡我們</h5>
-                        
+                        <span class="price">{{ short_code('home_banner_contact_label') }}</span>
+                        <h5>{{ short_code('home_banner_contact_title') }}</h5>
                         <a href="/contact" class="theme-btn style-two">了解更多 <i class="far fa-arrow-alt-right"></i></a>
                         <div class="food-image">
-                            <img src="/upload/website/home_p.7_230x230.png" alt="Food">
+                            <img src="{{ short_code('home_banner_contact_image') }}" alt="Food">
                         </div>
                     </div>
                 </div>
@@ -169,14 +163,14 @@
         <div class="row align-items-center">
             <div class="col-lg-6">
                 <div class="why-choose-two-image">
-                    <img src="/upload/website/home_p.8_960x728.png" alt="Testimonials">
+                    {{ short_code('home_testimonial_left_image') }}
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="testimonials-two-content rel z-1 text-center text-white p-45 rpy-55">
                     <div class="section-title mb-20" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
-                        <span class="sub-title mb-5">1F breakfast</span>
-                        <h2>用科技打造穩定品質，用心守住每一口美味。</h2>
+                        <span class="sub-title mb-5">{{ short_code('home_testimonial_subtitle') }}</span>
+                        <h2>{{ short_code('home_testimonial_title') }}</h2>
                     </div>
                     <span class="marquee-wrap style-two">
                         <span class="marquee-inner left">review </span>
@@ -186,16 +180,9 @@
                     <div class="testimonials-two-carousel" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1500" data-aos-offset="50">
                         <div class="testimonial-two-item">
                             <div class="quote"><i class="flaticon-quote"></i></div>
-                            <div class="text">運用科技提升效率、以 SOP 確保品質，<br>
-但始終不忘：早餐，不只是填飽肚子，<br>
-更是一種情感的連結。<br>
-每一份餐點都保留媽媽當年「一份一份做」的心意；<br>
-每一家壹樓門市，都是你早晨放鬆微笑的溫暖角落。<br>
-
-
-</div>
-                            <span class="author">Hi there！</span>
-                            <span class="designation">經典美味盡在壹樓！</span>
+                            <div class="text">{{ short_code('home_testimonial_1_text') }}</div>
+                            <span class="author">{{ short_code('home_testimonial_1_author') }}</span>
+                            <span class="designation">{{ short_code('home_testimonial_1_role') }}</span>
                         </div>
                         <div class="testimonial-two-item">
                             <div class="quote"><i class="flaticon-quote"></i></div>
@@ -229,32 +216,32 @@
         <div class="row no-gap row-cols-xxl-5 row-cols-xl-4 row-cols-lg-3 row-cols-sm-2 row-cols-1 justify-content-center">
             <div class="col" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
                 <div class="instagram-item">
-                    <img src="/upload/website/footer_0.p.1_384x400.png" alt="Instagram">
-                    <a href="/upload/website/footer_0.p.1_384x400.png"><i class="fab fa-instagram"></i></a>
+                    <img src="{{ short_code('shared_instagram_1') }}" alt="Instagram">
+                    <a href="{{ short_code('shared_instagram_1') }}"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
             <div class="col" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1500" data-aos-offset="50">
                 <div class="instagram-item">
-                    <img src="/upload/website/footer_0.p.2_384x400.png" alt="Instagram">
-                    <a href="/upload/website/footer_0.p.2_384x400.png"><i class="fab fa-instagram"></i></a>
+                    <img src="{{ short_code('shared_instagram_2') }}" alt="Instagram">
+                    <a href="{{ short_code('shared_instagram_2') }}"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
             <div class="col" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
                 <div class="instagram-item">
-                    <img src="/upload/website/footer_0.p.3_384x400.png" alt="Instagram">
-                    <a href="/upload/website/footer_0.p.3_384x400.png"><i class="fab fa-instagram"></i></a>
+                    <img src="{{ short_code('shared_instagram_3') }}" alt="Instagram">
+                    <a href="{{ short_code('shared_instagram_3') }}"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
             <div class="col" data-aos="fade-up" data-aos-delay="150" data-aos-duration="1500" data-aos-offset="50">
                 <div class="instagram-item">
-                    <img src="/upload/website/footer_0.p.4_384x400.png" alt="Instagram">
-                    <a href="/upload/website/footer_0.p.4_384x400.png"><i class="fab fa-instagram"></i></a>
+                    <img src="{{ short_code('shared_instagram_4') }}" alt="Instagram">
+                    <a href="{{ short_code('shared_instagram_4') }}"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
             <div class="col" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1500" data-aos-offset="50">
                 <div class="instagram-item">
-                    <img src="/upload/website/footer_0.p.5_384x400.png" alt="Instagram">
-                    <a href="/upload/website/footer_0.p.5_384x400.png"><i class="fab fa-instagram"></i></a>
+                    <img src="{{ short_code('shared_instagram_5') }}" alt="Instagram">
+                    <a href="{{ short_code('shared_instagram_5') }}"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
         </div>

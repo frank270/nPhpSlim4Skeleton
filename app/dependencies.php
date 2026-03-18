@@ -60,6 +60,8 @@ return function (App $app) {
             switch ($block['type']) {
                 case 'image':
                     return '<img src="' . htmlspecialchars($block['content']) . '" alt="' . htmlspecialchars($code) . '">';
+                case 'image_url':
+                    return $block['content']; // Raw URL for use in CSS background-image or <img src>
                 case 'html':
                     return $block['content']; // Raw HTML
                 case 'raw_text':
