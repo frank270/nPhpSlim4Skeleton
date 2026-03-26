@@ -21,7 +21,7 @@ class UserAction extends BaseAction
             'SELECT id, name FROM permissions_groups ORDER BY id ASC'
         );
         
-        return $this->view->render($response, 'Opanel/users/index.twig', [
+        return $this->view->render($response, 'opanel/users/index.twig', [
             'groups' => $groups
         ]);
     }
@@ -60,7 +60,7 @@ class UserAction extends BaseAction
             ]);
         }
         
-        return $this->view->render($response, 'Opanel/users/create.twig', [
+        return $this->view->render($response, 'opanel/users/create.twig', [
             'groups' => $groups
         ]);
     }
@@ -192,7 +192,7 @@ class UserAction extends BaseAction
             ]);
         }
         
-        return $this->view->render($response, 'Opanel/users/edit.twig', [
+        return $this->view->render($response, 'opanel/users/edit.twig', [
             'user' => $user,
             'groups' => $groups
         ]);

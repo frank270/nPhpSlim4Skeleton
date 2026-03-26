@@ -179,6 +179,7 @@ function MenuCategoriesApp({ apiBase }) {
           <table className="table table-vcenter card-table">
             <thead>
               <tr>
+                <th className="text-muted w-1">ID</th>
                 <th>名稱</th>
                 <th>Slug</th>
                 <th>排序</th>
@@ -188,12 +189,13 @@ function MenuCategoriesApp({ apiBase }) {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan="5" className="text-center">載入中...</td></tr>
+                <tr><td colSpan="6" className="text-center">載入中...</td></tr>
               ) : categories.length === 0 ? (
-                <tr><td colSpan="5" className="text-center">無資料</td></tr>
+                <tr><td colSpan="6" className="text-center">無資料</td></tr>
               ) : (
                 categories.map(cat => (
                   <tr key={cat.id}>
+                    <td className="text-muted">{cat.id}</td>
                     <td>{cat.name}</td>
                     <td>{cat.slug}</td>
                     <td>{cat.sort_order}</td>

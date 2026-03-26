@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import '../i18n';
 
 const initialForm = {
+  item_code: '',
   name: '',
   description: '',
   category_id: '',
@@ -136,6 +137,7 @@ function MenuItemsApp({ apiBase, apiCategoryBase }) {
 
   const handleEdit = (item) => {
     setForm({
+      item_code: item.item_code || '',
       name: item.name,
       description: item.description || '',
       category_id: item.category_id,
@@ -215,23 +217,90 @@ function MenuItemsApp({ apiBase, apiCategoryBase }) {
     }));
   };
 
+  const handleBatchCsv = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setLoading(true);
+    const formData = new FormData();
+    formData.append('file', file);
+    try {
+      const res = await fetch('/opanel/menu/batch/csv', { method: 'POST', body: formData });
+      const data = await res.json();
+      if (data.success) {
+        toast(`CSV 匯入成功：新增 ${data.data.added} 筆，更新 ${data.data.updated} 筆`);
+        if (data.data.errors && data.data.errors.length > 0) {
+           console.warn('匯入有部分錯誤', data.data.errors);
+           toast(`有 ${data.data.errors.length} 筆發生錯誤，請查看 Console`, 'error');
+        }
+        loadItems();
+      } else {
+        toast(data.message || 'CSV 匯入失敗', 'error');
+      }
+    } catch (err) {
+      toast(err.message, 'error');
+    } finally {
+      setLoading(false);
+      e.target.value = ''; // reset
+    }
+  };
+
+  const handleBatchZip = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setLoading(true);
+    const formData = new FormData();
+    formData.append('file', file);
+    try {
+      const res = await fetch('/opanel/menu/batch/zip', { method: 'POST', body: formData });
+      const data = await res.json();
+      if (data.success) {
+        toast(`ZIP 匯入成功：配對 ${data.data.matched} 張圖片`);
+        if (data.data.unmatched && data.data.unmatched.length > 0) {
+           console.warn('未對應的圖片', data.data.unmatched);
+           toast(`有 ${data.data.unmatched.length} 張圖無法對應，請查看 Console`, 'error');
+        }
+        loadItems();
+      } else {
+        toast(data.message || 'ZIP 匯入失敗', 'error');
+      }
+    } catch (err) {
+      toast(err.message, 'error');
+    } finally {
+      setLoading(false);
+      e.target.value = ''; // reset
+    }
+  };
+
   return (
     <div>
-      <div className="d-flex justify-content-between mb-3">
-        <div className="d-flex gap-2">
-           <h3>商品列表</h3>
+      <div className="d-flex justify-content-between mb-3 flex-wrap gap-2">
+        <div className="d-flex gap-2 align-items-center">
+           <h3 className="m-0">商品列表</h3>
            <select className="form-select w-auto" value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)}>
              <option value="">所有分類</option>
              {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
            </select>
         </div>
-        <button className="btn btn-primary" onClick={() => {
-          setForm(initialForm);
-          setEditingId(null);
-          setShowForm(!showForm);
-        }}>
-          {showForm ? '取消' : '新增商品'}
-        </button>
+        <div className="d-flex gap-2 flex-wrap">
+           <a href="/opanel/menu/batch/template" className="btn btn-outline-secondary" target="_blank" rel="noreferrer">
+             下載 CSV 範本
+           </a>
+           <label className="btn btn-outline-primary mb-0">
+             匯入 CSV
+             <input type="file" hidden accept=".csv" onChange={handleBatchCsv} />
+           </label>
+           <label className="btn btn-outline-success mb-0">
+             匯入圖檔 ZIP
+             <input type="file" hidden accept=".zip" onChange={handleBatchZip} />
+           </label>
+           <button className="btn btn-primary" onClick={() => {
+             setForm(initialForm);
+             setEditingId(null);
+             setShowForm(!showForm);
+           }}>
+             {showForm ? '取消' : '新增商品'}
+           </button>
+        </div>
       </div>
 
       {showForm && (
@@ -239,11 +308,15 @@ function MenuItemsApp({ apiBase, apiCategoryBase }) {
           <div className="card-body">
             <form onSubmit={handleSubmit}>
               <div className="row g-3">
-                <div className="col-md-6">
+                <div className="col-md-3">
+                  <label className="form-label">菜單編號 (可選)</label>
+                  <input type="text" className="form-control" name="item_code" value={form.item_code} onChange={handleInputChange} />
+                </div>
+                <div className="col-md-5">
                   <label className="form-label">名稱 <span className="text-danger">*</span></label>
                   <input type="text" className="form-control" name="name" value={form.name} onChange={handleInputChange} required />
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-4">
                   <label className="form-label">分類 <span className="text-danger">*</span></label>
                   <select className="form-select" name="category_id" value={form.category_id} onChange={handleInputChange} required>
                     <option value="">請選擇</option>
@@ -407,6 +480,7 @@ function MenuItemsApp({ apiBase, apiCategoryBase }) {
                   <tr key={item.id}>
                     <td>
                       {item.is_best_seller === 1 && <span className="badge bg-yellow me-1">熱銷</span>}
+                      {item.item_code && <span className="text-muted pe-1">[{item.item_code}]</span>}
                       {item.name}
                     </td>
                     <td>{item.category_name}</td>

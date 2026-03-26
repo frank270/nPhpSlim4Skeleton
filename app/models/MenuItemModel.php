@@ -57,10 +57,25 @@ class MenuItemModel
         return $record ?: null;
     }
 
+    public function findByItemCode(string $code): ?array
+    {
+        $record = $this->db->createQueryBuilder()
+            ->select('m.*, c.name as category_name')
+            ->from('menu_items', 'm')
+            ->leftJoin('m', 'menu_categories', 'c', 'm.category_id = c.id')
+            ->where('m.item_code = :code')
+            ->setParameter('code', $code)
+            ->executeQuery()
+            ->fetchAssociative();
+
+        return $record ?: null;
+    }
+
     public function create(array $data): int
     {
         $this->db->insert('menu_items', [
             'category_id' => (int)$data['category_id'],
+            'item_code' => $data['item_code'] ?? null,
             'name' => $data['name'],
             'description' => $data['description'] ?? null,
             'price_original' => $data['price_original'],
@@ -80,7 +95,7 @@ class MenuItemModel
     {
         $update = [];
         $fields = [
-            'category_id', 'name', 'description', 'price_original', 'price_sale',
+            'item_code', 'category_id', 'name', 'description', 'price_original', 'price_sale',
             'image_path', 'tags', 'is_best_seller', 'status', 'published_at'
         ];
 

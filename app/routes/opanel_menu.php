@@ -20,5 +20,10 @@ return function (RouteCollectorProxy $group) {
         $group->post('/items/create', [MenuAction::class, 'createItem']);
         $group->post('/items/{id:[0-9]+}/edit', [MenuAction::class, 'updateItem']);
         $group->delete('/items/{id:[0-9]+}/delete', [MenuAction::class, 'deleteItem']);
+
+        // Batch Upload Setup
+        $group->post('/batch/csv', [MenuAction::class, 'batchUploadCsv']);
+        $group->post('/batch/zip', [MenuAction::class, 'batchUploadZip']);
+        $group->get('/batch/template', [MenuAction::class, 'downloadTemplate']);
     });
 };
