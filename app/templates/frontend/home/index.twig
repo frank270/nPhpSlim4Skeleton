@@ -1,250 +1,369 @@
 {% extends "frontend/master-layout03.twig" %}
 
-{% block title %}首頁 - 1fBreakFast{% endblock %}
+{% block title %}首頁 - 1fBreakFast
+{% endblock %}
 {% block hero %}
-<!-- Hero Area Start -->
-        <section class="hero-area-three pt-250 pb-220 rpb-100 rel z-1" style="background-image: url(/assets/wellfood/assets/images/background/hero-three.png)">
-           <span class="marquee-wrap style-two text-white">
-               <span class="marquee-inner left">{{ short_code('home_hero_marquee') }}</span>
-               <span class="marquee-inner left">{{ short_code('home_hero_marquee') }}</span>
-               <span class="marquee-inner left">{{ short_code('home_hero_marquee') }}</span>
-            </span>
-            <div class="container">
-                <div class="row align-items-end">
-                    <div class="col-lg-6">
-                        <div class="hero-content-three mt-250 rmt-0 rmb-55 text-white" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
-                            <h1>{{ short_code('home_hero_title') }}</h1>
-                            <p>{{ short_code('home_hero_subtitle') }}</p>
-                            <a href="{{ short_code('home_hero_btn_url') }}" class="theme-btn style-two">{{ short_code('home_hero_btn_text') }} <i class="far fa-arrow-alt-right"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="hero-three-image">
-                            {{ short_code('home_hero_image') }}
-                            <div class="offer-badge" style="background-image: url(/assets/wellfood/assets/images/shapes/offer-circle-shape.png)">
-                                <span>{{ short_code('home_hero_badge') }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+	<!-- Hero Area Start -->
+	<section class="hero-area-three pt-250 pb-220 rpb-100 rel z-1" style="background-image: url(/assets/wellfood/assets/images/background/hero-three.png)">
+		<span class="marquee-wrap style-two text-white">
+			<span class="marquee-inner left">{{ short_code('home_hero_marquee') }}</span>
+			<span class="marquee-inner left">{{ short_code('home_hero_marquee') }}</span>
+			<span class="marquee-inner left">{{ short_code('home_hero_marquee') }}</span>
+		</span>
+		<div class="container">
+			<div class="row align-items-end">
+				<div class="col-lg-6">
+					<div class="hero-content-three mt-250 rmt-0 rmb-55 text-white" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+						<h1>{{ short_code('home_hero_title') }}</h1>
+						<p>{{ short_code('home_hero_subtitle') }}</p>
+						<a href="{{ short_code('home_hero_btn_url') }}" class="theme-btn style-two">{{ short_code('home_hero_btn_text') }}
+							<i class="far fa-arrow-alt-right"></i>
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="hero-three-image">
+						{{ short_code('home_hero_image') }}
+						<div class="offer-badge" style="background-image: url(/assets/wellfood/assets/images/shapes/offer-circle-shape.png)">
+							<span>{{ short_code('home_hero_badge') }}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 {% endblock %}
 {% block content %}
-<!-- Food Category Area start -->
-    <section class="food-category-area pb-90 rpb-65 rel z-1">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xl-7 col-lg-9">
-                    <div class="section-title text-center mb-50" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
-                        <span class="sub-title mb-5">{{ short_code('home_brand_subtitle') }}</span>
-                        <h2>{{ short_code('home_brand_title') }}</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
-                    <div class="featured-item">
-                        <div class="icon">
-                            <i class="flaticon-recommended-food"></i>
-                        </div>
-                        <div class="content">
-                            <h4>{{ short_code('home_brand_mission_title') }}</h4>
-                            <p>{{ short_code('home_brand_mission_text') }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1500" data-aos-offset="50">
-                    <div class="featured-item">
-                        <div class="icon">
-                            <i class="flaticon-fast-delivery"></i>
-                        </div>
-                        <div class="content">
-                            <h4>{{ short_code('home_brand_persistence_title') }}</h4>
-                            <p>{{ short_code('home_brand_persistence_text') }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
-                    <div class="featured-item">
-                        <div class="icon">
-                            <i class="flaticon-cashback"></i>
-                        </div>
-                        <div class="content">
-                            <h4>{{ short_code('home_brand_vision_title') }}</h4>
-                            <p>{{ short_code('home_brand_vision_text') }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="food-category-shape">
-            <div class="shape one">
-                <img src="/assets/wellfood/assets/images/shapes/food-category1.png" alt="Shape">
-            </div>
-            <div class="shape two">
-                <img src="/assets/wellfood/assets/images/shapes/food-category2.png" alt="Shape">
-            </div>
-        </div>
-    </section>
-<!-- Food Category Area end -->
-<!-- Category Banner area start -->
-    <div class="category-banner-area-two">
-        <div class="container-fluid">
-            <div class="row row-cols-lg-3 row-cols-sm-2 row-cols-1 justify-content-center">
-                <div class="col" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
-                    <div class="category-banner-item style-two" style="background-image: url(assets/wellfood/assets/images/banner/category-banner-two1.png);">
-                        <span class="price">{{ short_code('home_banner_about_label') }}</span>
-                        <h5>{{ short_code('home_banner_about_title') }}</h5>
-                        <a href="/about" class="theme-btn style-two">了解更多 <i class="far fa-arrow-alt-right"></i></a>
-                        <div class="food-image">
-                            <img src="{{ short_code('home_banner_about_image') }}" alt="Food">
-                        </div>
-                    </div>
-                </div>
-                <div class="col" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1500" data-aos-offset="50">
-                    <div class="category-banner-item style-two color-black" style="background-image: url(assets/wellfood/assets/images/banner/category-banner-two2.png);">
-                        <span class="price">{{ short_code('home_banner_menu_label') }}</span>
-                        <h5>{{ short_code('home_banner_menu_title') }}</h5>
-                        <a href="/menu" class="theme-btn">了解更多 <i class="far fa-arrow-alt-right"></i></a>
-                        <div class="food-image">
-                            <img src="{{ short_code('home_banner_menu_image') }}" alt="Food">
-                        </div>
-                    </div>
-                </div>
-                <div class="col" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
-                    <div class="category-banner-item style-two" style="background-image: url(assets/wellfood/assets/images/banner/category-banner-two1.png);">
-                        <span class="price">{{ short_code('home_banner_news_label') }}</span>
-                        <h5>{{ short_code('home_banner_news_title') }}</h5>
-                        <a href="/news" class="theme-btn style-two">了解更多 <i class="far fa-arrow-alt-right"></i></a>
-                        <div class="food-image">
-                            <img src="{{ short_code('home_banner_news_image') }}" alt="Food">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row row-cols-lg-3 row-cols-sm-2 row-cols-1 justify-content-center">
-                <div class="col" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
-                    <div class="category-banner-item style-two" style="background-image: url(assets/wellfood/assets/images/banner/category-banner-two1.png);">
-                        <span class="price">{{ short_code('home_banner_locations_label') }}</span>
-                        <h5>{{ short_code('home_banner_locations_title') }}</h5>
-                        <a href="/locations" class="theme-btn style-two">了解更多 <i class="far fa-arrow-alt-right"></i></a>
-                        <div class="food-image">
-                            <img src="{{ short_code('home_banner_locations_image') }}" alt="Food">
-                        </div>
-                    </div>
-                </div>
-                <div class="col" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1500" data-aos-offset="50">
-                    <div class="category-banner-item style-two color-black" style="background-image: url(assets/wellfood/assets/images/banner/category-banner-two2.png);">
-                        <span class="price">{{ short_code('home_banner_franchise_label') }}</span>
-                        <h5>{{ short_code('home_banner_franchise_title') }}</h5>
-                        <a href="/franchise" class="theme-btn">了解更多 <i class="far fa-arrow-alt-right"></i></a>
-                        <div class="food-image">
-                            <img src="{{ short_code('home_banner_franchise_image') }}" alt="Food">
-                        </div>
-                    </div>
-                </div>
-                <div class="col" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
-                    <div class="category-banner-item style-two" style="background-image: url(assets/wellfood/assets/images/banner/category-banner-two1.png);">
-                        <span class="price">{{ short_code('home_banner_contact_label') }}</span>
-                        <h5>{{ short_code('home_banner_contact_title') }}</h5>
-                        <a href="/contact" class="theme-btn style-two">了解更多 <i class="far fa-arrow-alt-right"></i></a>
-                        <div class="food-image">
-                            <img src="{{ short_code('home_banner_contact_image') }}" alt="Food">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+	<!-- Food Category Area start -->
+	<section class="food-category-area pb-90 rpb-65 rel z-1">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-xl-7 col-lg-9">
+					<div class="section-title text-center mb-50" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+						<span class="sub-title mb-5">{{ short_code('home_brand_subtitle') }}</span>
+						<h2>{{ short_code('home_brand_title') }}</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+					<div class="featured-item">
+						<div class="icon">
+							<i class="flaticon-recommended-food"></i>
+						</div>
+						<div class="content">
+							<h4>{{ short_code('home_brand_mission_title') }}</h4>
+							<p>{{ short_code('home_brand_mission_text') }}</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1500" data-aos-offset="50">
+					<div class="featured-item">
+						<div class="icon">
+							<i class="flaticon-fast-delivery"></i>
+						</div>
+						<div class="content">
+							<h4>{{ short_code('home_brand_persistence_title') }}</h4>
+							<p>{{ short_code('home_brand_persistence_text') }}</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
+					<div class="featured-item">
+						<div class="icon">
+							<i class="flaticon-cashback"></i>
+						</div>
+						<div class="content">
+							<h4>{{ short_code('home_brand_vision_title') }}</h4>
+							<p>{{ short_code('home_brand_vision_text') }}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="food-category-shape">
+			<div class="shape one">
+				<img src="/assets/wellfood/assets/images/shapes/food-category1.png" alt="Shape">
+			</div>
+			<div class="shape two">
+				<img src="/assets/wellfood/assets/images/shapes/food-category2.png" alt="Shape">
+			</div>
+		</div>
+	</section>
+	<!-- Food Category Area end -->
+	<!-- Category Banner area start -->
+	<div class="category-banner-area-two">
+		<div class="container-fluid">
+			<div class="row row-cols-lg-3 row-cols-sm-2 row-cols-1 justify-content-center">
+				<div class="col" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+					<div class="category-banner-item style-two" style="background-image: url(assets/wellfood/assets/images/banner/category-banner-two1.png);">
+						<span class="price">{{ short_code('home_banner_about_label') }}</span>
+						<h5>{{ short_code('home_banner_about_title') }}</h5>
+						<a href="/about" class="theme-btn style-two">了解更多
+							<i class="far fa-arrow-alt-right"></i>
+						</a>
+						<div class="food-image">
+							<img src="{{ short_code('home_banner_about_image') }}" alt="Food">
+						</div>
+					</div>
+				</div>
+				<div class="col" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1500" data-aos-offset="50">
+					<div class="category-banner-item style-two color-black" style="background-image: url(assets/wellfood/assets/images/banner/category-banner-two2.png);">
+						<span class="price">{{ short_code('home_banner_menu_label') }}</span>
+						<h5>{{ short_code('home_banner_menu_title') }}</h5>
+						<a href="/menu" class="theme-btn">了解更多
+							<i class="far fa-arrow-alt-right"></i>
+						</a>
+						<div class="food-image">
+							<img src="{{ short_code('home_banner_menu_image') }}" alt="Food">
+						</div>
+					</div>
+				</div>
+				<div class="col" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
+					<div class="category-banner-item style-two" style="background-image: url(assets/wellfood/assets/images/banner/category-banner-two1.png);">
+						<span class="price">{{ short_code('home_banner_news_label') }}</span>
+						<h5>{{ short_code('home_banner_news_title') }}</h5>
+						<a href="/news" class="theme-btn style-two">了解更多
+							<i class="far fa-arrow-alt-right"></i>
+						</a>
+						<div class="food-image">
+							<img src="{{ short_code('home_banner_news_image') }}" alt="Food">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row row-cols-lg-3 row-cols-sm-2 row-cols-1 justify-content-center">
+				<div class="col" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+					<div class="category-banner-item style-two" style="background-image: url(assets/wellfood/assets/images/banner/category-banner-two1.png);">
+						<span class="price">{{ short_code('home_banner_locations_label') }}</span>
+						<h5>{{ short_code('home_banner_locations_title') }}</h5>
+						<a href="/locations" class="theme-btn style-two">了解更多
+							<i class="far fa-arrow-alt-right"></i>
+						</a>
+						<div class="food-image">
+							<img src="{{ short_code('home_banner_locations_image') }}" alt="Food">
+						</div>
+					</div>
+				</div>
+				<div class="col" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1500" data-aos-offset="50">
+					<div class="category-banner-item style-two color-black" style="background-image: url(assets/wellfood/assets/images/banner/category-banner-two2.png);">
+						<span class="price">{{ short_code('home_banner_franchise_label') }}</span>
+						<h5>{{ short_code('home_banner_franchise_title') }}</h5>
+						<a href="/franchise" class="theme-btn">了解更多
+							<i class="far fa-arrow-alt-right"></i>
+						</a>
+						<div class="food-image">
+							<img src="{{ short_code('home_banner_franchise_image') }}" alt="Food">
+						</div>
+					</div>
+				</div>
+				<div class="col" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
+					<div class="category-banner-item style-two" style="background-image: url(assets/wellfood/assets/images/banner/category-banner-two1.png);">
+						<span class="price">{{ short_code('home_banner_contact_label') }}</span>
+						<h5>{{ short_code('home_banner_contact_title') }}</h5>
+						<a href="/contact" class="theme-btn style-two">了解更多
+							<i class="far fa-arrow-alt-right"></i>
+						</a>
+						<div class="food-image">
+							<img src="{{ short_code('home_banner_contact_image') }}" alt="Food">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Category Banner area end -->
+	<!-- Testimonials Two Area start -->
+	<section class="testimonials-two bgc-primary" style="background-image: url(assets/wellfood/assets/images/testimonials/testimonials-two-bg.png);">
+		<div class="row align-items-center">
+			<div class="col-lg-6">
+				<div class="why-choose-two-image">
+					{{ short_code('home_testimonial_left_image') }}
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="testimonials-two-content rel z-1 text-center text-white p-45 rpy-55">
+					<div class="section-title mb-20" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+						<span class="sub-title mb-5">{{ short_code('home_testimonial_subtitle') }}</span>
+						<h2>{{ short_code('home_testimonial_title') }}</h2>
+					</div>
+					<span class="marquee-wrap style-two">
+						<span class="marquee-inner left">review
+						</span>
+						<span class="marquee-inner left">review
+						</span>
+						<span class="marquee-inner left">review
+						</span>
+					</span>
+					<div class="testimonials-two-carousel" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1500" data-aos-offset="50">
+						<div class="testimonial-two-item">
+							<div class="quote">
+								<i class="flaticon-quote"></i>
+							</div>
+							<div class="text">{{ short_code('home_testimonial_1_text') }}</div>
+							<span class="author">{{ short_code('home_testimonial_1_author') }}</span>
+							<span class="designation">{{ short_code('home_testimonial_1_role') }}</span>
+						</div>
+						{# <div class="testimonial-two-item">
+						                            <div class="quote"><i class="flaticon-quote"></i></div>
+						                            <div class="text">Renowned for its versatility in the kitchen, Red King Crab can prepared in various ways, from simple steaming or boiling to elaborate preparations such as grilling incorporating weather loving</div>
+						                            <span class="author">Salvador I. Burton</span>
+						                            <span class="designation">Manager</span>
+						                        </div>
+						                        <div class="testimonial-two-item">
+						                            <div class="quote"><i class="flaticon-quote"></i></div>
+						                            <div class="text">Renowned for its versatility in the kitchen, Red King Crab can prepared in various ways, from simple steaming or boiling to elaborate preparations such as grilling incorporating weather loving</div>
+						                            <span class="author">Salvador I. Burton</span>
+						                            <span class="designation">Manager</span>
+						                        </div>
+						                        <div class="testimonial-two-item">
+						                            <div class="quote"><i class="flaticon-quote"></i></div>
+						                            <div class="text">Renowned for its versatility in the kitchen, Red King Crab can prepared in various ways, from simple steaming or boiling to elaborate preparations such as grilling incorporating weather loving</div>
+						                            <span class="author">Salvador I. Burton</span>
+						                            <span class="designation">Manager</span>
+						                        </div> #}
+					</div>
+					<div class="shape">
+						<img src="/assets/wellfood/assets/images/shapes/tomato.png" alt="Shape">
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Testimonials Two Area end -->
+	<!-- Instagram area start -->
+	<div class="instagram-area">
+		<div class="row no-gap row-cols-xxl-5 row-cols-xl-4 row-cols-lg-3 row-cols-sm-2 row-cols-1 justify-content-center">
+			<div class="col" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
+				<div class="instagram-item">
+					<img src="{{ short_code('shared_instagram_1') }}" alt="Instagram">
+					<a href="{{ short_code('shared_instagram_1') }}">
+						<i class="fab fa-instagram"></i>
+					</a>
+				</div>
+			</div>
+			<div class="col" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1500" data-aos-offset="50">
+				<div class="instagram-item">
+					<img src="{{ short_code('shared_instagram_2') }}" alt="Instagram">
+					<a href="{{ short_code('shared_instagram_2') }}">
+						<i class="fab fa-instagram"></i>
+					</a>
+				</div>
+			</div>
+			<div class="col" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
+				<div class="instagram-item">
+					<img src="{{ short_code('shared_instagram_3') }}" alt="Instagram">
+					<a href="{{ short_code('shared_instagram_3') }}">
+						<i class="fab fa-instagram"></i>
+					</a>
+				</div>
+			</div>
+			<div class="col" data-aos="fade-up" data-aos-delay="150" data-aos-duration="1500" data-aos-offset="50">
+				<div class="instagram-item">
+					<img src="{{ short_code('shared_instagram_4') }}" alt="Instagram">
+					<a href="{{ short_code('shared_instagram_4') }}">
+						<i class="fab fa-instagram"></i>
+					</a>
+				</div>
+			</div>
+			<div class="col" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1500" data-aos-offset="50">
+				<div class="instagram-item">
+					<img src="{{ short_code('shared_instagram_5') }}" alt="Instagram">
+					<a href="{{ short_code('shared_instagram_5') }}">
+						<i class="fab fa-instagram"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Instagram area end -->
+{% endblock %}
+
+{% block scripts %}
+<!-- Entry Popup -->
+<style>
+#entry-popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+#entry-popup-overlay.visible {
+    opacity: 1;
+}
+#entry-popup-inner {
+    position: relative;
+    transform: scale(0.93);
+    transition: transform 0.4s ease;
+}
+#entry-popup-overlay.visible #entry-popup-inner {
+    transform: scale(1);
+}
+#entry-popup-inner img {
+    display: block;
+    max-width: 90vw;
+    max-height: 85vh;
+    width: auto;
+    height: auto;
+}
+#entry-popup-close {
+    position: absolute;
+    top: -18px;
+    right: -18px;
+    width: 36px;
+    height: 36px;
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.6);
+    border-radius: 50%;
+    color: #fff;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+#entry-popup-close:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+}
+</style>
+
+<div id="entry-popup-overlay">
+    <div id="entry-popup-inner">
+        <button id="entry-popup-close" aria-label="關閉">&#x2715;</button>
+        <img src="/assets/img/home_popup_img.png" alt="公告">
     </div>
-<!-- Category Banner area end -->
-<!-- Testimonials Two Area start -->
-    <section class="testimonials-two bgc-primary" style="background-image: url(assets/wellfood/assets/images/testimonials/testimonials-two-bg.png);">
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                <div class="why-choose-two-image">
-                    {{ short_code('home_testimonial_left_image') }}
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="testimonials-two-content rel z-1 text-center text-white p-45 rpy-55">
-                    <div class="section-title mb-20" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
-                        <span class="sub-title mb-5">{{ short_code('home_testimonial_subtitle') }}</span>
-                        <h2>{{ short_code('home_testimonial_title') }}</h2>
-                    </div>
-                    <span class="marquee-wrap style-two">
-                        <span class="marquee-inner left">review </span>
-                        <span class="marquee-inner left">review </span>
-                        <span class="marquee-inner left">review </span>
-                    </span>
-                    <div class="testimonials-two-carousel" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1500" data-aos-offset="50">
-                        <div class="testimonial-two-item">
-                            <div class="quote"><i class="flaticon-quote"></i></div>
-                            <div class="text">{{ short_code('home_testimonial_1_text') }}</div>
-                            <span class="author">{{ short_code('home_testimonial_1_author') }}</span>
-                            <span class="designation">{{ short_code('home_testimonial_1_role') }}</span>
-                        </div>
-                        <div class="testimonial-two-item">
-                            <div class="quote"><i class="flaticon-quote"></i></div>
-                            <div class="text">Renowned for its versatility in the kitchen, Red King Crab can prepared in various ways, from simple steaming or boiling to elaborate preparations such as grilling incorporating weather loving</div>
-                            <span class="author">Salvador I. Burton</span>
-                            <span class="designation">Manager</span>
-                        </div>
-                        <div class="testimonial-two-item">
-                            <div class="quote"><i class="flaticon-quote"></i></div>
-                            <div class="text">Renowned for its versatility in the kitchen, Red King Crab can prepared in various ways, from simple steaming or boiling to elaborate preparations such as grilling incorporating weather loving</div>
-                            <span class="author">Salvador I. Burton</span>
-                            <span class="designation">Manager</span>
-                        </div>
-                        <div class="testimonial-two-item">
-                            <div class="quote"><i class="flaticon-quote"></i></div>
-                            <div class="text">Renowned for its versatility in the kitchen, Red King Crab can prepared in various ways, from simple steaming or boiling to elaborate preparations such as grilling incorporating weather loving</div>
-                            <span class="author">Salvador I. Burton</span>
-                            <span class="designation">Manager</span>
-                        </div>
-                    </div>
-                    <div class="shape">
-                        <img src="/assets/wellfood/assets/images/shapes/tomato.png" alt="Shape">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Testimonials Two Area end -->
-<!-- Instagram area start -->
-    <div class="instagram-area">
-        <div class="row no-gap row-cols-xxl-5 row-cols-xl-4 row-cols-lg-3 row-cols-sm-2 row-cols-1 justify-content-center">
-            <div class="col" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
-                <div class="instagram-item">
-                    <img src="{{ short_code('shared_instagram_1') }}" alt="Instagram">
-                    <a href="{{ short_code('shared_instagram_1') }}"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-            <div class="col" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1500" data-aos-offset="50">
-                <div class="instagram-item">
-                    <img src="{{ short_code('shared_instagram_2') }}" alt="Instagram">
-                    <a href="{{ short_code('shared_instagram_2') }}"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-            <div class="col" data-aos="fade-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
-                <div class="instagram-item">
-                    <img src="{{ short_code('shared_instagram_3') }}" alt="Instagram">
-                    <a href="{{ short_code('shared_instagram_3') }}"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-            <div class="col" data-aos="fade-up" data-aos-delay="150" data-aos-duration="1500" data-aos-offset="50">
-                <div class="instagram-item">
-                    <img src="{{ short_code('shared_instagram_4') }}" alt="Instagram">
-                    <a href="{{ short_code('shared_instagram_4') }}"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-            <div class="col" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1500" data-aos-offset="50">
-                <div class="instagram-item">
-                    <img src="{{ short_code('shared_instagram_5') }}" alt="Instagram">
-                    <a href="{{ short_code('shared_instagram_5') }}"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Instagram area end -->
+</div>
+
+<script>
+(function () {
+    var KEY = '1f_entry_popup_shown';
+    if (sessionStorage.getItem(KEY)) return;
+
+    var overlay = document.getElementById('entry-popup-overlay');
+    sessionStorage.setItem(KEY, '1');
+
+    setTimeout(function () {
+        overlay.classList.add('visible');
+    }, 500);
+
+    function close() {
+        overlay.classList.remove('visible');
+        setTimeout(function () { overlay.style.display = 'none'; }, 400);
+    }
+
+    document.getElementById('entry-popup-close').addEventListener('click', close);
+    overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) close();
+    });
+})();
+</script>
 {% endblock %}
