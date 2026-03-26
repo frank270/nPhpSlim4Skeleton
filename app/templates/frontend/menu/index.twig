@@ -103,7 +103,7 @@
                                         <div class="image">
                                             <a href="/menu/details/{{ item.id }}">
                                                 {% if item.image_path %}
-                                                <img src="{{ item.image_path starts with 'http' ? item.image_path : '/' ~ item.image_path }}" alt="{{ item.name }}" style="width: 100%; height: 250px; object-fit: cover;">
+                                                <img src="{{ item.image_path starts with 'http' or item.image_path starts with '/' ? item.image_path : '/' ~ item.image_path }}" alt="{{ item.name }}" style="width: 100%; height: 250px; object-fit: cover;">
                                                 {% else %}
                                                 <img src="/assets/wellfood/assets/images/dishes/dish1.png" alt="Default Image">
                                                 {% endif %}

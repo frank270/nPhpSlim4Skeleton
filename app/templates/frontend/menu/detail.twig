@@ -56,7 +56,7 @@
             <div class="col-lg-6">
                 <div class="product-details-image rmb-55" data-aos="fade-left" data-aos-duration="1500" data-aos-offset="50">
                     {% if item.image_path %}
-                    <img src="{{ item.image_path starts with 'http' ? item.image_path : '/' ~ item.image_path }}" alt="{{ item.name }}" style="width: 100%; object-fit: cover;">
+                    <img src="{{ item.image_path starts with 'http' or item.image_path starts with '/' ? item.image_path : '/' ~ item.image_path }}" alt="{{ item.name }}" style="width: 100%; object-fit: cover;">
                     {% else %}
                     <img src="/assets/wellfood/assets/images/products/product-details.jpg" alt="Default Image">
                     {% endif %}
