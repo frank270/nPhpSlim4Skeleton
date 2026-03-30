@@ -4,7 +4,7 @@
 {% endblock %}
 {% block hero %}
 	<!-- Hero Area Start -->
-	<section class="hero-area-three pt-250 pb-220 rpb-100 rel z-1" style="background-image: url(/assets/wellfood/assets/images/background/hero-three.png)">
+	<section class="hero-area-three pt-250 pb-220 rpb-100 rel z-1" style="background-image: url(/assets/wellfood/assets/images/background/hero-three.png?v=260326)">
 		<span class="marquee-wrap style-two text-white">
 			<span class="marquee-inner left">{{ short_code('home_hero_marquee') }}</span>
 			<span class="marquee-inner left">{{ short_code('home_hero_marquee') }}</span>
@@ -291,10 +291,12 @@
     align-items: center;
     justify-content: center;
     opacity: 0;
+    pointer-events: none;
     transition: opacity 0.4s ease;
 }
 #entry-popup-overlay.visible {
     opacity: 1;
+    pointer-events: auto;
 }
 #entry-popup-inner {
     position: relative;
@@ -346,9 +348,11 @@
 <script>
 (function () {
     var KEY = '1f_entry_popup_shown';
-    if (sessionStorage.getItem(KEY)) return;
-
     var overlay = document.getElementById('entry-popup-overlay');
+    if (sessionStorage.getItem(KEY)) {
+        overlay.style.display = 'none';
+        return;
+    }
     sessionStorage.setItem(KEY, '1');
 
     setTimeout(function () {
