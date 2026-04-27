@@ -9,6 +9,7 @@ function ContentBlocks() {
   const [loading, setLoading] = useState(false);
   const [pagination, setPagination] = useState({ current_page: 1, total_pages: 1 });
   const [filters, setFilters] = useState({ keyword: '', group: '', type: '', status: '' });
+  const [currentPage, setCurrentPage] = useState(1);
   const [groups, setGroups] = useState([]);
   
   // Edit Form State
@@ -28,13 +29,13 @@ function ContentBlocks() {
     if (view === 'list') {
       fetchList();
     }
-  }, [view, filters, pagination.current_page]);
+  }, [view, filters, currentPage]);
 
   const fetchList = async () => {
     setLoading(true);
     try {
       const params = new URLSearchParams({
-        page: pagination.current_page,
+        page: currentPage,
         ...filters
       });
       const res = await fetch(`/opanel/content-blocks/list?${params}`);
@@ -50,6 +51,11 @@ function ContentBlocks() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleFilterChange = (key, value) => {
+    setFilters(prev => ({ ...prev, [key]: value }));
+    setCurrentPage(1);
   };
 
   const handleCreate = () => {
@@ -346,12 +352,12 @@ function ContentBlocks() {
       <div className="card-header">
         <h3 className="card-title">頁面區塊管理</h3>
         <div className="ms-auto d-flex gap-2">
-            <select className="form-select w-auto" value={filters.group} onChange={e => setFilters({...filters, group: e.target.value})}>
+            <select className="form-select w-auto" value={filters.group} onChange={e => handleFilterChange('group', e.target.value)}>
                 <option value="">所有群組</option>
                 {groups.map(g => <option key={g} value={g}>{g}</option>)}
             </select>
-            <input type="text" className="form-control w-auto" placeholder="搜尋短碼..." 
-                value={filters.keyword} onChange={e => setFilters({...filters, keyword: e.target.value})} />
+            <input type="text" className="form-control w-auto" placeholder="搜尋短碼..."
+                value={filters.keyword} onChange={e => handleFilterChange('keyword', e.target.value)} />
             <button className="btn btn-primary" onClick={handleCreate}>新增區塊</button>
         </div>
       </div>
@@ -416,14 +422,14 @@ function ContentBlocks() {
             共 {pagination.total_items} 筆
         </p>
         <ul className="pagination m-0 ms-auto">
-            <li className={`page-item ${pagination.current_page <= 1 ? 'disabled' : ''}`}>
-                <button className="page-link" onClick={() => setPagination({...pagination, current_page: pagination.current_page - 1})}>上一頁</button>
+            <li className={`page-item ${currentPage <= 1 ? 'disabled' : ''}`}>
+                <button className="page-link" onClick={() => setCurrentPage(p => p - 1)}>上一頁</button>
             </li>
             <li className="page-item active">
-                <span className="page-link">{pagination.current_page}</span>
+                <span className="page-link">{currentPage} / {pagination.total_pages}</span>
             </li>
-            <li className={`page-item ${pagination.current_page >= pagination.total_pages ? 'disabled' : ''}`}>
-                <button className="page-link" onClick={() => setPagination({...pagination, current_page: pagination.current_page + 1})}>下一頁</button>
+            <li className={`page-item ${currentPage >= pagination.total_pages ? 'disabled' : ''}`}>
+                <button className="page-link" onClick={() => setCurrentPage(p => p + 1)}>下一頁</button>
             </li>
         </ul>
       </div>
