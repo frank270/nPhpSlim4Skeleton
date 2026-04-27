@@ -79,6 +79,7 @@ class MenuAction extends BaseAction
         return $this->view->render($response, 'frontend/menu/detail.twig', [
             'item' => $item,
             'categories' => $categories, // Passed if we want to show sidebar in detail page too, or just for nav
+            'shareUrl' => (string) $request->getUri(),
         ]);
     }
 }
