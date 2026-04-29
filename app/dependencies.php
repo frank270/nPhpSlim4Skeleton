@@ -46,6 +46,19 @@ return function (App $app) {
             return $i18n->t($key, $replace);
         }));
 
+        $twig->getEnvironment()->addFunction(new \Twig\TwigFunction('current_url', function (?string $path = null) {
+            $scheme = $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? null;
+            if (!$scheme) {
+                $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+            }
+
+            $host = $_SERVER['HTTP_X_FORWARDED_HOST'] ?? ($_SERVER['HTTP_HOST'] ?? '1fbreakfast.com.tw');
+            $uri = $path ?? ($_SERVER['REQUEST_URI'] ?? '/');
+            $uriPath = parse_url($uri, PHP_URL_PATH) ?: '/';
+
+            return $scheme . '://' . $host . $uriPath;
+        }));
+
         // Add short_code() function
         $db = $c->get(\Doctrine\DBAL\Connection::class);
         // Avoid re-instantiating if possible, but here it's fine

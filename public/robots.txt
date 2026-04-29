@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /opanel/
+
+Sitemap: https://1fbreakfast.com.tw/sitemap.xml

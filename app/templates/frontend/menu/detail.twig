@@ -1,6 +1,11 @@
 {% extends "frontend/master-layout03.twig" %}
 
 {% block title %}{{ item.name }} - 1fBreakFast{% endblock %}
+{% block seo_description %}{{ item.description|default('壹樓早餐美味餐點')|striptags|slice(0, 120) }}{% endblock %}
+{% block og_title %}{{ item.name }}｜壹樓早餐{% endblock %}
+{% block og_description %}{{ item.description|default('壹樓早餐美味餐點')|striptags|slice(0, 120) }}{% endblock %}
+{% block og_image %}{{ item.image_path ? (item.image_path starts with 'http' ? item.image_path : current_url(item.image_path starts with '/' ? item.image_path : '/' ~ item.image_path)) : current_url('/assets/img/logo-v7-nobg.png') }}{% endblock %}
+{% block og_type %}product{% endblock %}
 
 {% block hero %}
 <!-- Hero Area Start -->
