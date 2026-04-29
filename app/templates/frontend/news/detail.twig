@@ -1,6 +1,11 @@
 {% extends "frontend/master-layout03.twig" %}
 
 {% block title %}{{ post.title }} - 最新消息 - 1fBreakFast{% endblock %}
+{% block seo_description %}{{ (post.summary|default(post.content|striptags))|striptags|slice(0, 120) }}{% endblock %}
+{% block og_title %}{{ post.title }}｜壹樓早餐最新消息{% endblock %}
+{% block og_description %}{{ (post.summary|default(post.content|striptags))|striptags|slice(0, 120) }}{% endblock %}
+{% block og_image %}{{ post.cover_image ? (post.cover_image starts with 'http' ? post.cover_image : current_url(post.cover_image starts with '/' ? post.cover_image : '/' ~ post.cover_image)) : current_url('/assets/img/logo-v7-nobg.png') }}{% endblock %}
+{% block og_type %}article{% endblock %}
 
 {% block styles %}
 <style>
