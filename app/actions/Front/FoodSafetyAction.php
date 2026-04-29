@@ -69,6 +69,7 @@ class FoodSafetyAction extends BaseAction
 
         return $this->view->render($response, 'frontend/food-safety/detail.twig', [
             'item' => $item,
+            'shareUrl' => (string) $request->getUri(),
         ]);
     }
 }

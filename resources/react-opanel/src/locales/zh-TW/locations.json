@@ -21,6 +21,10 @@
   "closed": "已打烊",
   "pause": "暫停營業",
   "toggle_status": "切換狀態",
+  "total_items": "共 {{count}} 筆",
+  "per_page": "{{count}}/頁",
+  "prev_page": "上一頁",
+  "next_page": "下一頁",
   "placeholder": {
     "name": "請輸入門市名稱",
     "phone": "02-1234-5678",

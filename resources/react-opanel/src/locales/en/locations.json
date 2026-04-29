@@ -21,6 +21,10 @@
   "closed": "Closed",
   "pause": "Pause",
   "toggle_status": "Toggle Status",
+  "total_items": "Total {{count}} items",
+  "per_page": "{{count}}/page",
+  "prev_page": "Previous",
+  "next_page": "Next",
   "placeholder": {
     "name": "Please enter shop name",
     "phone": "02-1234-5678",

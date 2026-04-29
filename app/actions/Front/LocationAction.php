@@ -103,10 +103,42 @@ class LocationAction extends BaseAction
             $grouped[$county][] = $item;
         }
 
+        foreach ($grouped as &$stores) {
+            usort($stores, [$this, 'compareStoresByDistrictOrder']);
+        }
+        unset($stores);
+
         // 使用 Twig 渲染
         return $this->view->render($response, 'frontend/location/index.twig', [
             'groupedLocations' => $grouped,
             'filters' => $filters,
         ]);
+    }
+
+    private function compareStoresByDistrictOrder(array $left, array $right): int
+    {
+        $zipcodeCompare = $this->normalizeZipcode($left['zipcode'] ?? null) <=> $this->normalizeZipcode($right['zipcode'] ?? null);
+        if ($zipcodeCompare !== 0) {
+            return $zipcodeCompare;
+        }
+
+        $districtCompare = strnatcmp((string)($left['district'] ?? ''), (string)($right['district'] ?? ''));
+        if ($districtCompare !== 0) {
+            return $districtCompare;
+        }
+
+        $sortCompare = ((int)($left['sort_order'] ?? 0)) <=> ((int)($right['sort_order'] ?? 0));
+        if ($sortCompare !== 0) {
+            return $sortCompare;
+        }
+
+        return strnatcmp((string)($left['name'] ?? ''), (string)($right['name'] ?? ''));
+    }
+
+    private function normalizeZipcode($zipcode): int
+    {
+        $digits = preg_replace('/\D/', '', (string)$zipcode);
+
+        return $digits === '' ? PHP_INT_MAX : (int)$digits;
     }
 }

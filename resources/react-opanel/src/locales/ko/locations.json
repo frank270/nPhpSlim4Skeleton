@@ -21,6 +21,10 @@
   "closed": "영업 종료",
   "pause": "일시 중지",
   "toggle_status": "상태 전환",
+  "total_items": "총 {{count}}개",
+  "per_page": "{{count}}/페이지",
+  "prev_page": "이전",
+  "next_page": "다음",
   "placeholder": {
     "name": "매장명을 입력하세요",
     "phone": "02-1234-5678",
