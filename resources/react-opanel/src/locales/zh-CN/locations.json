@@ -21,6 +21,10 @@
   "closed": "已打烊",
   "pause": "暂停营业",
   "toggle_status": "切换状态",
+  "total_items": "共 {{count}} 笔",
+  "per_page": "{{count}}/页",
+  "prev_page": "上一页",
+  "next_page": "下一页",
   "placeholder": {
     "name": "请输入门店名称",
     "phone": "02-1234-5678",

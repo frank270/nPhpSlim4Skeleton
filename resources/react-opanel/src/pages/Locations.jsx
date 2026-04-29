@@ -36,6 +36,9 @@ function LocationsApp({ apiBase }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [refreshKey, setRefreshKey] = useState(0);
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(20);
+  const [pagination, setPagination] = useState({ total: 0, page: 1, per_page: 20 });
 
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState(initialFormState);
@@ -48,7 +51,13 @@ function LocationsApp({ apiBase }) {
   const addressSelectorRef = useRef(null);
   const addressContainerRef = useRef(null);
 
-  const listEndpoint = useMemo(() => `${apiBase}/list`, [apiBase]);
+  const listEndpoint = useMemo(() => {
+    const query = new URLSearchParams({
+      page: String(page),
+      per_page: String(perPage),
+    });
+    return `${apiBase}/list?${query.toString()}`;
+  }, [apiBase, page, perPage]);
 
   const loadStores = async () => {
     setLoading(true);
@@ -60,9 +69,11 @@ function LocationsApp({ apiBase }) {
         throw new Error(result.message || t('locations.error.load_failed'));
       }
       setStores(result.data || []);
+      setPagination(result.pagination || { total: 0, page, per_page: perPage });
     } catch (err) {
       setError(err.message);
       setStores([]);
+      setPagination({ total: 0, page, per_page: perPage });
     } finally {
       setLoading(false);
     }
@@ -72,6 +83,14 @@ function LocationsApp({ apiBase }) {
     loadStores();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listEndpoint, refreshKey]);
+
+  const totalPages = Math.max(1, Math.ceil((pagination.total || 0) / perPage));
+
+  useEffect(() => {
+    if (!loading && page > totalPages) {
+      setPage(totalPages);
+    }
+  }, [loading, page, totalPages]);
 
   // 初始化地址選擇器
   useEffect(() => {
@@ -265,6 +284,9 @@ function LocationsApp({ apiBase }) {
       }
 
       toast(editingStore ? t('common.saved') : t('common.saved'), 'success');
+      if (!editingStore) {
+        setPage(1);
+      }
       resetForm();
       setRefreshKey((prev) => prev + 1);
     } catch (err) {
@@ -339,7 +361,11 @@ function LocationsApp({ apiBase }) {
       }
 
       toast(t('common.deleted'), 'success');
-      setStores((prev) => prev.filter((item) => item.id !== store.id));
+      if (stores.length === 1 && page > 1) {
+        setPage((prev) => Math.max(1, prev - 1));
+      } else {
+        setRefreshKey((prev) => prev + 1);
+      }
     } catch (err) {
       toast(err.message || t('locations.error.delete_failed'), 'error');
     } finally {
@@ -611,13 +637,62 @@ function LocationsApp({ apiBase }) {
     );
   };
 
+  const renderPagination = () => {
+    if (loading || error || (pagination.total || 0) === 0) {
+      return null;
+    }
+
+    return (
+      <div className="d-flex justify-content-between align-items-center mt-3">
+        <span className="text-secondary small">
+          {t('common.pagination', { page, total: totalPages })}
+        </span>
+        <div className="btn-group">
+          <button
+            type="button"
+            className="btn btn-outline-secondary btn-sm"
+            disabled={page <= 1}
+            onClick={() => setPage((prev) => Math.max(1, prev - 1))}
+          >
+            {t('locations.prev_page')}
+          </button>
+          <button
+            type="button"
+            className="btn btn-outline-secondary btn-sm"
+            disabled={page >= totalPages}
+            onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
+          >
+            {t('locations.next_page')}
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="container-xl mt-3">
       {renderToolbar()}
       {renderForm()}
       <div className="card">
+        <div className="card-header d-flex justify-content-between align-items-center">
+          <span className="text-secondary small">{t('locations.total_items', { count: pagination.total || 0 })}</span>
+          <select
+            className="form-select form-select-sm"
+            style={{ width: 'auto' }}
+            value={perPage}
+            onChange={(event) => {
+              setPerPage(Number(event.target.value));
+              setPage(1);
+            }}
+          >
+            {[20, 50, 100].map((size) => (
+              <option key={size} value={size}>{t('locations.per_page', { count: size })}</option>
+            ))}
+          </select>
+        </div>
         <div className="card-body">
           {renderTable()}
+          {renderPagination()}
         </div>
       </div>
     </div>
@@ -634,4 +709,3 @@ if (mountNode) {
     </React.StrictMode>
   );
 }
-
