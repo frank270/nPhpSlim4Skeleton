@@ -23,3 +23,6 @@ log
 
 # Vite build output (react-opanel)
 /public/js/opanel/
+
+# Docker 本地環境變數
+.env.docker
